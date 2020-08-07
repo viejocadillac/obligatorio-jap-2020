@@ -30,19 +30,22 @@
       <p class="sign-in-description">Inicia sesion para acceder a esta area</p>
       <form action="">
 
-        <div class="form-group form-control-underline">
+        <div id="user-input-group"class="form-group form-control-underline-group">
+          <input id="usuario" type="text" class="input-no-focus" title="Debe ingresar su usuario"required>
           <label class="text-label" for="usuario">Usuario</label>
-          <input id="usuario" type="text" class="input-no-focus">
+
+          <div class="input-underline"></div>
+        
+        </div>
+
+        <div id="password-input-group" class="form-group form-control-underline-group">
+          <input id="password" type="text" class="input-no-focus" required title="Debe ingresar su contraseña">
+          <label class="text-label" for="password">Password</label>
+
           <div class="input-underline"></div>
         </div>
 
-        <div class="form-group form-control-underline">
-          <label class="text-label" for="usuario">Contraseña</label>
-          <input id="usuario" type="text" class="input-no-focus">
-          <div class="input-underline"></div>
-        </div>
-
-        <button type="button" class="btn btn-primary btn-sm">Entrar</button>
+        <button type="submit" class="btn btn-primary btn-sm float-right">Entrar</button>
      
       </form>
       <p class="other-methods-title">O tambien podes iniciar sesion con:</p>
