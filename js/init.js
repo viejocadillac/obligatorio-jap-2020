@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     // User is signed simulated (sessionStorage).
     user = sessionStorage.getItem('user');
 
-    if(user) {
+    if(user.user) {
       user = JSON.parse(user)
       mensajeBienvenida.innerHTML += ` ${user.user}!`
     }
