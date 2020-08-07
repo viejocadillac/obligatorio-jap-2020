@@ -28,10 +28,10 @@
     <div class="signin">
       <h1 class="signin-title">eMercado</h1>
       <p class="sign-in-description">Inicia sesion para acceder a esta area</p>
-      <form action="">
+      <form id="formulario-login" action="">
 
         <div id="user-input-group"class="form-group form-control-underline-group">
-          <input id="usuario" type="text" class="input-no-focus" title="Debe ingresar su usuario"required>
+          <input id="usuario" name="user" type="text" class="input-no-focus" title="Debe ingresar su usuario"required>
           <label class="text-label" for="usuario">Usuario</label>
 
           <div class="input-underline"></div>
@@ -39,7 +39,7 @@
         </div>
 
         <div id="password-input-group" class="form-group form-control-underline-group">
-          <input id="password" type="text" class="input-no-focus" required title="Debe ingresar su contraseña">
+          <input id="password" name="password" type="password" class="input-no-focus" required title="Debe ingresar su contraseña">
           <label class="text-label" for="password">Password</label>
 
           <div class="input-underline"></div>

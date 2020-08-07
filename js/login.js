@@ -5,6 +5,16 @@
 
 document.addEventListener("DOMContentLoaded", function (e) {
 
+    const formulario = document.getElementById('formulario-login')
+
+    formulario.addEventListener('submit', (e)=> {
+        e.preventDefault()
+        const formData = new FormData(formulario)
+        const userObj = Object.fromEntries(formData.entries())
+        sessionStorage.setItem('user', JSON.stringify(userObj))
+        window.location = '/'
+    })
+
    
 
 
@@ -15,7 +25,9 @@ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
 
     // When user are loged, redirect to the home 
+    saveSession(googleUser.getBasicProfile)
     window.location = 'https://viejocadillac.github.io/obligatorio-jap-2020'
+    /*
     var profile = googleUser.getBasicProfile();
     console.log(googleUser)
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -28,6 +40,11 @@ function onSignIn(googleUser) {
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+    */
+}
+
+function saveSession(user){
+    sessionStorage.setItem('user', JSON.stringify(user))
 }
 
 

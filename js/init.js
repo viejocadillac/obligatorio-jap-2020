@@ -44,4 +44,15 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  const mensaejePortada = document.getElementById('mensaje-bienvenida')
+
+  const user = sessionStorage.getItem('user');
+  if(user){
+    const userObj = JSON.parse(user)
+    mensaejePortada.innerHTML += ` ${ userObj.user ? userObj.user : user.getName()}!`
+
+  }else {
+    window.location = '/obligatorio-jap-2020/login'
+  }
+
 });
