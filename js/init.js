@@ -57,22 +57,30 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-
-
-  const mensaejePortada = document.getElementById('mensaje-bienvenida')
+  const mensajeBienvenida = document.getElementById('mensaje-bienvenida')
   const navLinksContainer = document.getElementById('nav-links-container')
+  let user = firebase.auth().currentUser;
 
-  navLinksContainer.addEventListener('click', logout)
+  if (user) {
+    // User is signed in with Google.
+    console.log(user)
+    mensajeBienvenida.innerHTML += ` ${user.getName()}!`
 
-  const user = sessionStorage.getItem('user');
-  if(user){
-    const userObj = JSON.parse(user)
-    mensaejePortada.innerHTML += ` ${ userObj.user ? userObj.user : user.getName()}!`
-    navLinksContainer.innerHTML += '<a class="py-2 d-none d-md-inline-block" click="logout()">Cerrar Sesion</a>'
+  } else if (sessionStorage.getItem('user')) {
+    // User is signed simulated (sessionStorage).
+    user = sessionStorage.getItem('user');
+    user = JSON.parse(user)
+    mensajeBienvenida.innerHTML += ` ${user.user}!`
 
   }else {
+    // No user is signed in.
     window.location = '/obligatorio-jap-2020/login'
+
   }
+
+  navLinksContainer.innerHTML += '<a class="py-2 d-none d-md-inline-block" onclick="logout()">Cerrar Sesion</a>'
+
+
 
 });
 
