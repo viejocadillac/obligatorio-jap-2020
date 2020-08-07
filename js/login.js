@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
 
-    window.location = 'http://ed3269eccdd3.ngrok.io/'
+    // When user are loged, redirect to the home 
+    window.location = 'https://viejocadillac.github.io/obligatorio-jap-2020'
     var profile = googleUser.getBasicProfile();
     console.log(googleUser)
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
