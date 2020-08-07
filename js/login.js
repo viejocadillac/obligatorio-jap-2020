@@ -25,7 +25,7 @@ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
 
     // When user are loged, redirect to the home 
-    saveSession(googleUser.getBasicProfile)
+    saveSession(googleUser.getBasicProfile())
     window.location = 'https://viejocadillac.github.io/obligatorio-jap-2020'
     /*
     var profile = googleUser.getBasicProfile();
