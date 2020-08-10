@@ -140,10 +140,17 @@ a.custom-card:hover {
   color: orange;
 }
 
+a.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2rem;
+  color: rgb(255, 72, 109) ;
+}
+
 /* Opciones de usuario en la barra de navegacion */
 select {
   background-color: transparent;
-  color: crimson;
+  color: White;
   border: none;
   font-weight: 600;
 }
