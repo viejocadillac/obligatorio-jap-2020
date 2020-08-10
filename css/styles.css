@@ -143,3 +143,17 @@ a.custom-card:hover {
 #mensaje-bienvenida {
   text-align: center;
 }
+
+select {
+  background-color: transparent;
+  color: crimson;
+  border: none;
+  font-weight: 600;
+}
+option {
+  padding: 1em;
+  color: blue;
+}
+option:first-child {
+  display: none;
+}

@@ -8,14 +8,15 @@ const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
 
-var firebaseConfig = {
-  apiKey: "AIzaSyAoWh9ESaf4ECr9YQ5006lHzOOMya11sF0",
-  authDomain: "obligatorio-jap-2020.firebaseapp.com",
-  databaseURL: "https://obligatorio-jap-2020.firebaseio.com",
-  projectId: "obligatorio-jap-2020",
-  storageBucket: "obligatorio-jap-2020.appspot.com",
-  messagingSenderId: "210642457292",
-  appId: "1:210642457292:web:188b2a0316d84304b8a869"
+// Firebase configuration
+let firebaseConfig = {
+  apiKey: "AIzaSyB-XYq5X9nS1FIQZoCXvOohWwsJMdBDLXc",
+  authDomain: "jovenes-a-programar-deed4.firebaseapp.com",
+  databaseURL: "https://jovenes-a-programar-deed4.firebaseio.com",
+  projectId: "jovenes-a-programar-deed4",
+  storageBucket: "jovenes-a-programar-deed4.appspot.com",
+  messagingSenderId: "972986978219",
+  appId: "1:972986978219:web:c41276ff01dcc7ca7a8cee"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -57,42 +58,37 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-  const mensajeBienvenida = document.getElementById('mensaje-bienvenida')
-  const navLinksContainer = document.getElementById('nav-links-container')
-  let user = firebase.auth().currentUser;
 
-  if (user) {
-    // User is signed in with Google.
-    console.log(user)
-    mensajeBienvenida.innerHTML += ` ${user.getName()}!`
-
-  } else if (sessionStorage.getItem('user')) {
-    // User is signed simulated (sessionStorage).
-    user = sessionStorage.getItem('user');
-
-    if(user.user) {
-      user = JSON.parse(user)
-      mensajeBienvenida.innerHTML += ` ${user.user}!`
-    }
-    
-
-  }else {
-    // No user is signed in.
-    window.location = '/obligatorio-jap-2020/login'
-
-  }
-
-  navLinksContainer.innerHTML += '<a class="py-2 d-none d-md-inline-block" onclick="logout()">Cerrar Sesion</a>'
-
-
+  
 
 });
 
-function logout() {
-  sessionStorage.removeItem('user')
-  firebase.auth().signOut().then(function() {
-    console.log('// Sign-out successful.')
-  }).catch(function(error) {
-    // An error happened.
-  });
+const createSelectHandler = (selectId) => {
+  return (optionName, cb) => {
+    const select = document.getElementById(selectId);
+    const index = select.selectedIndex
+  
+    if( select.options[index].value === optionName) cb();
+  }
 }
+
+const onOptionClicked = createSelectHandler('opciones-usuario')
+
+
+
+selectClicked = () => {
+  onOptionClicked('logout', () => logout())
+}
+
+
+
+
+const logout = (e) => {
+  firebase.auth().signOut().then(()=> {
+    console.log('sesion cerrada correctamente')
+  })
+}
+
+
+
+
