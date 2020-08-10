@@ -140,20 +140,14 @@ a.custom-card:hover {
   color: orange;
 }
 
-#mensaje-bienvenida {
-  text-align: center;
-}
-
+/* Opciones de usuario en la barra de navegacion */
 select {
   background-color: transparent;
   color: crimson;
   border: none;
   font-weight: 600;
 }
-option {
-  padding: 1em;
-  color: blue;
-}
+
 option:first-child {
   display: none;
 }

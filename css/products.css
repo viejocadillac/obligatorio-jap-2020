@@ -1,0 +1,64 @@
+
+h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+.productos-container {
+    
+   
+    display: grid;
+    gap: 1.5em;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.producto {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    color: #505050;
+    box-shadow: 3px 6px 11px -4px rgba(0,0,0,0.75);
+
+}
+
+img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+}
+
+.product-price {
+    font-family: 'Arial';
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.product-description {
+    
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+
+.product-body {
+    padding: 1em;
+    padding-bottom: 0;
+    flex-grow: 1;
+}
+
+.vendidos {
+    text-align: center;
+    margin: 0;
+    line-height: 2.5rem ; 
+}
+
+hr {
+    margin-bottom: 0;
+}
+
