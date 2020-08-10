@@ -28,10 +28,10 @@ firebase.auth().onAuthStateChanged(function(user) {
   if ( user ) {
   // User is signed in.
   dropdownButton.innerHTML = `${user.displayName}`
-  opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item">Mi Carrito</a>'
-  opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item">Perfil</a>'
+  opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>'
+  opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>'
 
-  opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()">Cerrar Sesion</button>'
+  opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
   } else {
     opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
 

@@ -152,9 +152,8 @@ a.logo {
 
 .nav-item {
   margin: 0 1rem;
-  
-  
 }
+
 a.nav-item {
   color: grey;
   font-weight: 600;
@@ -172,8 +171,11 @@ button.nav-item:hover, button.nav-item:active {
   border-color: rgb(255, 72, 109) ;
 }
 
-
-
+.dropdown-item > i {
+  width: 20px;
+  margin-right: 1rem;
+  color: rgb(255, 72, 109);
+}
 
 
 
@@ -181,11 +183,26 @@ button.nav-item:hover, button.nav-item:active {
 
 
 .grid-items-list-title {
-  text-align: center;
   margin: 4rem;
-  font-size: 1.5rem;
- 
 }
+
+.grid-items-list-title i{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 4rem;
+  color: crimson;
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+.grid-items-list-title h1{
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
 
 
 .productos-container {
