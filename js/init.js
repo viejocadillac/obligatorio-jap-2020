@@ -59,29 +59,37 @@ var getJSONData = function(url){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
 
-  
+  const selectUserOptionsId = 'opciones-usuario'
+  const select = document.getElementById(selectUserOptionsId);
+  const onOptionClicked = createSelectHandler(selectUserOptionsId)
 
+  select.addEventListener('click', ()=>{
+    // Agrega los manejadores de cada opcion aqui...
+    onOptionClicked('logout', () => logout())
+    //...
+  })
 });
 
+
+/**
+  Devuelve una funcion que chequeara si se hace click en la opcion
+  con el atributo name igual al pasado como parametro (del select con id igual al pasado en esta),
+  y en ese caso ejecuta una funcion callback
+  @param {tring} selectId Id del select que se desea observar
+  @returns {Function} Funcion que controlara una determinada opcion del select 
+*/
 const createSelectHandler = (selectId) => {
+  const select = document.getElementById(selectId);
+
+  select.addEventListener('click', ()=>{
+
+  })
+
   return (optionName, cb) => {
-    const select = document.getElementById(selectId);
     const index = select.selectedIndex
-  
     if( select.options[index].value === optionName) cb();
   }
 }
-
-const onOptionClicked = createSelectHandler('opciones-usuario')
-
-
-
-selectClicked = () => {
-  onOptionClicked('logout', () => logout())
-}
-
-
-
 
 const logout = (e) => {
   firebase.auth().signOut().then(()=> {
