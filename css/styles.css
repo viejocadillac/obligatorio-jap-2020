@@ -143,18 +143,32 @@ a.custom-card:hover {
 a.logo {
   font-size: 1.2rem;
   font-weight: 700;
-  line-height: 1.2rem;
+ 
   color: rgb(255, 72, 109) ;
 }
 
 /* Opciones de usuario en la barra de navegacion */
-select {
-  background-color: transparent;
-  color: White;
-  border: none;
+
+
+.nav-item {
+  margin: 0 1rem;
+  
+  
+}
+a.nav-item {
+  color: grey;
   font-weight: 600;
+  text-decoration: none;
 }
 
-option:first-child {
-  display: none;
+.nav-item:hover {
+  cursor: pointer;
+  color: rgb(255, 72, 109) ;
 }
+
+button.nav-item:hover, button.nav-item:active {
+  cursor: pointer;
+  background-color: transparent ;
+  border-color: rgb(255, 72, 109) ;
+}
+

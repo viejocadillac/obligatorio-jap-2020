@@ -23,13 +23,17 @@ firebase.initializeApp(firebaseConfig);
 
 
 firebase.auth().onAuthStateChanged(function(user) {
+  const dropdownButton = document.getElementById('dropdown-button');
+  const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
   if ( user ) {
   // User is signed in.
-  document.getElementById('opciones-usuario').innerHTML = `<option value="user" selected disabled>${user.displayName}</option>`
-  document.getElementById('opciones-usuario').innerHTML += '<option name="logout" value="logout" >Cerrar Sesion</option>'
+  dropdownButton.innerHTML = `${user.displayName}`
+  opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item">Mi Carrito</a>'
+  opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item">Perfil</a>'
+
+  opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()">Cerrar Sesion</button>'
   } else {
-    document.getElementById('opciones-usuario').innerHTML = '<option value="user" selected disabled>Anonimo</option>'
-    document.getElementById('opciones-usuario').innerHTML += '<option name="signin" value="signin" disabled>Crearme una cuenta</option>'
+    opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
 
   }
 }, function(error) {
@@ -72,48 +76,21 @@ var getJSONData = function(url){
     });
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
-
-  const selectUserOptionsId = 'opciones-usuario'
-  const select = document.getElementById(selectUserOptionsId);
-  const onOptionClicked = createSelectHandler(selectUserOptionsId)
-
-  select.addEventListener('click', ()=>{
-    // Agrega los manejadores de cada opcion aqui...
-    onOptionClicked('logout', () => logout())
-    //...
-  })
-});
-
-
-/**
-  Devuelve una funcion que chequeara si se hace click en la opcion
-  con el atributo name igual al pasado como parametro (del select con id igual al pasado en esta),
-  y en ese caso ejecuta una funcion callback
-  @param {tring} selectId Id del select que se desea observar
-  @returns {Function} Funcion que controlara una determinada opcion del select 
-*/
-const createSelectHandler = (selectId) => {
-  const select = document.getElementById(selectId);
-
-  select.addEventListener('click', ()=>{
-
-  })
-
-  return (optionName, cb) => {
-    const index = select.selectedIndex
-    if( select.options[index].value === optionName) cb();
-  }
-}
-
 const logout = (e) => {
   firebase.auth().signOut().then(()=> {
     console.log('sesion cerrada correctamente')
   })
 }
+
+//Función que se ejecuta una vez que se haya lanzado el evento de
+//que el documento se encuentra cargado, es decir, se encuentran todos los
+//elementos HTML presentes.
+document.addEventListener("DOMContentLoaded", function(e){
+
+});
+
+
+
 
 
 
