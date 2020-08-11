@@ -1,6 +1,10 @@
+body {
+  padding-bottom: 5rem;
+}
 .jumbotron, .card-body, .container, .site-header{
     font-family: 'Raleway', serif !important;
 }
+
 
 .jumbotron .display-4{
     font-weight: bold;
@@ -9,7 +13,7 @@
 .jumbotron {
   height: 50vh;
   padding: 5em inherit;
-  margin-bottom: 0;
+
   background-color: #53C0FB;
   background: url('../img/cover_back.png');
   background-size: cover;
@@ -23,6 +27,7 @@
   .jumbotron {
     padding-top: 6rem;
     padding-bottom: 6rem;
+    
   }
 }
 
@@ -160,6 +165,8 @@ a.nav-item {
   text-decoration: none;
 }
 
+
+
 .nav-item:hover {
   cursor: pointer;
   color: rgb(255, 72, 109) ;
@@ -262,6 +269,34 @@ img {
 hr {
   margin-bottom: 0;
 }
+
+
+
+.nav-bottom {
+  position: fixed;
+  display: grid;
+  z-index: 999;
+  grid-template-columns: repeat(3, 1fr);
+  bottom: 0;
+  width: 100%;
+
+
+  background-color: rgb(255, 72, 109);
+}
+
+.nav-bottom > a {
+  display: block;
+  flex-grow: 1;
+  padding-top: 0.5rem;
+  height: 100%;
+  text-align: center;
+  color: white;
+}
+
+.nav-bottom > a:hover {
+  background-color: crimson;
+}
+
 
 
 
