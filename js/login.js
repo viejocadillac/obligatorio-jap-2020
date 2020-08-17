@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
                 const formData = new FormData(formulario)
                 const userObj = Object.fromEntries(formData.entries())
-                sessionStorage.setItem('user', JSON.stringify(userObj))
+                localStorage.setItem('user', JSON.stringify(userObj))
                 window.location = HOME
         
               

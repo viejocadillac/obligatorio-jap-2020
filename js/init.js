@@ -25,22 +25,6 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-firebase.auth().onAuthStateChanged( (user)=> {
-  if(user) {
-    // Usuario logeado
-  } else {
-    // Usuario sin logear
-  }
-})
-
-
-
-
-
-
-
-
-
 firebase.auth().onAuthStateChanged(function(user) {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
@@ -53,7 +37,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
   } else {
     // usuario no logueado con google, se chequea si existe en session storage
-    const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
+    const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
 
     if (sessionStorageUser) {
       dropdownButton.innerHTML = `${sessionStorageUser.username}`
@@ -112,9 +96,9 @@ const logout = (e) => {
 
   firebase.auth().signOut().then(()=> {
     
-    const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
+    const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
     if(sessionStorageUser) {
-      sessionStorage.removeItem('user')
+      localStorage.removeItem('user')
       window.location = LOGIN
     }
     console.log('sesion cerrada correctamente')
