@@ -1,3 +1,6 @@
+const HOME = '/obligatorio-jap-2020'
+const LOGIN = '/obligatorio-jap-2020/login'
+
 const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
 const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
 const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
@@ -22,6 +25,22 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
+firebase.auth().onAuthStateChanged( (user)=> {
+  if(user) {
+    // Usuario logeado
+  } else {
+    // Usuario sin logear
+  }
+})
+
+
+
+
+
+
+
+
+
 firebase.auth().onAuthStateChanged(function(user) {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
@@ -33,7 +52,19 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
   } else {
-    opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
+    // usuario no logueado con google, se chequea si existe en session storage
+    const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
+
+    if (sessionStorageUser) {
+      dropdownButton.innerHTML = `${sessionStorageUser.username}`
+      opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>'
+      opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>'
+    
+      opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
+      
+    } else {
+      opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
+    }
 
   }
 }, function(error) {
@@ -77,8 +108,18 @@ var getJSONData = function(url){
 }
 
 const logout = (e) => {
+
+
   firebase.auth().signOut().then(()=> {
+    
+    const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
+    if(sessionStorageUser) {
+      sessionStorage.removeItem('user')
+      window.location = LOGIN
+    }
     console.log('sesion cerrada correctamente')
+    
+    
   })
 }
 

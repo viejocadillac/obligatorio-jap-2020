@@ -34,6 +34,7 @@ var uiConfig = {
 
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 // The start method will wait until the DOM is loaded to include the FirebaseUI sign-in widget
 // within the element corresponding to the selector specified.
 ui.start('#firebaseui-auth-container', uiConfig);
@@ -50,11 +51,25 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     formulario.addEventListener('submit', (e)=> {
         e.preventDefault()
-        const formData = new FormData(formulario)
-        const userObj = Object.fromEntries(formData.entries())
-        sessionStorage.setItem('user', JSON.stringify(userObj))
+
+        var user = firebase.auth().currentUser;
+            if ( user ) {
+            // User is signed in.
+            alert('Ya se encuentra logueado con google')
+           
+            } else {
+               
+
+                const formData = new FormData(formulario)
+                const userObj = Object.fromEntries(formData.entries())
+                sessionStorage.setItem('user', JSON.stringify(userObj))
+                window.location = HOME
+        
+              
+          
+            }
+          
        
     })
 });
-
 
