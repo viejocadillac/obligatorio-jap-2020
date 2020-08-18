@@ -5,7 +5,7 @@ const CLIENT_ID = '210642457292-5ta58pfjm3pqbg7h7seocdkbtbhqt1oh.apps.googleuser
 // FirebaseUI config.
 var uiConfig = {
     // Url to redirect to after a successful sign-in.
-    signInSuccessUrl: '/obligatorio-jap-2020',
+    signInSuccessUrl: HOME,
     'callbacks': {
         'signInSuccess': function(user, credential, redirectUrl) {
             if (window.opener) {
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 const formData = new FormData(formulario)
                 const userObj = Object.fromEntries(formData.entries())
                 localStorage.setItem('user', JSON.stringify(userObj))
-                window.location = HOME
+                redirectTo(HOME)
         
               
           

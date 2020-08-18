@@ -55,7 +55,9 @@ firebase.auth().onAuthStateChanged(function(user) {
   console.log(error);
 });
 
-
+const redirectToLogin = (url) => {
+  window.location.href = url
+}
 
 
 var showSpinner = function(){
@@ -99,13 +101,16 @@ const logout = (e) => {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
     if(sessionStorageUser) {
       localStorage.removeItem('user')
-      window.location = LOGIN
+      redirectTo(LOGIN)
     }
     console.log('sesion cerrada correctamente')
     
     
   })
 }
+
+
+
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los

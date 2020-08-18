@@ -4,7 +4,7 @@ const redirectToLogin = function() {
         const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
         if ( !user && !sessionStorageUser) {
         // User is not signed in. Redirect to login
-        window.location = '/obligatorio-jap-2020/login'
+        redirectTo(LOGIN)
         }
     }, function(error) {
         console.log(error);
