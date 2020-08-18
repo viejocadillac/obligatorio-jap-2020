@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   console.log(error);
 });
 
-const redirectToLogin = (url) => {
+const redirectTo = (url) => {
   window.location.href = url
 }
 
