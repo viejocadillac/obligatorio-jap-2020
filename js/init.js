@@ -59,6 +59,9 @@ const redirectToLogin = (url) => {
   window.location.href = url
 }
 
+const setLocalStorage = (key, obj) => {
+  localStorage.setItem(key, JSON.stringify(obj))
+}
 const getFromLocalStorage = (key) => {
   return JSON.parse(localStorage.getItem(key))
 }

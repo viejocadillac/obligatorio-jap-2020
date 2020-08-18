@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
                 const formData = new FormData(formulario)
                 const userObj = Object.fromEntries(formData.entries())
-                localStorage.setItem('user', JSON.stringify(userObj))
+                setLocalStorage('user', userObj)
                 redirectTo(HOME)
         
               
