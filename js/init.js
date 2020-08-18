@@ -37,7 +37,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
   } else {
     // usuario no logueado con google, se chequea si existe en session storage
-    const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
+    const sessionStorageUser = getFromLocalStorage('user')
 
     if (sessionStorageUser) {
       dropdownButton.innerHTML = `${sessionStorageUser.username}`
@@ -57,6 +57,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 const redirectToLogin = (url) => {
   window.location.href = url
+}
+
+const getFromLocalStorage = (key) => {
+  return JSON.parse(localStorage.getItem(key))
 }
 
 
@@ -98,7 +102,7 @@ const logout = (e) => {
 
   firebase.auth().signOut().then(()=> {
     
-    const sessionStorageUser = JSON.parse(localStorage.getItem('user'))
+    const sessionStorageUser = getFromLocalStorage('user')
     if(sessionStorageUser) {
       localStorage.removeItem('user')
       redirectTo(LOGIN)
