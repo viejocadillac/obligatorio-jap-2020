@@ -24,30 +24,41 @@ let firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const createNavMenu = (displayName) => {
+  const dropdownButton = document.getElementById('dropdown-button');
+  const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
+
+  if(displayName && dropdownButton) {
+    // Nombre de usuario y barra de navegacion presente (dropdown)
+    dropdownButton.innerHTML = `${displayName}`
+    opcionesDeUsuario.innerHTML += `
+      <a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>
+      <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>
+      <button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>`
+
+  } else if(dropdownButton) { 
+    // Barra de navegacion presente pero sin nombre de usuario (dropdown)
+    opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
+  }
+}
+
 
 firebase.auth().onAuthStateChanged(function(user) {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
   if ( user ) {
   // User is signed in.
-  dropdownButton.innerHTML = `${user.displayName}`
-  opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>'
-  opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>'
+  createNavMenu(user.displayName)
 
-  opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
   } else {
     // usuario no logueado con google, se chequea si existe en session storage
     const sessionStorageUser = getFromLocalStorage('user')
 
     if (sessionStorageUser) {
-      dropdownButton.innerHTML = `${sessionStorageUser.username}`
-      opcionesDeUsuario.innerHTML += '<a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>'
-      opcionesDeUsuario.innerHTML += '<a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>'
-    
-      opcionesDeUsuario.innerHTML += '<button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>'
-      
+      createNavMenu(sessionStorageUser.username)
+ 
     } else {
-      opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
+      createNavMenu()
     }
 
   }
