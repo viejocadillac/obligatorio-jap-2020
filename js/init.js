@@ -28,7 +28,7 @@ const createNavMenu = (displayName) => {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
 
-  if(displayName && dropdownButton) {
+  if (displayName && dropdownButton) {
     // Nombre de usuario y barra de navegacion presente (dropdown)
     dropdownButton.innerHTML = `${displayName}`
     opcionesDeUsuario.innerHTML += `
@@ -36,33 +36,33 @@ const createNavMenu = (displayName) => {
       <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>
       <button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>`
 
-  } else if(dropdownButton) { 
+  } else if (dropdownButton) {
     // Barra de navegacion presente pero sin nombre de usuario (dropdown)
     opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>'
   }
 }
 
 
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
-  if ( user ) {
-  // User is signed in.
-  createNavMenu(user.displayName)
+  if (user) {
+    // User is signed in.
+    createNavMenu(user.displayName)
 
   } else {
     // usuario no logueado con google, se chequea si existe en session storage
-    const sessionStorageUser = getFromLocalStorage('user')
+    const localStorageUser = getFromLocalStorage('user')
 
-    if (sessionStorageUser) {
-      createNavMenu(sessionStorageUser.username)
- 
+    if (localStorageUser) {
+      createNavMenu(localStorageUser.username)
+
     } else {
       createNavMenu()
     }
 
   }
-}, function(error) {
+}, function (error) {
   console.log(error);
 });
 
@@ -78,52 +78,52 @@ const getFromLocalStorage = (key) => {
 }
 
 
-var showSpinner = function(){
+var showSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "block";
 }
 
-var hideSpinner = function(){
+var hideSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-var getJSONData = function(url){
-    var result = {};
-    showSpinner();
-    return fetch(url)
+var getJSONData = function (url) {
+  var result = {};
+  showSpinner();
+  return fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
-      }else{
+      } else {
         throw Error(response.statusText);
       }
     })
-    .then(function(response) {
-          result.status = 'ok';
-          result.data = response;
-          hideSpinner();
-          return result;
+    .then(function (response) {
+      result.status = 'ok';
+      result.data = response;
+      hideSpinner();
+      return result;
     })
-    .catch(function(error) {
-        result.status = 'error';
-        result.data = error;
-        hideSpinner();
-        return result;
+    .catch(function (error) {
+      result.status = 'error';
+      result.data = error;
+      hideSpinner();
+      return result;
     });
 }
 
 const logout = (e) => {
 
 
-  firebase.auth().signOut().then(()=> {
-    
-    const sessionStorageUser = getFromLocalStorage('user')
-    if(sessionStorageUser) {
+  firebase.auth().signOut().then(() => {
+
+    const localStorageUser = getFromLocalStorage('user')
+    if (localStorageUser) {
       localStorage.removeItem('user')
       redirectTo(LOGIN)
     }
     console.log('sesion cerrada correctamente')
-    
-    
+
+
   })
 }
 
@@ -133,13 +133,6 @@ const logout = (e) => {
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
+document.addEventListener("DOMContentLoaded", function (e) {
 
 });
-
-
-
-
-
-
-
