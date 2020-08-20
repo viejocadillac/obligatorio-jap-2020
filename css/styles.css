@@ -230,10 +230,23 @@ button.nav-item:hover, button.nav-item:active {
 
 }
 
-img {
+.producto header {
+  overflow: hidden;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+.producto:hover {
+  cursor: pointer;
+}
+
+.producto:hover img {
+
+  transform: scale(1.02);
+}
+
+img {
   width: 100%;
+  transition: transform 0.5s ease-in;
 }
 
 .product-price {
