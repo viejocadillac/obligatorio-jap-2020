@@ -114,13 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
     minCount = document.getElementById('rangeFilterCountMin').value;
     maxCount = document.getElementById('rangeFilterCountMax').value;
 
-    if ((minCount !== undefined) && (minCount !== '') && (parseInt(minCount)) >= 0) {
+    if (minCount && (parseInt(minCount)) >= 0) {
       minCount = parseInt(minCount);
     } else {
       minCount = undefined;
     }
 
-    if ((maxCount !== undefined) && (maxCount !== '') && (parseInt(maxCount)) >= 0) {
+    if (maxCount && (parseInt(maxCount)) >= 0) {
       maxCount = parseInt(maxCount);
     } else {
       maxCount = undefined;

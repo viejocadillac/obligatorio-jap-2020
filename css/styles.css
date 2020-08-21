@@ -223,6 +223,7 @@ button.nav-item:hover, button.nav-item:active {
 
 .producto {
   display: flex;
+
   flex-direction: column;
   border-radius: 8px;
   color: #505050;
@@ -246,7 +247,7 @@ button.nav-item:hover, button.nav-item:active {
 
 img {
   width: 100%;
-  transition: transform 0.5s ease-in;
+  transition: transform 0.3s ease-in;
 }
 
 .product-price {

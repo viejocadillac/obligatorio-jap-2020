@@ -23,6 +23,7 @@
     <script src="js/init.js"></script>
     <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
     <script src="js/redirectIfNotLoged.js"></script>
+    <script src="js/sort.js"></script>
     <script src="js/products.js"></script>
   </head>
   <body>
@@ -89,6 +90,15 @@
                   <label class="btn btn-light" id="sortByCount" >
                       <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
                   </label>
+                  <label class="btn btn-light" id="sortByCount" >
+                    <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-up mr-1"></i>Cant.
+                </label>
+                <label class="btn btn-light" id="sortByCost" >
+                  <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Prec.
+              </label>
+                  <label class="btn btn-light" id="sortByCost" >
+                    <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-up mr-1"></i>Prec.
+                </label>
               </div>
           </div>
         </div>
