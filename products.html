@@ -78,50 +78,73 @@
           <i class="fas fa-car" size="5x"></i>
           <h1>Venis caminando, te vas rodando!</h1>
         </div>
-        <div class="row">
-          <div class="col text-right">
-              <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-                  <label class="btn btn-light active" id="sortAsc" >
-                      <input type="radio" name="options" autocomplete="off" checked>A-Z
-                  </label>
-                  <label class="btn btn-light" id="sortDesc" >
-                      <input type="radio" name="options" autocomplete="off">Z-A
-                  </label>
-                  <label class="btn btn-light" id="sortByCount" >
-                      <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
-                  </label>
-                  <label class="btn btn-light" id="sortByCount" >
-                    <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-up mr-1"></i>Cant.
-                </label>
-                <label class="btn btn-light" id="sortByCost" >
-                  <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Prec.
-              </label>
-                  <label class="btn btn-light" id="sortByCost" >
-                    <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-up mr-1"></i>Prec.
-                </label>
+
+        <div>
+          <span>120 elementos encontrados.</span>
+          <div class="dropdown d-inline-block">
+            <a id="dropdown-button" class="btn-sm btn-outline-secondary text-nowrap dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Ordenar
+            </a>
+            <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <h6 class="dropdown-header">Alfabetico</h6>
+              <button id="sortAsc" type="button" class="dropdown-item"><i class="fa fa-sort-alpha-down"></i>A-Z</button>
+              <button id="sortDesc" type="button" class="dropdown-item"><i class="fa fa-sort-alpha-down-alt"></i>Z-A</button>
+              <h6 class="dropdown-header">Orden</h6>
+                <button id="precio-venta-mayor-menor" class="dropdown-item" ><i class="fa fa-sort-numeric-down-alt"></i>Precio de venta </i></button>
+                <button id="precio-venta-menor-mayor" class="dropdown-item" ><i class="fa fa-sort-numeric-down"></i>Precio de venta </i></button>
+                <button id="cantidad-vendidos-mayor-menor" class="dropdown-item" ><i class="fa fa-sort-numeric-down-alt"></i>Cantidad de vendidos </i></button>
+                <button id="cantidad-vendidos-menor-mayor"class="dropdown-item" ><i class="fa fa-sort-numeric-down"></i>Cantidad de vendidos </i></button>
               </div>
           </div>
+          <div class="dropdown d-inline-block">
+            <a id="dropdown-button" class="btn-sm btn-outline-secondary text-nowrap dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filtrar
+            </a>
+            <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <h6 class="dropdown-header">Criterio</h6>
+                
+              <div class="dropdown-item radio-group">
+                <input id="filtrado-por-ventas" type="radio" name="criterio-de-filtrado" type="button"></input>
+                <label for="filtrado-por-ventas">Cantidad de vendidos</label>
+              </div>
+
+              <div class="dropdown-item radio-group">
+                <input id="filtrado-por-precio" type="radio" name="criterio-de-filtrado" type="button"></input>
+                <label for="filtrado-por-precio">Precio de venta</label>
+              </div>
+              
+              
+  
+              <div class="dropdown-divider"></div>
+              <h6 class="dropdown-header">Cantidad</h6>
+         
+
+              <div class="mx-4 form-group">
+                <label for="exampleDropdownFormPassword1">Minimo</label>
+                <input id="rangeFilterCountMin" type="number" class="form-control" id="exampleDropdownFormPassword1" >
+              </div>
+
+              <div class="mx-4 form-group">
+                <label for="exampleDropdownFormPassword1">Maximo</label>
+                <input id="rangeFilterCountMax" type="number" class="form-control" id="exampleDropdownFormPassword1" >
+              </div>
+
+              <div class="dropdown-item btn-group" role="group">
+                <button id="rangeFilterCount" type="button" class="btn btn-primary">Filtrar</button>
+                <button id="clearRangeFilter" type="button" class="btn btn-secondary">Limpiar</button>
+
+
+              </div>
+       
+            
+            </div>
+          </div>
+      
         </div>
         <div class="row justify-content-end">
           <div class="col-md-6"></div>
             <div class="col-md-6 col-sm-12 mb-1 container">
-              <div class="row container p-0 m-0">
-                <div class="col">
-                  <p class="font-weight-normal text-right my-2">Cant.</p>
-                </div>
-                <div class="col">
-                  <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-                </div>
-                <div class="col">
-                  <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-                </div>
-                <div class="col-3 p-0">
-                  <div class="btn-group" role="group">
-                    <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                    <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-                  </div>
-                </div>
-              </div>
+
             </div>
         </div>
 

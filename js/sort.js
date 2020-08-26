@@ -2,6 +2,13 @@ const ORDER_ASC_BY_NAME = 'AZ';
 const ORDER_DESC_BY_NAME = 'ZA';
 const ORDER_BY_PROD_COUNT = 'Cant.';
 const ORDER_BY_SOLD_COUNT = 'Sold.';
+
+const ORDER_BY_PRICE_DESC = 'Price Desc.';
+const ORDER_BY_PRICE_ASC = 'Price Asc.';
+
+const ORDER_BY_SOLD_COUNT_DESC = 'Sold count Desc.';
+const ORDER_BY_SOLD_COUNT_ASC = 'Sold count Asc.';
+
 const FILTER = 'Filter';
 
 function sortArray(criteria, array) {
@@ -40,8 +47,32 @@ function sortArray(criteria, array) {
 
 
 
+  } else if (criteria === ORDER_BY_PRICE_DESC) {
+    result = array.sort((a, b) => {
+      if (a.cost > b.cost) { return -1; }
+      if (a.cost < b.cost) { return 1; }
+      return 0;
+    });
+  } else if (criteria === ORDER_BY_PRICE_ASC) {
+    result = array.sort((a, b) => {
+      if (a.cost > b.cost) { return 1; }
+      if (a.cost < b.cost) { return -1; }
+      return 0;
+    });
+  } else if (criteria === ORDER_BY_SOLD_COUNT_DESC) {
+    result = array.sort((a, b) => {
+      if (a.soldCount > b.soldCount) { return -1; }
+      if (a.soldCount < b.soldCount) { return 1; }
+      return 0;
+    });
+  } else if (criteria === ORDER_BY_SOLD_COUNT_ASC) {
+    result = array.sort((a, b) => {
+      if (a.soldCount > b.soldCount) { return 1; }
+      if (a.soldCount < b.soldCount) { return -1; }
+      return 0;
+    });result = array;
   } else {
-      result = array;
+    result = array;
   }
 
   return result;

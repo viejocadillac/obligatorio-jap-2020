@@ -23,6 +23,8 @@ const setLocalStorage = (key, obj) => {
   localStorage.setItem(key, JSON.stringify(obj));
 };
 
+localStorage.setItem('clave2', 'valor');
+
 const getFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
 
 const showSpinner = () => {

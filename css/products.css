@@ -62,3 +62,20 @@ hr {
     margin-bottom: 0;
 }
 
+.radio-group {
+    display: flex;
+  
+    align-items: center;
+    align-content: center;
+
+}
+
+
+
+.radio-group label {
+    padding-left: 0.5em;
+    display: block;
+    margin: 0;
+   
+}
+

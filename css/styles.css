@@ -223,7 +223,6 @@ button.nav-item:hover, button.nav-item:active {
 
 .producto {
   display: flex;
-
   flex-direction: column;
   border-radius: 8px;
   color: #505050;
