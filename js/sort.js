@@ -35,7 +35,7 @@ function sortArray(criteria, array) {
       return 0;
     });
   } else if (criteria === ORDER_BY_SOLD_COUNT) {
-      console.log('aca')
+      
     result = array.sort((a, b) => {
         const aCount = parseInt(a.soldCount, 10);
         const bCount = parseInt(b.soldCount, 10);

@@ -184,6 +184,9 @@ button.nav-item:hover, button.nav-item:active {
   color: rgb(255, 72, 109);
 }
 
+i.icon-search  {
+  color: rgb(255, 72, 109);
+}
 
 
 
@@ -261,7 +264,6 @@ img {
 }
 
 .product-description {
-  
   font-size: 0.9rem;
   font-weight: normal;
 }
@@ -292,8 +294,6 @@ hr {
   grid-template-columns: repeat(3, 1fr);
   bottom: 0;
   width: 100%;
-
-
   background-color: rgb(255, 72, 109);
 }
 
@@ -308,6 +308,33 @@ hr {
 
 .nav-bottom > a:hover {
   background-color: crimson;
+}
+
+#listado-autocompletado {
+  position: absolute;
+  top:100%;
+  min-width: 100%;
+  list-style: none;
+  padding: 0;
+  margin-top:3px;
+  border-radius: 4px;
+
+}
+
+#listado-autocompletado a {
+  background-color: white;
+  color: grey;
+  padding: 0.5em 1em;
+  border-radius: 0;
+}
+
+#listado-autocompletado a:hover {
+  color: crimson;
+}
+
+.search-bar {
+  position: relative;
+  
 }
 
 

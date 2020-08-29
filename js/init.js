@@ -13,6 +13,9 @@ const PRODUCT_INFO_COMMENTS_URL = 'https://japdevdep.github.io/ecommerce-api/pro
 const CART_INFO_URL = 'https://japdevdep.github.io/ecommerce-api/cart/987.json';
 const CART_BUY_URL = 'https://japdevdep.github.io/ecommerce-api/cart/buy.json';
 
+const ARROW_DOWN_KEYCODE = 40;
+const ARROW_UP_KEYCODE = 38;
+
 // Global functions
 
 const redirectTo = (url) => {
@@ -22,8 +25,6 @@ const redirectTo = (url) => {
 const setLocalStorage = (key, obj) => {
   localStorage.setItem(key, JSON.stringify(obj));
 };
-
-localStorage.setItem('clave2', 'valor');
 
 const getFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
 
@@ -42,7 +43,7 @@ const logout = (e) => {
       localStorage.removeItem('user');
       redirectTo(LOGIN);
     }
-    console.log('sesion cerrada correctamente');
+    // console.log('sesion cerrada correctamente');
   });
 };
 
@@ -95,14 +96,12 @@ firebase.auth().onAuthStateChanged((user) => {
       createNavMenu();
     }
   }
-}, (error) => {
-  console.log(error);
-});
+}, (error) => {});
 
-const getJSONData = (url) => {
+const getJSONData = (url, showLoading = true, options = {}) => {
   const result = {};
-  showSpinner();
-  return fetch(url)
+  if (showLoading) showSpinner();
+  return fetch(url, options)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -112,13 +111,92 @@ const getJSONData = (url) => {
     .then((response) => {
       result.status = 'ok';
       result.data = response;
-      hideSpinner();
+      if (showLoading) hideSpinner();
       return result;
     })
     .catch((error) => {
       result.status = 'error';
       result.data = error;
-      hideSpinner();
+      if (showLoading) hideSpinner();
       return result;
     });
 };
+
+const isFocused = (element) => document.activeElement === element;
+
+let PRODUCTS = [];
+
+function setProductsAndActualize(container, items) {
+  const contenedor = container;
+  // Se restablece el contenido de la lista
+  contenedor.innerHTML = '';
+
+  // Se agrega cada elemento a ella
+  items.forEach((producto) => {
+    contenedor.innerHTML += `
+      <a href="#" class="dropdown-item" >
+        ${producto.name}
+      </a>
+    `;
+  });
+}
+
+// Función que se ejecuta una vez que se haya lanzado el evento de
+// que el documento se encuentra cargado, es decir, se encuentran todos los
+// elementos HTML presentes.
+document.addEventListener('DOMContentLoaded', () => {
+  const inputSearch = document.getElementById('input-search');
+  const autocompleteList = document.getElementById('listado-autocompletado');
+
+  // Maneja el cambio de foco en cada elemento con las teclas de flecha arriba y abajo
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp' && event.target.previousElementSibling) {
+      // Se previene el comportamiento por default (Scroll de la pagina)
+      // mientras se encuentre un elemento hermano
+      event.preventDefault();
+      event.target.previousElementSibling.focus();
+    } else if (event.key === 'ArrowDown' && event.target.nextElementSibling) {
+      event.preventDefault();
+      event.target.nextElementSibling.focus();
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target !== inputSearch) {
+      event.stopPropagation();
+      autocompleteList.style.display = 'none';
+    }
+  });
+
+  let fetching = false;
+  // Cuando se hace focus en el input de busqueda, se llama a la api y
+  // se obtiene la lista de productos
+  inputSearch.addEventListener('focus', () => {
+    // Se controla que hasta que no se termina la solicitud no se pueda generar otra.
+    if (!fetching) {
+      fetching = true;
+      getJSONData(PRODUCTS_URL, false).then(({ data }) => {
+        PRODUCTS = data;
+        setProductsAndActualize(autocompleteList, data);
+        autocompleteList.style.display = 'block';
+        fetching = false;
+      });
+    }
+  });
+
+  // Se ejecuta cada vez que se ingresa algo en el input de busqueda
+  inputSearch.addEventListener('input', (event) => {
+    // Se obtiene el texto ingresado
+    const inputValue = event.target.value;
+
+    // Se genera una expresion regular (Se puede ingresar expresiones en el input), ignorando
+    // la diferencia entre mayusculas y minusculas.
+    try {
+      const regex = new RegExp(inputValue, 'i');
+      const filtrados = PRODUCTS.filter((product) => product.name.match(regex));
+      setProductsAndActualize(autocompleteList, filtrados);
+    } catch (error) {
+      console.log('Expresion de busqueda no valida');
+    }
+  });
+});

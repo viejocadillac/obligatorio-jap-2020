@@ -26,7 +26,18 @@
     <div id="nav-links-container" class="container d-flex align-items-center justify-content-between">
       <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a> -->
       <a class="py-2 align-middle logo" href="index.html">eMercado</a>
-      <div class="d-block ">
+      <div class="d-flex align-items-center">
+
+        <div class="input-group nav-item search-bar">
+          <div class="input-group-prepend">
+            <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
+          </div>
+          <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..." aria-label="Buscar productos" aria-describedby="basic-addon1">
+          <ul id="listado-autocompletado" class="dropdown-search">
+            <!-- Se completa dinamicamente -->
+          </ul>
+        </div>
+        
         <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
