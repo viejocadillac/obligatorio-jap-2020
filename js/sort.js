@@ -9,8 +9,6 @@ const ORDER_BY_PRICE_ASC = 'Price Asc.';
 const ORDER_BY_SOLD_COUNT_DESC = 'Sold count Desc.';
 const ORDER_BY_SOLD_COUNT_ASC = 'Sold count Asc.';
 
-const FILTER = 'Filter';
-
 function sortArray(criteria, array) {
   let result = [];
   if (criteria === ORDER_ASC_BY_NAME) {
@@ -35,18 +33,14 @@ function sortArray(criteria, array) {
       return 0;
     });
   } else if (criteria === ORDER_BY_SOLD_COUNT) {
-      
     result = array.sort((a, b) => {
-        const aCount = parseInt(a.soldCount, 10);
-        const bCount = parseInt(b.soldCount, 10);
-  
-        if (aCount > bCount) { return -1; }
-        if (aCount < bCount) { return 1; }
-        return 0;
-      });
+      const aCount = parseInt(a.soldCount, 10);
+      const bCount = parseInt(b.soldCount, 10);
 
-
-
+      if (aCount > bCount) { return -1; }
+      if (aCount < bCount) { return 1; }
+      return 0;
+    });
   } else if (criteria === ORDER_BY_PRICE_DESC) {
     result = array.sort((a, b) => {
       if (a.cost > b.cost) { return -1; }

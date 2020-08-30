@@ -118,9 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-
-
-const filterByRange = ( (array, keyToCompare, min ,max) => {
-  return array.filter(( element) => element[keyToCompare] > min && element[keyToCompare] < max);
+const filterByRange = ((array, keyToCompare, min, max) => {
+  const filtrados = array.filter(( element) => element[keyToCompare] > min && element[keyToCompare] < max);
+  return filtrados;
 });
