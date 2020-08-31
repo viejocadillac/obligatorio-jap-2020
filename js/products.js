@@ -1,25 +1,25 @@
 /* eslint-disable no-undef */
 /* global getJSONData, PRODUCTS_URL */
 
-const showProducts = (elements) => {
-  const productsContainer = document.getElementById('productos-container');
-  const cantidadEncontrados = document.getElementById('cantidad-encontrados');
-  cantidadEncontrados.innerHTML = elements.length;
+const showProducts = (products) => {
+  const productsContainer = document.getElementById('products-container');
+  const productsListedCount = document.getElementById('products-listed-count');
+  productsListedCount.innerHTML = products.length;
   productsContainer.innerHTML = '';
 
-  elements.forEach((producto) => {
+  products.forEach((product) => {
     productsContainer.innerHTML += `
       <section class="producto">
           <header>
-              <img src="${producto.imgSrc}" alt="">
+              <img src="${product.imgSrc}" alt="${product.name}">
           </header>
           <div class="product-body">
-              <h2 class="product-price">${producto.currency} ${producto.cost}</h2>
-              <h3 class="product-name">${producto.name}</h3>
-              <p class="product-description">${producto.description}</p>
+              <h2 class="product-price">${product.currency} ${product.cost}</h2>
+              <h3 class="product-name">${product.name}</h3>
+              <p class="product-description">${product.description}</p>
           </div>
           <hr>
-          <p class="vendidos"><span id="cantidad-vendidos">${producto.soldCount}</span> vendidos.</p>
+          <p class="vendidos"><span id="cantidad-vendidos">${product.soldCount}</span> vendidos.</p>
       </section>
     `;
   });
@@ -34,45 +34,43 @@ document.addEventListener('DOMContentLoaded', () => {
     lastSorted = data;
     showProducts(data);
 
-    let sortOptions = { key: 'cost', areNumbers: true };
-    addOrderListener('precio-venta-mayor-menor', lastSorted, DESC, sortOptions, showProducts);
-    addOrderListener('precio-venta-menor-mayor', lastSorted, ASC, sortOptions, showProducts);
+    let sortOptions = {
+      key: 'cost',
+      areNumbers: true,
+    };
+    addOrderListener('by-cost-max-min', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('by-cost-min-max', lastSorted, ASC, sortOptions, showProducts);
 
-    sortOptions = { key: 'soldCount', areNumbers: true };
-    addOrderListener('cantidad-vendidos-mayor-menor', lastSorted, DESC, sortOptions, showProducts);
-    addOrderListener('cantidad-vendidos-menor-mayor', lastSorted, ASC, sortOptions, showProducts);
+    sortOptions = {
+      key: 'soldCount',
+      areNumbers: true,
+    };
+    addOrderListener('by-sold-count-max-min', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('by-sold-count-min-max', lastSorted, ASC, sortOptions, showProducts);
 
     // Orden alfabetico A-Z
-    sortOptions = { key: 'name' };
-    addOrderListener('sortAsc', lastSorted, ASC, sortOptions, showProducts);
+    sortOptions = {
+      key: 'name',
+    };
+    addOrderListener('by-abc-az', lastSorted, ASC, sortOptions, showProducts);
     // Orden alfabetico Z-A
-    addOrderListener('sortDesc', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('by-abc-za', lastSorted, DESC, sortOptions, showProducts);
 
     // Filter
-    document.getElementById('rangeFilterCount').addEventListener('click', () => {
-      const minValue = parseInt(document.getElementById('rangeFilterCountMin').value, 10);
-      const maxValue = parseInt(document.getElementById('rangeFilterCountMax').value, 10);
+    document.getElementById('filter').addEventListener('click', () => {
+      const [minValue, maxValue] = getNumberValues('filter-min', 'filter-max');
 
-      const filterByPrice = document.getElementById('filtrado-por-precio').checked;
-      const filterBySold = document.getElementById('filtrado-por-ventas').checked;
+      const filterByPrice = document.getElementById('filter-by-price').checked;
+      const filterBySold = document.getElementById('filter-by-sold').checked;
 
-      let filtered;
       if (filterByPrice) {
-        filtered = filterByRange(lastSorted, 'cost', minValue, maxValue);
-        showProducts(filtered);
+        filterByRange(lastSorted, 'cost', minValue, maxValue, showProducts);
       } else if (filterBySold) {
-        filtered = filterByRange(lastSorted, 'soldCount', minValue, maxValue);
-        showProducts(filtered);
+        filterByRange(lastSorted, 'soldCount', minValue, maxValue, showProducts);
       }
     });
 
     // Clear filter
-    document.getElementById('clearRangeFilter').addEventListener('click', () => {
-      showProducts(lastSorted);
-      document.getElementById('rangeFilterCountMin').value = '';
-      document.getElementById('rangeFilterCountMax').value = '';
-    });
+    addClearFilterListener('filter-clear', 'filter-min', 'filter-max', showProducts);
   });
 });
-
-

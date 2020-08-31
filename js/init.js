@@ -13,7 +13,6 @@ const PRODUCT_INFO_COMMENTS_URL = 'https://japdevdep.github.io/ecommerce-api/pro
 const CART_INFO_URL = 'https://japdevdep.github.io/ecommerce-api/cart/987.json';
 const CART_BUY_URL = 'https://japdevdep.github.io/ecommerce-api/cart/buy.json';
 
-
 // Global functions
 
 const redirectTo = (url) => {
@@ -194,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const filtrados = PRODUCTS.filter((product) => product.name.match(regex));
       setProductsAndActualize(autocompleteList, filtrados);
     } catch (error) {
-      console.log('Expresion de busqueda no valida');
+      // console.log('Expresion de busqueda no valida');
     }
   });
 });
