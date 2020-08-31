@@ -25,13 +25,6 @@ const showProducts = (elements) => {
   });
 };
 
-const filterByRange = ((array, keyToCompare, min, max) => {
-  const filtrados = array.filter(( element) => element[keyToCompare] > min && element[keyToCompare] < max);
-  return filtrados;
-});
-
-let lastSorted;
-
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
@@ -41,81 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
     lastSorted = data;
     showProducts(data);
 
-    document.getElementById('precio-venta-mayor-menor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(DESC, lastSorted, { key: 'cost', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(DESC, data, { key: 'cost', areNumbers: true });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
+    let sortOptions = { key: 'cost', areNumbers: true };
+    addOrderListener('precio-venta-mayor-menor', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('precio-venta-menor-mayor', lastSorted, ASC, sortOptions, showProducts);
 
-    document.getElementById('precio-venta-menor-mayor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(ASC, lastSorted, { key: 'cost', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(ASC, data, { key: 'cost', areNumbers: true });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
-
-    document.getElementById('cantidad-vendidos-mayor-menor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(DESC, lastSorted, { key: 'soldCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(DESC, data, { key: 'soldCount', areNumbers: true });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
-
-    document.getElementById('cantidad-vendidos-menor-mayor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(ASC, lastSorted, { key: 'soldCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(ASC, data, { key: 'soldCount', areNumbers: true });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
+    sortOptions = { key: 'soldCount', areNumbers: true };
+    addOrderListener('cantidad-vendidos-mayor-menor', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('cantidad-vendidos-menor-mayor', lastSorted, ASC, sortOptions, showProducts);
 
     // Orden alfabetico A-Z
-    document.getElementById('sortAsc').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(ASC, lastSorted, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(ASC, data, { key: 'name' });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
-
+    sortOptions = { key: 'name' };
+    addOrderListener('sortAsc', lastSorted, ASC, sortOptions, showProducts);
     // Orden alfabetico Z-A
-    document.getElementById('sortDesc').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(DESC, lastSorted, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(DESC, data, { key: 'name' });
-        lastSorted = data;
-        showProducts(newOrder);
-      }
-    });
+    addOrderListener('sortDesc', lastSorted, DESC, sortOptions, showProducts);
 
-  
     // Filter
     document.getElementById('rangeFilterCount').addEventListener('click', () => {
       const minValue = parseInt(document.getElementById('rangeFilterCountMin').value, 10);
@@ -126,11 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let filtered;
       if (filterByPrice) {
-        console.log('precio')
         filtered = filterByRange(lastSorted, 'cost', minValue, maxValue);
         showProducts(filtered);
       } else if (filterBySold) {
-        console.log('vendidos')
         filtered = filterByRange(lastSorted, 'soldCount', minValue, maxValue);
         showProducts(filtered);
       }

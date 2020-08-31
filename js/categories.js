@@ -24,71 +24,25 @@ const showProducts = (elements) => {
   });
 };
 
-const filterByRange = ((array, keyToCompare, min, max) => {
-  const filtrados = array.filter(( element) => element[keyToCompare] > min && element[keyToCompare] < max);
-  return filtrados;
-});
-
-let lastSorted;
-
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
   getJSONData(CATEGORIES_URL).then(({ data }) => {
     // eslint-disable-next-line no-undef
+    /* La variable lastSorted esta definida en el archivo sort.js */
     lastSorted = data;
     showProducts(data);
 
-    document.getElementById('precio-venta-mayor-menor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(DESC, lastSorted, { key: 'productCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(DESC, data, { key: 'productCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      }
-    });
-
-    document.getElementById('precio-venta-menor-mayor').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(ASC, lastSorted, { key: 'productCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(ASC, data, { key: 'productCount', areNumbers: true });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      }
-    });
+    let sortOptions = { key: 'productCount', areNumbers: true };
+    addOrderListener('precio-venta-mayor-menor', lastSorted, DESC, sortOptions, showProducts);
+    addOrderListener('precio-venta-menor-mayor', lastSorted, ASC, sortOptions, showProducts);
 
     // Orden alfabetico A-Z
-    document.getElementById('sortAsc').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(ASC, lastSorted, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(ASC, data, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      }
-    });
-
+    sortOptions = { key: 'name' };
+    addOrderListener('sortAsc', lastSorted, ASC, sortOptions, showProducts);
     // Orden alfabetico Z-A
-    document.getElementById('sortDesc').addEventListener('click', () => {
-      if (lastSorted) {
-        const newOrder = sortArray(DESC, lastSorted, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      } else {
-        const newOrder = sortArray(DESC, data, { key: 'name' });
-        lastSorted = newOrder;
-        showProducts(newOrder);
-      }
-    });
+    addOrderListener('sortDesc', lastSorted, DESC, sortOptions, showProducts);
 
     // Filter
     document.getElementById('rangeFilterCount').addEventListener('click', () => {
@@ -101,11 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Clear filter
     document.getElementById('clearRangeFilter').addEventListener('click', () => {
-      lastSorted = showProducts(lastSorted);
+      showProducts(lastSorted);
       document.getElementById('rangeFilterCountMin').value = '';
       document.getElementById('rangeFilterCountMax').value = '';
     });
   });
 });
-
-
