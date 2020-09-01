@@ -44,13 +44,13 @@ const logout = (e) => {
   });
 };
 
-const createNavMenu = (displayName) => {
+const createNavMenu = (displayName, photoURL) => {
   const dropdownButton = document.getElementById('dropdown-button');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
 
   if (displayName && dropdownButton) {
     // Nombre de usuario y barra de navegacion presente (dropdown)
-    dropdownButton.innerHTML = `<img class="user-image" src="img/profile-example.png"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
+    dropdownButton.innerHTML = `<img class="user-image" src="${photoURL}"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
     opcionesDeUsuario.innerHTML += `
       <a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>
       <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>
@@ -82,14 +82,13 @@ se completa el menu de la barra de navegacion
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in with google.
-    createNavMenu(user.displayName);
-    console.log(user)
+    createNavMenu(user.displayName, user.photoURL);
   } else {
     // usuario no logueado con google, se chequea si existe en localStorage
     const localStorageUser = getFromLocalStorage('user');
 
     if (localStorageUser) {
-      createNavMenu(localStorageUser.username);
+      createNavMenu(localStorageUser.username, 'img/profile-example.png');
     } else {
       createNavMenu();
     }
