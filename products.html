@@ -9,7 +9,8 @@
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <!-- Firebase Auth -->
-  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <!-- Bootstrap -->
@@ -29,43 +30,47 @@
   <script src="js/init.js"></script>
   <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
   <script src="js/redirectIfNotLoged.js"></script>
-  <script src="js/sort.js"></script>
+  <script src="js/sort.js" defer></script>
   <script src="js/products.js"></script>
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 navbar-light bg-light">
-    <div id="nav-links-container" class="container d-flex align-items-center justify-content-between">
-      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a> -->
-      <a class="py-2 align-middle logo" href="index.html">eMercado</a>
-      <div class="d-flex align-items-center">
-
-        <div class="input-group nav-item search-bar">
-          <div class="input-group-prepend">
+  <nav class="site-header sticky-top py-3 navbar-light bg-light">
+    <div class="container d-flex align-items-center">
+      <a class="" href="index.html">
+        <img class="d-lg-none logo" src="img/logo-small.svg" alt="logo">
+        <img class="d-none d-lg-inline-block logo" src="img/logo-big.svg" alt="logo">
+      </a>
+  
+      <div class="input-group input-group-sm mx-3 search-bar">
+        <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
+          aria-label="Buscar productos" aria-describedby="basic-addon1">
+          <div class="input-group-append">
             <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
-          </div>
-          <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
-            aria-label="Buscar productos" aria-describedby="basic-addon1">
-          <ul id="listado-autocompletado" class="dropdown-search">
-            <!-- Se completa dinamicamente -->
-          </ul>
-        </div>
 
+          </div>
+        <ul id="search-suggestions-list" class="search-suggestions-list">
+          <!-- Se completa dinamicamente -->
+        </ul>
+      </div>
+
+      <div class="d-flex align-items-center nav-right">
         <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
 
-        <div class="dropdown d-inline-block nav-item">
-          <button id="dropdown-button" class="btn btn-sm btn-outline-secondary text-nowrap dropdown-toggle align-middle"
+        <div class="dropdown d-inline-block">
+          <a id="dropdown-button" class="text-nowrap dropdown-toggle"
             type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Anonimo
-          </button>
-          <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <img class="user-image"></img>Anonimo
+          </a>
+          <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <!-- Las opciones se cargan dinamicamente-->
           </div>
         </div>
       </div>
     </div>
+  </div>
   </nav>
 
   <nav class="nav-bottom">
@@ -84,17 +89,8 @@
       <p>Vender</p>
     </a>
   </nav>
-  <div class="container p-5">
-    <!--
-      <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-        <h4 class="alert-heading">¡A trabajar! :)</h4>
-        <p>Esta sección corresponde a: Entrega 1 (Fecha de entrega: 16/08/2020) y Entrega 2 (Fecha de entrega: 30/08/2020).</p>
-        <hr>
-        <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-      </div>
-      -->
-    <article>
-      <div class="grid-items-list-title">
+  <article class="container pb-5">
+      <div class="page-title">
         <i class="fas fa-car" size="5x"></i>
         <h1>Venis caminando, te vas rodando!</h1>
       </div>
@@ -108,9 +104,8 @@
           </a>
           <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <h6 class="dropdown-header">Alfabetico</h6>
-            <button id="by-abc-az" type="button" class="dropdown-item"><i
-                class="fa fa-sort-alpha-down"></i>A-Z</button>
-            <button id="filter-abc-za" type="button" class="dropdown-item"><i
+            <button id="by-abc-az" type="button" class="dropdown-item"><i class="fa fa-sort-alpha-down"></i>A-Z</button>
+            <button id="by-abc-za" type="button" class="dropdown-item"><i
                 class="fa fa-sort-alpha-down-alt"></i>Z-A</button>
             <h6 class="dropdown-header">Orden</h6>
             <button id="by-cost-max-min" class="dropdown-item"><i class="fa fa-sort-numeric-down-alt"></i>Precio de
@@ -141,11 +136,8 @@
               <label for="filter-by-price">Precio de venta</label>
             </div>
 
-
-
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Cantidad</h6>
-
 
             <div class="mx-4 form-group">
               <label for="exampleDropdownFormPassword1">Minimo</label>
@@ -160,34 +152,14 @@
             <div class="dropdown-item btn-group" role="group">
               <button id="filter" type="button" class="btn btn-primary">Filtrar</button>
               <button id="filter-clear" type="button" class="btn btn-secondary">Limpiar</button>
-
-
             </div>
-
-
           </div>
         </div>
-
       </div>
-      <div class="row justify-content-end">
-        <div class="col-md-6"></div>
-        <div class="col-md-6 col-sm-12 mb-1 container">
-
-        </div>
+      <div id="products-container" class="grid-container">
+        <!-- Se completa dinamicamente -->
       </div>
-
-      <div id="products-container" class="productos-container">
-        <!-- Se cargan dinamicamente -->
-      </div>
-
-
-
-    </article>
-
-
-
-
-  </div>
+  </article>
   <footer class="text-muted bg-light">
     <div class="container">
       <p class="float-right">
@@ -205,9 +177,5 @@
       <div></div>
     </div>
   </div>
-
-
-
 </body>
-
 </html>

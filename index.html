@@ -1,190 +1,129 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="es">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>eMercado - Todo lo que busques está aquí</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
 
-    <!-- Firebase Auth -->
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-    <!-- Bootstrap -->
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script> 
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script> 
+  <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+  <!-- Bootstrap -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,600,700,700i,900,900i" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Estilos globales -->
-    <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,600,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <!-- Estilos globales -->
+  <link href="css/styles.css" rel="stylesheet">
 
-    <script src="js/init.js"></script>
-    <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
-    <script src="js/redirectIfNotLoged.js"></script>
-    <script src="js/home.js" defer></script>
+  <script src="js/init.js"></script>
+  <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
+  <script src="js/redirectIfNotLoged.js"></script>
+  <script src="js/home.js" defer></script>
 
-  </head>
-  <body>
-     <nav class="site-header sticky-top py-1 navbar-light bg-light">
-      <div id="nav-links-container" class="container d-flex align-items-center justify-content-between">
-        <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a> -->
-        <a class="py-2 align-middle logo" href="index.html">eMercado</a>
-        <div class="d-flex align-items-center">
+</head>
 
-          <div class="input-group nav-item search-bar">
-            <div class="input-group-prepend">
-              <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
-            </div>
-            <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..." aria-label="Buscar productos" aria-describedby="basic-addon1">
-            <ul id="listado-autocompletado" class="dropdown-search">
-              <!-- Se completa dinamicamente -->
-            </ul>
+<body>
+  <nav class="site-header sticky-top py-3 navbar-light bg-light">
+    <div class="container d-flex align-items-center">
+      <a class="" href="index.html">
+        <img class="d-lg-none logo" src="img/logo-small.svg" alt="logo">
+        <img class="d-none d-lg-inline-block logo" src="img/logo-big.svg" alt="logo">
+      </a>
+  
+      <div class="input-group input-group-sm mx-3 search-bar">
+        <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
+          aria-label="Buscar productos" aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
+
           </div>
+        <ul id="search-suggestions-list" class="search-suggestions-list">
+          <!-- Se completa dinamicamente -->
+        </ul>
+      </div>
 
-          <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
-          <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
-          <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
-                  
-          <div class="dropdown d-inline-block nav-item">
-            <button id="dropdown-button" class="btn btn-sm btn-outline-secondary text-nowrap dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Anonimo
-            </button>
-            <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <!-- Las opciones se cargan dinamicamente-->
-            </div>
+      <div class="d-flex align-items-center nav-right">
+        <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
+        <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
+        <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
+
+        <div class="dropdown d-inline-block">
+          <a id="dropdown-button" class="text-nowrap dropdown-toggle"
+            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="user-image"></img>Anonimo
+          </a>
+          <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <!-- Las opciones se cargan dinamicamente-->
           </div>
         </div>
       </div>
-    </nav>
+    </div>
+  </div>
+  </nav>
 
-    <nav class="nav-bottom">
-      <a href="categories.html" class="d-md-none">
-        <i class="fas fa-user"></i>
-        <p>Categorias</p>
-      </a>
+  <nav class="nav-bottom">
+    <a href="categories.html" class="d-md-none">
+      <i class="fas fa-user"></i>
+      <p>Categorias</p>
+    </a>
 
-      <a href="products.html" class="d-md-none">
-        <i class="fas fa-user"></i>
-        <p>Productos</p>
-      </a>
+    <a href="products.html" class="d-md-none">
+      <i class="fas fa-user"></i>
+      <p>Productos</p>
+    </a>
 
-      <a href="sell.html" class="d-md-none">
-        <i class="fas fa-user"></i>
-        <p>Vender</p>
-      </a>
+    <a href="sell.html" class="d-md-none">
+      <i class="fas fa-user"></i>
+      <p>Vender</p>
+    </a>
+  </nav>
 
 
-    </nav>
+  <main role="main">
+    <section class="jumbotron text-center">
+      <div class="">
 
-    <main role="main">
-      <section class="jumbotron text-center">
-        <div class="">
-        
-        </div>
-      </section>
-      <!--
-      <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-           
-            
-            <div class="col-md-4">
-              <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                <img class="bd-placeholder-img card-img-top"  src="img/cat1.jpg">
-                <h3 class="m-3">Autos (122)</h3>
-                <div class="card-body">
-                  <p class="card-text">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat2.jpg">
-                  <h3 class="m-3">Juguetes (354)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat3.jpg">
-                  <h3 class="m-3">Muebles (157)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat4.jpg">
-                  <h3 class="m-3">Herramientas (452)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Herramientas para cualquier tipo de trabajo.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat5.jpg">
-                  <h3 class="m-3">Computadoras (724)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Todo en cuanto a computadoras, para uso de oficina y/o juegos.</p>
-                  </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="categories.html" class="card mb-4 shadow-sm custom-card">
-                  <img class="bd-placeholder-img card-img-top" src="img/cat6.jpg">
-                  <h3 class="m-3">Vestimenta (841)</h3>
-                  <div class="card-body">
-                    <p class="card-text">Gran variedad de ropa, nueva y de segunda mano.</p>
-                  </div>
-                </a>
-            </div>
-          </div>
-          <div class="row">
-              <a type="button" class="btn btn-light btn-lg btn-block" href="categories.html">Ver todas</a>
-          </div>
-        </div>
       </div>
-    -->
-
+    </section>
     <article class="container p-5">
-      
-      <div class="grid-items-list-title">
+
+      <div class="page-title">
         <i class="fas fa-store" size="5x"></i>
         <h1>Los mejores productos, a un click de distancia.</h1>
       </div>
 
-      <div id="categories-container" class="productos-container">
+      <div id="categories-container" class="grid-container">
         <!-- Se cargan dinamicamente -->
       </div>
 
 
 
     </article>
-    </main>
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Volver arriba</a>
-        </p>
-        <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
-      </div>
-    </footer>
-    <div id="spinner-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
-
-
-
-    
-
-    
-    
-  </body>
+  </main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</body>
 </html>

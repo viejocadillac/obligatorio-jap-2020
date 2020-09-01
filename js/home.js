@@ -5,19 +5,21 @@
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
   const productsContainer = document.getElementById('categories-container');
-  getJSONData(CATEGORIES_URL).then(({ data }) => {
-    data.forEach((producto) => {
+  getJSONData(CATEGORIES_URL).then(({
+    data
+  }) => {
+    data.forEach((product) => {
       productsContainer.innerHTML += `
-        <section class="producto">
+        <section class="grid-element">
             <header>
-                <img src="${producto.imgSrc}" alt="">
+                <img class="grid-element-img" src="${product.imgSrc}" alt="">
             </header>
-            <div class="product-body">
-                <h2 class="product-price">${producto.name}</h2>
-                <p class="product-description">${producto.description}</p>
+            <div class="grid-element-body">
+                <h2 class="grid-element-body-title">${product.name}</h2>
+                <p class="grid-element-body-description">${product.description}</p>
             </div>
             <hr>
-            <p class="vendidos"><span id="cantidad-vendidos">${producto.productCount}</span> productos.</p>
+            <p class="grid-element-footer"><span >${product.productCount}</span> productos.</p>
         </section>
       `;
     });

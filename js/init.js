@@ -50,7 +50,7 @@ const createNavMenu = (displayName) => {
 
   if (displayName && dropdownButton) {
     // Nombre de usuario y barra de navegacion presente (dropdown)
-    dropdownButton.innerHTML = `${displayName}`;
+    dropdownButton.innerHTML = `<img class="user-image" src="img/profile-example.png"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
     opcionesDeUsuario.innerHTML += `
       <a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>
       <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>
@@ -83,6 +83,7 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in with google.
     createNavMenu(user.displayName);
+    console.log(user)
   } else {
     // usuario no logueado con google, se chequea si existe en localStorage
     const localStorageUser = getFromLocalStorage('user');
@@ -129,10 +130,10 @@ function setProductsAndActualize(container, items) {
   contenedor.innerHTML = '';
 
   // Se agrega cada elemento a ella
-  items.forEach((producto) => {
+  items.forEach((product) => {
     contenedor.innerHTML += `
       <a href="#" class="dropdown-item" >
-        ${producto.name}
+        ${product.name}
       </a>
     `;
   });
@@ -143,7 +144,7 @@ function setProductsAndActualize(container, items) {
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
   const inputSearch = document.getElementById('input-search');
-  const autocompleteList = document.getElementById('listado-autocompletado');
+  const autocompleteList = document.getElementById('search-suggestions-list');
 
   // Maneja el cambio de foco en cada elemento con las teclas de flecha arriba y abajo
   document.addEventListener('keydown', (event) => {
@@ -172,7 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Se controla que hasta que no se termina la solicitud no se pueda generar otra.
     if (!fetching) {
       fetching = true;
-      getJSONData(PRODUCTS_URL, false).then(({ data }) => {
+      getJSONData(PRODUCTS_URL, false).then(({
+        data
+      }) => {
         PRODUCTS = data;
         setProductsAndActualize(autocompleteList, data);
         autocompleteList.style.display = 'block';

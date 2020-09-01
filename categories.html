@@ -9,7 +9,8 @@
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <!-- Firebase Auth -->
-  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <!-- Bootstrap -->
@@ -29,42 +30,45 @@
   <script src="js/redirectIfNotLoged.js"></script>
   <script src="js/sort.js" defer></script>
   <script src="js/categories.js" defer></script>
-
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 navbar-light bg-light">
-    <div id="nav-links-container" class="container d-flex align-items-center justify-content-between">
-      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a> -->
-      <a class="py-2 align-middle logo" href="index.html">eMercado</a>
-      <div class="d-flex align-items-center">
-
-        <div class="input-group nav-item search-bar">
-          <div class="input-group-prepend">
+  <nav class="site-header sticky-top py-3 navbar-light bg-light">
+    <div class="container d-flex align-items-center">
+      <a class="" href="index.html">
+        <img class="d-lg-none logo" src="img/logo-small.svg" alt="logo">
+        <img class="d-none d-lg-inline-block logo" src="img/logo-big.svg" alt="logo">
+      </a>
+  
+      <div class="input-group input-group-sm mx-3 search-bar">
+        <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
+          aria-label="Buscar productos" aria-describedby="basic-addon1">
+          <div class="input-group-append">
             <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
-          </div>
-          <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
-            aria-label="Buscar productos" aria-describedby="basic-addon1">
-          <ul id="listado-autocompletado" class="dropdown-search">
-            <!-- Se completa dinamicamente -->
-          </ul>
-        </div>
 
+          </div>
+        <ul id="search-suggestions-list" class="search-suggestions-list">
+          <!-- Se completa dinamicamente -->
+        </ul>
+      </div>
+
+      <div class="d-flex align-items-center nav-right">
         <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
 
-        <div class="dropdown d-inline-block nav-item">
-          <button id="dropdown-button" class="btn btn-sm btn-outline-secondary text-nowrap dropdown-toggle align-middle"
+        <div class="dropdown d-inline-block">
+          <a id="dropdown-button" class="text-nowrap dropdown-toggle"
             type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Anonimo
-          </button>
-          <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <img class="user-image"></img>Anonimo
+          </a>
+          <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <!-- Las opciones se cargan dinamicamente-->
           </div>
         </div>
       </div>
     </div>
+  </div>
   </nav>
 
   <nav class="nav-bottom">
@@ -83,14 +87,11 @@
       <p>Vender</p>
     </a>
   </nav>
-  <main role="main" class="pb-5">
-    <div class="text-center p-4">
-      <h2>Categorías</h2>
-      <p class="lead">Verás aquí todas las categorías del sitio.</p>
+  <article class="container pb-5">
+    <div class="page-title">
+      <i class="fas fa-car" size="5x"></i>
+      <h1>Verás aquí todas las categorías del sitio.</h1>
     </div>
-    <div class="container">
-
-
 
       <div>
         <span><span id='categories-listed-count'>0</span> categorias encontradas.</span>
@@ -120,7 +121,6 @@
           <div id="opciones-usuario-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <h6 class="dropdown-header">Cantidad de productos</h6>
 
-
             <div class="mx-4 form-group">
               <label for="exampleDropdownFormPassword1">Minimo</label>
               <input id="filter-min" type="number" class="form-control" id="exampleDropdownFormPassword1">
@@ -134,22 +134,15 @@
             <div class="dropdown-item btn-group" role="group">
               <button id="filter" type="button" class="btn btn-primary">Filtrar</button>
               <button id="filter-clear" type="button" class="btn btn-secondary">Limpiar</button>
-
-
             </div>
-
-
           </div>
         </div>
-
       </div>
-      <div class="row">
-        <div class="list-group productos-container" id="categories-container">
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer class="text-muted bg-light">
+      <div id="categories-container" class="grid-container">
+        <!-- Se completa dinamicamente -->
+      </div>    
+  </article>
+  <footer class="text-muted">
     <div class="container">
       <p class="float-right">
         <a href="#">Volver arriba</a>
@@ -166,7 +159,5 @@
       <div></div>
     </div>
   </div>
-
 </body>
-
 </html>

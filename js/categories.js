@@ -9,16 +9,16 @@ const showCategories = (categories) => {
 
   categories.forEach((category) => {
     categoriesContainer.innerHTML += `
-    <section class="producto">
+    <section class="grid-element">
         <header>
-            <img src="${category.imgSrc}" alt="${category.name}">
+            <img class="grid-element-img" src="${category.imgSrc}" alt="${category.name}">
         </header>
-        <div class="product-body">
-            <h2 class="product-price">${category.name}</h2>
-            <p class="product-description">${category.description}</p>
+        <div class="grid-element-body">
+            <h2 class="grid-element-body-title">${category.name}</h2>
+            <p class="grid-element-body-description">${category.description}</p>
         </div>
         <hr>
-        <p class="vendidos"><span id="cantidad-vendidos">${category.productCount}</span> productos.</p>
+        <p class="grid-element-footer"><span >${category.productCount}</span> productos.</p>
     </section>
     `;
   });

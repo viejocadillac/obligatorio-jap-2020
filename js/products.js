@@ -9,17 +9,17 @@ const showProducts = (products) => {
 
   products.forEach((product) => {
     productsContainer.innerHTML += `
-      <section class="producto">
+      <section class="grid-element">
           <header>
-              <img src="${product.imgSrc}" alt="${product.name}">
+              <img class="grid-element-img" src="${product.imgSrc}" alt="${product.name}">
           </header>
-          <div class="product-body">
-              <h2 class="product-price">${product.currency} ${product.cost}</h2>
+          <div class="grid-element-body">
+              <h2 class="grid-element-body-title">${product.currency} ${product.cost}</h2>
               <h3 class="product-name">${product.name}</h3>
-              <p class="product-description">${product.description}</p>
+              <p class="grid-element-body-description">${product.description}</p>
           </div>
           <hr>
-          <p class="vendidos"><span id="cantidad-vendidos">${product.soldCount}</span> vendidos.</p>
+          <p class="grid-element-footer"><span >${product.soldCount}</span> vendidos.</p>
       </section>
     `;
   });
@@ -29,7 +29,9 @@ const showProducts = (products) => {
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
-  getJSONData(PRODUCTS_URL).then(({ data }) => {
+  getJSONData(PRODUCTS_URL).then(({
+    data,
+  }) => {
     // eslint-disable-next-line no-undef
     lastSorted = data;
     showProducts(data);
