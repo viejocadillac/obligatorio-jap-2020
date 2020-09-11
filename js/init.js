@@ -95,6 +95,38 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 }, (error) => {});
 
+/*
+Los input que sean envueltos con la clase pasada en wrapperClass y que tengan la clase
+pasada como parametro mediante controlClass,
+cuando se intente enviar el formulario y no sea valido el contenido del mismo, mostrara un mensaje
+de error abajo. Los estilos del mismo seran modificables mediante la clase pasada en errorClass
+*/
+const addErrorMessages = (wrapperClass, controlClass, errorClass) => {
+  const divsError = document.getElementsByClassName(wrapperClass);
+
+  for (let index = 0; index < divsError.length; index++) {
+    const wrapper = divsError[index];
+    const control = wrapper.querySelector(`.${controlClass}`);
+
+    const spanError = document.createElement('span');
+    spanError.classList.add(errorClass);
+    spanError.innerHTML = wrapper.dataset.error;
+    wrapper.appendChild(spanError);
+
+    control.addEventListener('invalid', (e) => {
+      e.preventDefault();
+      spanError.style.visibility = 'visible';
+    });
+
+    control.addEventListener('input', (e) => {
+      e.preventDefault();
+      if (control.value !== '') {
+        spanError.style.visibility = 'hidden';
+      }
+    });
+  }
+};
+
 const getJSONData = (url, showLoading = true, options = {}) => {
   const result = {};
   if (showLoading) showSpinner();

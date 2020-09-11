@@ -11,7 +11,7 @@ const showProducts = (products) => {
     productsContainer.innerHTML += `
       <section class="grid-element">
           <header>
-              <img class="grid-element-img" src="${product.imgSrc}" alt="${product.name}">
+              <a href="product-info.html"><img class="grid-element-img" src="${product.imgSrc}" alt="${product.name}"></a>
           </header>
           <div class="grid-element-body">
               <h2 class="grid-element-body-title">${product.currency} ${product.cost}</h2>

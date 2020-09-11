@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       const formData = new FormData(formulario);
       const userObj = Object.fromEntries(formData.entries());
-      
+
       setLocalStorage('user', userObj);
       redirectTo(HOME);
     }

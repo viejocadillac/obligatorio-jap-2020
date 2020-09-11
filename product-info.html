@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,6 +20,8 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/product-info.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -77,14 +79,145 @@
       <p>Vender</p>
     </a>
   </nav>
+
+
+
+
+
   <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+
+    <div class="product-hero">
+      <div class="container-images expand-1200">
+        <div>
+          <div id="container-images-small" class="container-images-small">
+            <!-- Varias imagenes, dinamicamente -->
+          </div>
+          <img id="image-big" src="img/prod1.jpg" alt="" class="image-big">
+        
+
+
+        </div>
+    
+      </div>
+      <div class="info expand-1200">
+
+        <div>
+          <span id="cantidad-vendidos"></span>
+          <h1 class="product-name">Chevrolet Onix</h1>
+          <div id="opiniones" class="average-score">
+            <div id="stars" class="stars"></div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="product-price">USD 13500</h2>
+          <span class="badge badge-success stock">En Stock</span>
+        </div>
+    
+        <button type="button" class="btn btn-primary btn-comprar">Comprar</button>
+
+      </div>
+
     </div>
+
+
+    <div class="bottom">
+
+      <div class="container-images expand-1200">
+        <article class="section container-related">
+          <h3 class="section-title">Relacionados</h3>
+          <div id="related-products" class="grid-container related-products">
+  
+          </div>
+        </article>
+
+        <article class="section left expand-1200">
+          <h3 class="section-title">Descripcion</h3>
+          <p id="product-description" class="description">
+            Potenciá tu actitud con Onix Joy que, además de destacarse por su diseño juvenil y moderno, te ofrecé una óptima autonomía, un desempeño equilibrado y el máximo confort interior. \u003cbr\u003eYa sea un viaje largo o un simple paseo por la ciudad, el confort es uno de los puntos fuertes del Onix. Esta versión incluye aire acondicionado, asientos tapizados en tela y gran espacio interior que te garantiza el máximo confort.
+          </p>
+
+     
+  
+        </article>
+      </div>
+
+
+      <section class="section right expand-1200">
+        <h3 class="section-title">Opiniones</h3>
+        <div id="comentarios" class="comentarios"></div>
+        <h5 class="section-title add-opinion-title" style="text-align: center">Tambien podes dejar la tuya!</h5>
+        <form action="" id="form-opinion">
+
+          <p class="my-0">¿Que puntaje le das al producto?</p>
+          <section id="valoracion">
+            
+            
+            <label for="star-val-1" class="label-star-valoracion"><i class="fas fa-star fa-sm star star-valoracion"></i></label>
+            <input class="d-none" type="radio" value="1" name="valoracion" id="star-val-1" checked>
+            
+            <label for="star-val-2" class="label-star-valoracion"><i class="fas fa-star fa-sm star star-valoracion"></i></label>
+            <input class="d-none" type="radio" value="2" name="valoracion" id="star-val-2">
+  
+            <label for="star-val-3" class="label-star-valoracion"><i class="fas fa-star fa-sm star star-valoracion"></i></label>
+            <input class="d-none" type="radio" value="3" name="valoracion" id="star-val-3">
+  
+            <label for="star-val-4" class="label-star-valoracion"><i class="fas fa-star fa-sm star star-valoracion"></i></label>
+            <input class="d-none" type="radio" value="4" name="valoracion" id="star-val-4">
+  
+            <label for="star-val-5" class="label-star-valoracion"><i class="fas fa-star fa-sm star star-valoracion"></i></label>
+            <input class="d-none" type="radio" value="5" name="valoracion" id="star-val-5">
+
+          </section>
+     
+
+
+          <div class="error-wrapper" data-error="Debes escribir algo para enviar">
+            <label for="opinion-textarea" class="input-label">Contanos brevemente que te agrada o desagrada</label>
+            <textarea id="opinion-textarea" class="form-control control" name="text" rows="5" required></textarea>
+          </div>
+      
+          <button type="submit" class="btn btn-primary" id="send-opinion">Enviar opinion</button>
+        </form>
+      
+
+    
+        
+      </section>
+      
+        
+
+
+      </div>
+
+ 
+
+      
+
+   
+      
+
+
+
+    </div>
+
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
@@ -104,8 +237,11 @@
   </div>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/moment-with-locales.min.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/redirectIfNotLoged.js"></script>
   <script src="js/product-info.js"></script>
+  
 </body>
 
 </html>
