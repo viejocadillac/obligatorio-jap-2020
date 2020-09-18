@@ -55,11 +55,6 @@ const generateCommentHTML = (comment) => `
 
 const generateImageHTML = (url) => `<img src="${url}" class="image-small" alt="" ></img>`;
 
-const renderIn = (container) => (innerHTML) => {
-  // eslint-disable-next-line no-param-reassign
-  container.innerHTML += innerHTML;
-};
-
 // Convierte la propiedad score a Integer ya que puede venir como entero o como string
 const parseScoreInt = (comment) => ({ ...comment, score: parseInt(comment.score, 10) });
 
