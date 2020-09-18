@@ -1,5 +1,12 @@
 body {
+  /* Revisar, en el index debe ser diferente, sacar de los estilos generales*/
+ 
+ /* Generales
   padding-bottom: 5rem;
+ */
+ /* Index 
+  (nada)
+ */
 }
 
 .jumbotron,
@@ -357,3 +364,50 @@ hr {
   font-weight: 600;
   color: grey;
 }
+
+.carousel-img {
+  object-fit: cover;
+  width: 100%;
+  height: calc(90vh - 0.3rem);
+  filter: blur(5px);
+}
+
+.carousel-caption {
+  color: black;
+  padding: 1em;
+ 
+  bottom: 30px;
+  text-align: left;
+}
+
+.carousel-caption h2 {
+  margin: 0;
+}
+.product-count {
+  background-color: rgb(255, 183, 0);
+  width: fit-content;
+  line-height: 2em;
+  border-radius: 1em;
+  padding: 0 1em;
+}
+
+.titular {
+  font-family: 'Lobster';
+  position: fixed;
+  color: crimson;
+  z-index: 10;
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%);
+  padding: 2rem;
+  text-align: center;
+ 
+}
+
+.titular h1 {
+  font-size: clamp(1.5em, 3vw, 3em);
+}
+.fa-store {
+  font-size: 4rem;
+}
+
