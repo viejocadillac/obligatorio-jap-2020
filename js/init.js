@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!fetching) {
       fetching = true;
       getJSONData(PRODUCTS_URL, false).then(({
-        data
+        data,
       }) => {
         PRODUCTS = data;
         setProductsAndActualize(autocompleteList, data);

@@ -7,6 +7,7 @@
     firebase,
     moment,
     addErrorMessages
+    renderIn
 */
 
 moment.locale('es');
@@ -121,7 +122,7 @@ const addComment = (data) => {
     saveComment(comment);
     const comentarios = document.getElementById('comentarios');
     comentarios.innerHTML += generateCommentHTML(comment);
-  }, (error) => {});
+  }, () => {});
 };
 
 const addToAveragePoints = (scoreToAdd) => {
