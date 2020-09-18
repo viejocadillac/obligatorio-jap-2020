@@ -109,7 +109,7 @@ de error abajo. Los estilos del mismo seran modificables mediante la clase pasad
 const addErrorMessages = (wrapperClass, controlClass, errorClass) => {
   const divsError = document.getElementsByClassName(wrapperClass);
 
-  for (let index = 0; index < divsError.length; index++) {
+  for (let index = 0; index < divsError.length; index += 1) {
     const wrapper = divsError[index];
     const control = wrapper.querySelector(`.${controlClass}`);
 

@@ -34,7 +34,7 @@ const generateRelatedHTML = (product) => `
 
 const generateStarsHTML = (starsCount, size) => {
   let starsHTML = '';
-  for (let index = 0; index < starsCount; index++) {
+  for (let index = 0; index < starsCount; index += 1) {
     starsHTML += `
       <i class="fas fa-star fa-${size} star"></i>
     `;
