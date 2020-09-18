@@ -4,24 +4,21 @@
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
-  const productsContainer = document.getElementById('categories-container');
+  const sliderInner = document.getElementById('slider-inner');
   getJSONData(CATEGORIES_URL).then(({
-    data
+    data,
   }) => {
-    data.forEach((product) => {
-      productsContainer.innerHTML += `
-        <section class="grid-element">
-            <header>
-                <img class="grid-element-img" src="${product.imgSrc}" alt="">
-            </header>
-            <div class="grid-element-body">
-                <h2 class="grid-element-body-title">${product.name}</h2>
-                <p class="grid-element-body-description">${product.description}</p>
-            </div>
-            <hr>
-            <p class="grid-element-footer"><span >${product.productCount}</span> productos.</p>
-        </section>
-      `;
+    data.forEach((product, i) => {
+      sliderInner.innerHTML += `
+        <div class="carousel-item ${i === 0 ? 'active' : ''}">
+          <img class="carousel-img" src="${product.imgSrc}" alt="${product.name}">
+          <div class="carousel-caption">
+            <h2>${product.name}</h5>
+            <p>${product.description}</p>
+            <p class="product-count"><span>${product.productCount}</span> productos.</p>
+          </div>
+        </div>
+        `;
     });
   });
 });
