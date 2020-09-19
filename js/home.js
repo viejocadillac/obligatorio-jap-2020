@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
   getJSONData(CATEGORIES_URL).then(({
     data,
   }) => {
-    data.forEach((product, i) => {
+    data.forEach((category, i) => {
       sliderInner.innerHTML += `
         <div class="carousel-item ${i === 0 ? 'active' : ''}">
-          <img class="carousel-img" src="${product.imgSrc}" alt="${product.name}">
+          <img class="carousel-img" src="${category.imgSrc}" alt="${category.name}">
           <div class="carousel-caption">
-            <h2>${product.name}</h5>
-            <p>${product.description}</p>
-            <p class="product-count"><span>${product.productCount}</span> productos.</p>
+            <a href=""><h2>${category.name}</h2></a>
+            <p>${category.description}</p>
+            <p class="product-count"><span>${category.productCount}</span> productos.</p>
           </div>
         </div>
         `;
