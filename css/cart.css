@@ -197,8 +197,7 @@ margin-top: 1rem;
     }
 
     .cart__title {
-        text-align: left;
-        width: 100%;
+        display: none;
     }
 
     .cart__list {
