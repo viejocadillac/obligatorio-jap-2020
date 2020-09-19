@@ -7,6 +7,7 @@ body {
  /* Index 
   (nada)
  */
+ font-family: 'Raleway';
 }
 
 .jumbotron,
@@ -369,11 +370,11 @@ hr {
   object-fit: cover;
   width: 100%;
   height: calc(90vh - 0.3rem);
-  filter: blur(5px);
+  filter: brightness(30%);
 }
 
 .carousel-caption {
-  color: black;
+  color: white;
   padding: 1em;
  
   bottom: 30px;
@@ -392,22 +393,38 @@ hr {
 }
 
 .titular {
-  font-family: 'Lobster';
+  text-transform: uppercase;
   position: fixed;
   color: crimson;
   z-index: 10;
   left: 50%;
-  top: 15%;
+  top: 20%;
   transform: translate(-50%);
-  padding: 2rem;
+
   text-align: center;
  
 }
 
 .titular h1 {
   font-size: clamp(1.5em, 3vw, 3em);
+  font-weight:bold;
+  color: white;
+  width: 100%;
 }
 .fa-store {
   font-size: 4rem;
 }
 
+@media screen and (max-width: 768px) {
+  .carousel-caption {
+    text-align: center;
+  }
+
+  .product-count {
+    margin: 0 auto;
+  }
+
+  .carousel-img {
+    height: calc(90vh - 5rem);
+  }
+}
