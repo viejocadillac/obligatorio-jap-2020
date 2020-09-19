@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemsContainer = document.getElementById('items-container');
 
     data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-   
+    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+
 
   
   });

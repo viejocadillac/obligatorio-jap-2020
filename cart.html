@@ -106,15 +106,25 @@
   </nav>
   
   <div class="main">
+    <header class="cart__header">
+      <h1 class="cart__title">Tu carrito.</h1>
+    </header>
     <section class="cart">
-      <header class="cart__header">
    
-        <h1 class="cart__title">Tu carrito.</h1>
-      </header>
+        <div class="cart__list">
+          <div class="cart-header-carrito">
+            <p>Tu carrito.</p>
+          </div>
 
-      <section id="items-container" class="container cart__list">
-        <!-- Completado dinamicamente -->
-      </section>
+          <section id="items-container" class="container cart__list">
+            <!-- Completado dinamicamente -->
+          </section>
+
+
+        </div>
+      
+
+
 
       <footer class="cart__footer">
 
@@ -124,10 +134,14 @@
         </div>
   
         <div class="cart-stats">
-          <p class="cart-stats__totalprice">Total del carrito: <span class="cart-stats__number"> $ 1200</span></p>
-          <p class="cart-stats__totalprice">Envio: <span class="cart-stats__number"> $ 0</span></p>
-          <hr/>
-          <p class="cart-stats__totalprice">Subtotal: <span class="cart-stats__number cart-stats__number--bold">$ 1200</span></p>
+          <div>
+            <p class="cart-stats__totalprice">Total del carrito: <span class="cart-stats__number"> $ 1200</span></p>
+            <p class="cart-stats__totalprice">Envio: <span class="cart-stats__number"> $ 0</span></p>
+            <hr/>
+            <p class="cart-stats__totalprice">Subtotal: <span class="cart-stats__number cart-stats__number--bold">$ 1200</span></p>
+
+          </div>
+ 
           <button type="button" class="btn btn-primary btn-comprar">Pagar</button>
         </div>
       </footer>
