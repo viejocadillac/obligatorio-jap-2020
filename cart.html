@@ -122,11 +122,11 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Costo</th>
-                  <th scope="col">Cantidad</th>
-                  <th scope="col">Subtotal</th>
+                  <th class="cart-item__celda" scope="col"></th>
+                  <th class="cart-item__celda" scope="col">Nombre</th>
+                  <th class="cart-item__celda" scope="col">Costo</th>
+                  <th class="cart-item__celda" scope="col">Cantidad</th>
+                  <th class="cart-item__celda" scope="col">Subtotal</th>
                 </tr>
               </thead>
               <tbody id="items-container">
@@ -147,17 +147,66 @@
           <button id="btn-toggle-checkout" type="button" class="btn-toggle-checkout"><i class="fa fa-chevron-up icon-toggle-footer"></i></button>
         </div>
   
-        <div class="cart-stats">
+        <form class="cart-stats">
           <div>
-            <p class="cart-stats__totalprice">Subtotal: <span id="subtotal" class="cart-stats__number"> $ 1200</span></p>
-            <p class="cart-stats__totalprice">Envio: <span class="cart-stats__number"> $ 0</span></p>
-            <hr/>
-            <p class="cart-stats__totalprice">Total: <span id="total" class="cart-stats__number cart-stats__number--bold">$ 1200</span></p>
+
+            <fieldset>
+              <legend>Envio</legend>
+              <div  >
+        
+  
+              <select class="form-control" name="porcentajeEnvio" id="select-envio">
+                <option value="0.05">Estandar</option>
+                <option value="0.07">Express</option>
+                <option value="0.15">Premium</option>
+              </select>
+              </div>
+
+              <div class="form-group">
+                <label for="calle">Direccion</label>
+                <input id="calle" type="text" class="form-control">
+              </div>
+
+
+            </fieldset>
+
+            <fieldset>
+              <legend>Costos</legend>
+              <select class="form-control form-control-sm" name="porcentajeEnvio" id="select-currency">
+                <!-- Se completa dinamicamente -->
+              </select>
+
+              <p class="cart-stats__totalprice">
+                Subtotal: 
+                <span id="subtotal" class="cart-stats__number cart-stats__number--right">
+                  <!-- Se completa dinamicamente -->
+                </span>
+              </p>
+  
+              <p class="cart-stats__totalprice">
+                Envio: 
+                <span id="envio" class="cart-stats__number cart-stats__number--right"> $ 0</span>
+              </p>
+  
+              <hr/>
+              
+              <p class="cart-stats__totalprice">
+                Total: 
+                <span id="total" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
+                  <!-- Se completa dinamicamente -->
+                </span>
+              </p>
+            </fieldset>
+
+        
+
+
+ 
 
           </div>
  
           <button type="button" class="btn btn-primary btn-comprar">Pagar</button>
-        </div>
+        </form>
       </footer>
 
 
