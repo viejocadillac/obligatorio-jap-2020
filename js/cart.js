@@ -24,10 +24,12 @@ const CURRENCIES = {
   USD: 40,
 };
 
-const calculateSubtotal = (subtotals) => {
-  const sum = (acc, value) => acc + value.cost * CURRENCIES[value.currency];
-  return subtotals.reduce(sum, 0);
-};
+const convertToPeso = (value) => value.cost * CURRENCIES[value.currency];
+
+/**
+ * Calcula la suma de todos los productos en el array pasado
+ */
+const calculateSubtotal = (subtotals) => subtotals.reduce((acc, value) => acc + value, 0);
 
 /**
  * Funcion que calcula el precio de envio
@@ -40,22 +42,36 @@ const getDeliveryCost = (subtotal) => {
   return Math.round(percentDelivery * subtotal);
 };
 
+
+const getFormatedCost = (prefix, number) => {
+  const numberFormater = new Intl.NumberFormat('es-UY');
+  return `${prefix} ${numberFormater.format(number)}`;
+};
+
+/**
+ * Convierte el valor pasado en pesos a la moneda indicada
+ * @param {number} value Valor a convertir
+ * @param {string} currency Moneda a la cual se quiere convertir
+ */
 const convertPesoTo = (value, currency) => value / CURRENCIES[currency];
 
 const updateTotal = () => {
   const cartElement = document.getElementById('items-container');
   const subtotals = getAllSubtotals(cartElement);
-  let subtotal = calculateSubtotal(subtotals);
+
+  const subtotalsInPesos = subtotals.map(convertToPeso);
+  const subtotalInPesos = calculateSubtotal(subtotalsInPesos);
 
   const selectedCurrency = document.getElementById('select-currency').value;
 
-  subtotal = convertPesoTo(subtotal, selectedCurrency);
+  const subtotalConverted = convertPesoTo(subtotalInPesos, selectedCurrency);
 
-  const deliveryCost = getDeliveryCost(subtotal);
+  const deliveryCost = getDeliveryCost(subtotalConverted);
+  const totalCost = subtotalConverted + deliveryCost;
 
-  document.getElementById('subtotal').innerHTML = `${selectedCurrency} ${subtotal}`;
-  document.getElementById('envio').innerHTML = `${selectedCurrency} ${deliveryCost}`;
-  document.getElementById('total').innerHTML = `${selectedCurrency} ${subtotal + deliveryCost}`;
+  document.getElementById('subtotal').innerHTML = getFormatedCost(selectedCurrency, subtotalConverted);
+  document.getElementById('envio').innerHTML = getFormatedCost(selectedCurrency, deliveryCost);
+  document.getElementById('total').innerHTML = getFormatedCost(selectedCurrency, totalCost);
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -66,7 +82,9 @@ const onCountChange = (e) => {
   const newProductCount = e.querySelector('td input').value;
   const subtotalElement = e.querySelector('td[name="subtotal"]');
 
-  subtotalElement.innerHTML = `${currency} ${unitCostInt * newProductCount}`;
+  const subtotal = unitCostInt * newProductCount;
+
+  subtotalElement.innerHTML = getFormatedCost(currency, subtotal);
   e.setAttribute('data-subtotal', unitCostInt * newProductCount);
   updateTotal();
 };
@@ -85,12 +103,12 @@ const generateCartItemHTML = (product) => {
           <img class="cart-item__img" src="${product.src}"></img>
       </td>
       <td class="cart-item__celda cart-item__name">${product.name}</td>
-      <td class="cart-item__celda" name="unit-cost">${product.currency} ${product.unitCost}</td>
+      <td class="cart-item__celda" name="unit-cost">${getFormatedCost(product.currency, product.unitCost)}</td>
       <td class="cart-item__celda">
           <input type="number" class="cart-item__count" value="${product.count}" min=1>
       </td>
       <td name="subtotal" class="cart-item__celda cart-stats__number">
-        ${product.currency} ${subtotal}
+      ${getFormatedCost(product.currency, subtotal)}
       </td>
     </tr>
   `;
@@ -104,9 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemsContainer = document.getElementById('items-container');
 
     data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    // data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    // data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    // data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
 
     updateTotal();
   });
