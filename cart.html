@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="es">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-    <!-- Firebase Auth -->
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script> 
-<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-    <!-- Bootstrap -->
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+  <!-- Bootstrap -->
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,600,700,700i,900,900i" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Estilos globales -->
-    <link href="css/styles.css" rel="stylesheet">
-    
-    <link href="css/cart.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,600,700,700i,900,900i"
+    rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <!-- Estilos globales -->
+  <link href="css/styles.css" rel="stylesheet">
 
-    <script src="js/init.js"></script>
-    <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
-    <script src="js/redirectIfNotLoged.js"></script>
-  
+  <link href="css/cart.css" rel="stylesheet">
+
+  <script src="js/init.js"></script>
+  <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
+  <script src="js/redirectIfNotLoged.js"></script>
+
 
   <style>
     .bd-placeholder-img {
@@ -60,31 +62,32 @@
       <div class="input-group input-group-sm mx-3 search-bar">
         <input id="input-search" type="text" class="form-control" placeholder="Buscar productos..."
           aria-label="Buscar productos" aria-describedby="basic-addon1">
-          <div class="input-group-append">
-            <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
+        <div class="input-group-append">
+          <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
 
-          </div>
+        </div>
         <ul id="search-suggestions-list" class="search-suggestions-list">
           <!-- Se completa dinamicamente -->
         </ul>
       </div>
 
-      <div class="d-flex align-items-center nav-right">     
+      <div class="d-flex align-items-center nav-right">
         <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
-                
+
         <div class="dropdown d-inline-block">
-          <a id="dropdown-button" class="text-nowrap dropdown-toggle"
-            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a id="dropdown-button" class="text-nowrap dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="user-image"></img>Anonimo
           </a>
-          <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right"
+            aria-labelledby="dropdownMenuButton">
             <!-- Las opciones se cargan dinamicamente-->
           </div>
         </div>
-        </div>
       </div>
+    </div>
     </div>
   </nav>
 
@@ -104,62 +107,62 @@
       <p>Vender</p>
     </a>
   </nav>
-  
+
   <div class="main">
-    <header class="cart__header">
-      <h1 class="cart__title">Tu carrito.</h1>
-    </header>
-    <section class="cart">
-   
-        <div class="cart__list">
-          <div class="cart-header-carrito">
-            <p>Tu carrito.</p>
-          </div>
-
-          <section class="container cart__list">
-            
-            
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="cart-item__celda" scope="col"></th>
-                  <th class="cart-item__celda" scope="col">Nombre</th>
-                  <th class="cart-item__celda" scope="col">Costo</th>
-                  <th class="cart-item__celda" scope="col">Cantidad</th>
-                  <th class="cart-item__celda" scope="col">Subtotal</th>
-                </tr>
-              </thead>
-              <tbody id="items-container">
-              </tbody>
-            </table>
-          </section>
 
 
-        </div>
-      
+    <article class="cart">
+
+      <section class="cart-details">
+        <header class="cart-details__header">
+          Tu carrito.
+        </header>
+
+        <section class="">
+
+
+          <table class="table">
+            <thead class="table__head">
+              <tr>
+                <th class="cart-item__celda" scope="col"></th>
+                <th class="cart-item__celda cart-item__celda--left" scope="col">Nombre</th>
+                <th class="cart-item__celda" scope="col">Costo</th>
+                <th class="cart-item__celda" scope="col">Cantidad</th>
+                <th class="cart-item__celda" scope="col">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="items-container">
+            </tbody>
+          </table>
+        </section>
+
+
+      </section>
 
 
 
-      <footer class="cart__footer">
+    
+      <section class="cart-checkout">
 
-        <div class="cart-footer-header">
+        <header class="cart-checkout__header">
           <p>Checkout</p>
-          <button id="btn-toggle-checkout" type="button" class="btn-toggle-checkout"><i class="fa fa-chevron-up icon-toggle-footer"></i></button>
-        </div>
-  
-        <form class="cart-stats">
+          <button id="btn-toggle-checkout" type="button" class="btn-toggle-checkout"><i
+              class="fa fa-chevron-up icon-toggle-footer"></i></button>
+        </header>
+
+        <form class="cart-checkout__stats">
           <div>
 
             <fieldset>
               <legend>Envio</legend>
-              <div  >
-        
-  
-              <select class="form-control" name="porcentajeEnvio" id="select-envio">
-                <option value="0.05">Estandar</option>
-                <option value="0.07">Express</option>
-                <option value="0.15">Premium</option>
-              </select>
+              <div>
+
+
+                <select class="form-control" name="porcentajeEnvio" id="select-envio">
+                  <option value="0.05">Estandar</option>
+                  <option value="0.07">Express</option>
+                  <option value="0.15">Premium</option>
+                </select>
               </div>
 
               <div class="form-group">
@@ -177,42 +180,42 @@
               </select>
 
               <p class="cart-stats__totalprice">
-                Subtotal: 
+                Subtotal:
                 <span id="subtotal" class="cart-stats__number cart-stats__number--right">
                   <!-- Se completa dinamicamente -->
                 </span>
               </p>
-  
+
               <p class="cart-stats__totalprice">
-                Envio: 
+                Envio:
                 <span id="envio" class="cart-stats__number cart-stats__number--right"> $ 0</span>
               </p>
-  
-              <hr/>
-              
+
+              <hr />
+
               <p class="cart-stats__totalprice">
-                Total: 
+                Total:
                 <span id="total" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
                   <!-- Se completa dinamicamente -->
                 </span>
               </p>
             </fieldset>
 
-        
 
 
- 
+
+
 
           </div>
- 
+
           <button type="button" class="btn btn-primary btn-comprar">Pagar</button>
         </form>
-      </footer>
+      </section>
+    
+
+    </article>
 
 
-    </section>
-
- 
   </div>
 
   <script src="js/dropzone.js"></script>
