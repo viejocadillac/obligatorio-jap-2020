@@ -36,7 +36,7 @@ const sumAllValues = (subtotals) => subtotals.reduce((acc, value) => acc + value
  * @returns {number} Precio de envio
  */
 const getDeliveryCost = (subtotal) => {
-  const selectEnvio = document.getElementById('select-envio');
+  const selectEnvio = document.querySelector('input[name="envio"]:checked');
   const percentDelivery = parseFloat(selectEnvio.value);
   return Math.round(percentDelivery * subtotal);
 };
@@ -51,19 +51,28 @@ const getFormatedNumberWithLocale = (number) => {
   return numberFormater.format(number);
 };
 
+const getSelectedCurrency = () => document.getElementsByName('porcentajeEnvio')[1].value;
+
 /**
  * Convierte el valor pasado en pesos a la moneda seleccionada
  * La moneda indicada debe ser parte del array CURRENCIES.
  * @param {number} value Valor a convertir
  */
 const convertPesoToSelectedCurrency = (value) => {
-  const selectedCurrency = document.getElementById('select-currency').value;
+  const selectedCurrency = getSelectedCurrency();
   return value / CURRENCIES[selectedCurrency];
 };
 
-const formatMoney = (ammount) => {
-  const selectedCurrency = document.getElementById('select-currency').value;
-  return `${selectedCurrency} ${getFormatedNumberWithLocale(ammount)}`;
+const formatMoney = (ammount, currency = getSelectedCurrency()) => {
+  return `${currency} ${getFormatedNumberWithLocale(ammount)}`;
+};
+
+const updateDeliveryCost = (subtotal) => {
+  const contenedores = document.getElementsByName('delivery-cost');
+  Array.from(contenedores).forEach((contenedor) => {
+    const percentDelivery = parseFloat(contenedor.dataset.percent);
+    contenedor.innerHTML = formatMoney(subtotal * percentDelivery);
+  });
 };
 
 const updateTotal = () => {
@@ -77,14 +86,21 @@ const updateTotal = () => {
   const deliveryCost = getDeliveryCost(subtotal);
   const totalCost = subtotal + deliveryCost;
 
-  document.getElementById('subtotal').innerHTML = formatMoney(subtotal);
+  document.getElementsByName('subtotal-cart').forEach((sub) => {
+    // eslint-disable-next-line no-param-reassign
+    console.log(sub)
+    console.log(subtotal)
+    sub.innerHTML = formatMoney(subtotal);
+  });
   document.getElementById('envio').innerHTML = formatMoney(deliveryCost);
   document.getElementById('total').innerHTML = formatMoney(totalCost);
+
+  updateDeliveryCost(subtotal);
 };
 
 // eslint-disable-next-line no-unused-vars
 const onCountChange = (cartItem) => {
-  const { unitcost } = cartItem.dataset;
+  const { unitcost, currency } = cartItem.dataset;
   const unitCostInt = parseInt(unitcost, 10);
 
   const newProductCount = cartItem.querySelector('td input').value;
@@ -92,7 +108,7 @@ const onCountChange = (cartItem) => {
 
   const subtotal = unitCostInt * newProductCount;
 
-  subtotalElement.innerHTML = formatMoney(subtotal);
+  subtotalElement.innerHTML = formatMoney(subtotal, currency);
 
   cartItem.setAttribute('data-subtotal', unitCostInt * newProductCount);
   updateTotal();
@@ -118,12 +134,12 @@ const generateCartItemHTML = ({
           <img src="${src}" class="cart-item__img"></img>
       </td>
       <td class="cart-item__name" >${name}</td>
-      <td class="cart-item__cost" name="unit-cost" data-th="Precio">${formatMoney(unitCost)}</td>
+      <td class="cart-item__cost" name="unit-cost" data-th="Precio">${formatMoney(unitCost, currency)}</td>
       <td class="cart-item__count" data-th="x">
           <input type="number" class="cart-item__count-input" value="${count}" min=1>
       </td>
       <td name="subtotal" class="cart-item__subtotal">
-      ${formatMoney(subtotal)}
+      ${formatMoney(subtotal, currency)}
       </td>
     </tr>
   `;
@@ -139,41 +155,28 @@ document.addEventListener('DOMContentLoaded', () => {
     data,
   }) => {
     const itemsContainer = document.getElementById('items-container');
-
     data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-
-    
-
     updateTotal();
   });
 
   // Seleccion del metodo de envio
-  document.getElementById('select-envio').addEventListener('change', () => {
-    updateTotal();
+  document.getElementsByName('envio').forEach((element) => {
+    element.addEventListener('change', () => {
+      updateTotal();
+    });
   });
 
-  const selectCurrency = document.getElementById('select-currency');
+  const selectsCurrency = document.getElementsByName('porcentajeEnvio');
   // Se completan las monedas en el select
-  Object.keys(CURRENCIES)
-    .map(generateCurrencyOptionHTML)
-    .forEach(renderIn(selectCurrency));
-
-  selectCurrency.addEventListener('change', () => {
-    updateTotal();
-  });
-
-  const toggleFooter = document.getElementById('btn-toggle-checkout');
-  let footerIsShown = false;
-  toggleFooter.addEventListener('click', () => {
-    const icon = document.querySelector('.icon-toggle-footer');
-    const cartFooter = document.querySelector('.cart-checkout');
-    if (footerIsShown) {
-      icon.style.transform = 'rotate(0deg)';
-      cartFooter.style.maxHeight = '3rem';
-    } else {
-      icon.style.transform = 'rotate(180deg)';
-      cartFooter.style.maxHeight = '999px';
-    }
-    footerIsShown = !footerIsShown;
+  const currenciesHTML = Object.keys(CURRENCIES).map(generateCurrencyOptionHTML);
+  selectsCurrency.forEach((select) => {
+    select.addEventListener('change', (e) => {
+      selectsCurrency.forEach((sel) => {
+        // eslint-disable-next-line no-param-reassign
+        sel.selectedIndex = e.target.selectedIndex;
+      });
+      updateTotal();
+    });
+    currenciesHTML.forEach(renderIn(select));
   });
 });

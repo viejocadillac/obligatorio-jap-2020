@@ -16,12 +16,15 @@
   <!-- Bootstrap -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
+  
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,600,700,700i,900,900i"
     rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
+
+  <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152092/smartwizard/smart_wizard.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152092/smartwizard/smart_wizard_theme_dots.min.css" rel="stylesheet" type="text/css" />
   <!-- Estilos globales -->
   <link href="css/styles.css" rel="stylesheet">
 
@@ -31,23 +34,6 @@
   <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
   <script src="js/redirectIfNotLoged.js"></script>
 
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
 
 </head>
 
@@ -108,19 +94,18 @@
     </a>
   </nav>
 
-  <div class="main">
+  <div class="container main">
 
 
-    <article class="cart">
+    <article class=" cart">
 
       <section class="cart-details">
         <header class="cart-details__header">
           Tu carrito.
+          
         </header>
 
-        <section class="">
-
-
+        <section class="overflow">
           <table class="table">
             <thead class="table__head">
               <tr>
@@ -136,90 +121,239 @@
           </table>
         </section>
 
-
       </section>
 
 
 
     
       <section class="cart-checkout">
+        <fieldset>
+          <legend class="cart-checkout__title">Costos.</legend>
+          <select class="form-control form-control-sm" name="porcentajeEnvio">
+            <!-- Se completa dinamicamente -->
+          </select>
 
-        <header class="cart-checkout__header">
-          <p>Checkout</p>
-          <button id="btn-toggle-checkout" type="button" class="btn-toggle-checkout"><i
-              class="fa fa-chevron-up icon-toggle-footer"></i></button>
-        </header>
+          <p class="cart-stats__totalprice">
+            Subtotal:
+            <span name="subtotal-cart" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
+              <!-- Se completa dinamicamente -->
+            </span>
+          </p>
+        </fieldset>
+        
 
-        <form class="cart-checkout__stats">
-          <div>
-
-            <fieldset>
-              <legend>Envio</legend>
-              <div>
-
-
-                <select class="form-control" name="porcentajeEnvio" id="select-envio">
-                  <option value="0.05">Estandar</option>
-                  <option value="0.07">Express</option>
-                  <option value="0.15">Premium</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="calle">Direccion</label>
-                <input id="calle" type="text" class="form-control">
-              </div>
-
-
-            </fieldset>
-
-            <fieldset>
-              <legend>Costos</legend>
-              <select class="form-control form-control-sm" name="porcentajeEnvio" id="select-currency">
-                <!-- Se completa dinamicamente -->
-              </select>
-
-              <p class="cart-stats__totalprice">
-                Subtotal:
-                <span id="subtotal" class="cart-stats__number cart-stats__number--right">
-                  <!-- Se completa dinamicamente -->
-                </span>
-              </p>
-
-              <p class="cart-stats__totalprice">
-                Envio:
-                <span id="envio" class="cart-stats__number cart-stats__number--right"> $ 0</span>
-              </p>
-
-              <hr />
-
-              <p class="cart-stats__totalprice">
-                Total:
-                <span id="total" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
-                  <!-- Se completa dinamicamente -->
-                </span>
-              </p>
-            </fieldset>
-
-
-
-
-
-
-          </div>
-
-          <button type="button" class="btn btn-primary btn-comprar">Pagar</button>
-        </form>
+          <button
+            type="button"
+            class="btn btn-primary btn-comprar"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Finalizá tu compra
+          </button>
+     
       </section>
-    
-
     </article>
-
-
   </div>
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ya casi tenes tus productos!</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+              <div id="smartwizard">
+                <ul>
+                  <li><a href="#step-1">Paso 1<br /><small>Direccion</small></a></li>
+                  <li><a href="#step-2">Paso 2<br /><small>Envio</small></a></li>
+                  <li><a href="#step-3">Paso 3<br /><small>Metodo de pago</small></a></li>
+                  <li><a href="#step-4">Paso 4<br /><small>Confirmacion</small></a></li>
+                </ul>
+                  <div>
+                    <div id="step-1" class="row">
+
+                      <div class="content">
+                        <form action="" class="form col-md-12">
+                          <fieldset class="mb-3">
+                      
+                            <p class="legend-sub">
+                              <i class="fas fa-shipping-fast icon-step"></i>
+                              Contanos donde queres que hagamos la entrega
+                            </p>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <label for="inputDepartamento">Departamento</label>
+                                <select id="inputDepartamento" class="form-control form-control-sm">
+                                  <option selected>Montevideo</option>
+                                  <option>Canelones</option>
+                                </select>
+                              </div>
+  
+                              <div class="form-group col-md-2">
+                                <label for="inputCiudad">Ciudad</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="Ciudad" required> 
+                              </div>
+  
+                              <div class="form-group col-md-5">
+                                <label for="inputCalle">Calle</label>
+                                <input id="inputCalle" type="text" class="form-control form-control-sm" placeholder="Observaciones" required>
+                              </div>
+  
+                              <div class="form-group col-md-2">
+                                <label for="inputNumeroPuerta">Numero</label>
+                                <input id="inputNumeroPuerta" type="text" class="form-control form-control-sm" placeholder="N° de puerta" required>
+                              </div>
+  
+                        
+                            </div>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-12">
+                                <label for="inputObservaciones">Observaciones de la direccion</label>
+                                <input id="inputObservaciones" type="text" class="form-control form-control-sm" placeholder="Cualquier dato que te parezca relevante" required>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </form>
+
+
+
+                      </div>
+
+                    </div>
+
+                    <div id="step-2" class="row">
+
+                      <div class="content">
+                        <p class="legend-sub">Elegí como queres que te lo enviemos</p>
+                        <form class="row metodos-envio">
+                          <div class="col metodo-envio">
+                            <div class="form-group metodo-envio__header">
+                              <input id="estandar" type="radio" name="envio"  value="0.05" checked>
+                              <label for="estandar">
+                                <i class="fas fa-truck icon-step"></i>
+                                <h6>Estandar</h6>
+                              </label>
+                            </div>
+                            <p>De 12 a 15 dias de demora.</p>
+                            <span id="estandar" name="delivery-cost" class="metodo-envio__precio" data-percent="0.05">Costo: UYU 1200</span>
+                          </div>
+  
+                          <div class="col metodo-envio">
+                            <div class="form-group metodo-envio__header">
+                              <input type="radio" name="envio" id="express" value="0.07">
+                              <label for="express">
+                                <i class="fas fa-shipping-fast icon-step"></i>
+                                <h6>Express</h6>
+                              </label>
+                            </div>
+                            <p>De 5 a 8 dias de demora.</p>
+                            <span id="express" name="delivery-cost" class="metodo-envio__precio"data-percent="0.07">Costo: UYU 1200</span>
+                          </div>
+  
+                          <div class="col metodo-envio">
+                            <div class="form-group metodo-envio__header">
+                              <input type="radio" name="envio" id="premium" value="0.15">
+                              <label for="premium">
+                                <i class="fas fa-gem icon-step"></i>
+                                <h6>Premium</h6>
+                              </label>
+                            </div>
+                            <p>De 2 a 5 dias de demora.</p>
+                            <span id="premium" name="delivery-cost" class="metodo-envio__precio" data-percent="0.15">Costo: UYU 1200</span>
+                          </div>
+                        </form>
+
+
+
+                      </div>
+                 
+                    </div>
+
+                    <div id="step-3" class="row">
+
+                      <div class="content">
+                        <form class="row">
+                          <span style="text-align: center; margin: 0 auto;">En construccion</span>
+                          
+                   
+  
+  
+                        
+                        </form>
+
+
+
+                      </div>
+                 
+                    </div>
+
+                    <div id="step-4">
+                      <div class="row">
+                        <div class="content">
+                          <fieldset class="costos">
+                            <legend>Costo total</legend>
+                            <select class="form-control form-control-sm" name="porcentajeEnvio" id="select-currency">
+                              <!-- Se completa dinamicamente -->
+                            </select>
+              
+                            <p class="cart-stats__totalprice">
+                              Subtotal:
+                              <span name="subtotal-cart" class="cart-stats__number cart-stats__number--right">
+                                <!-- Se completa dinamicamente -->
+                              </span>
+                            </p>
+              
+                            <p class="cart-stats__totalprice">
+                              Envio:
+                              <span id="envio" class="cart-stats__number cart-stats__number--right"> $ 0</span>
+                            </p>
+              
+                            <hr />
+              
+                            <p class="cart-stats__totalprice">
+                              Total:
+                              <span id="total" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
+                                <!-- Se completa dinamicamente -->
+                              </span>
+                            </p>
+
+                            <p class="legend-sub">Hace click en siguiente para confirmar tu compra</p>
+                          </fieldset>
+                          
+                        </div>
+
+                      </div>
+                    
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <script src="js/jquery-3.4.1.min.js"></script>
+
+ <script type="text/javascript" src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/cart.js"></script>
+
+  <script>
+    $('#smartwizard').smartWizard({
+      selected: 0,
+      theme: 'dots',
+      autoAdjustHeight:true,
+      justified: true,
+      transitionEffect:'fade',
+      showStepURLhash: false,
+      lang: {
+            next: 'Siguiente',
+            previous: 'Anterior'
+      },
+    });
+    </script>
 </body>
 
 </html>
