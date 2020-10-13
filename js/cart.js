@@ -1,4 +1,18 @@
-/* global getJSONData CART_INFO_URL renderIn */
+/* global getJSONData CART_INFO_URL renderIn, $ */
+
+/* Se inicializa la libreria del modal */
+$('#modal-wizard').smartWizard({
+  selected: 0,
+  theme: 'dots',
+  autoAdjustHeight: false,
+  justified: true,
+  transitionEffect: 'fade',
+  showStepURLhash: false,
+  lang: {
+    next: 'Siguiente',
+    previous: 'Anterior',
+  },
+});
 
 /**
  * Funcion que retorna un array con los subtotales de cada item del carrito
@@ -88,8 +102,6 @@ const updateTotal = () => {
 
   document.getElementsByName('subtotal-cart').forEach((sub) => {
     // eslint-disable-next-line no-param-reassign
-    console.log(sub)
-    console.log(subtotal)
     sub.innerHTML = formatMoney(subtotal);
   });
   document.getElementById('envio').innerHTML = formatMoney(deliveryCost);
@@ -130,10 +142,12 @@ const generateCartItemHTML = ({
         data-unitcost=${unitCost}
         data-subtotal=${subtotal}
       >
-      <td class="cart-item__celda cart-item__celda-img">
+      <td class="table__cell table__cell-img">
           <img src="${src}" class="cart-item__img"></img>
       </td>
-      <td class="cart-item__name" >${name}</td>
+      <td class="table__cell--left" >
+        <span class="cart-item__name">${name}</span>
+      </td>
       <td class="cart-item__cost" name="unit-cost" data-th="Precio">${formatMoney(unitCost, currency)}</td>
       <td class="cart-item__count" data-th="x">
           <input type="number" class="cart-item__count-input" value="${count}" min=1>
@@ -155,6 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
     data,
   }) => {
     const itemsContainer = document.getElementById('items-container');
+    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
     data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
     updateTotal();
   });

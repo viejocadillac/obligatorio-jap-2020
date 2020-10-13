@@ -55,7 +55,7 @@ const createNavMenu = (displayName, photoURL) => {
 
   if (displayName && dropdownButton) {
     // Nombre de usuario y barra de navegacion presente (dropdown)
-    dropdownButton.innerHTML = `<img class="user-image" src="${photoURL}"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
+    dropdownButton.innerHTML = `<img class="site-header__user-image" src="${photoURL}"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
     opcionesDeUsuario.innerHTML += `
       <a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>
       <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>

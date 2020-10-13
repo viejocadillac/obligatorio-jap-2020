@@ -40,7 +40,7 @@
 <body>
   <nav class="site-header sticky-top py-3 navbar-light bg-light">
     <div class="container d-flex align-items-center">
-      <a class="" href="index.html">
+      <a href="index.html">
         <img class="d-lg-none logo" src="img/logo-small.svg" alt="logo">
         <img class="d-none d-lg-inline-block logo" src="img/logo-big.svg" alt="logo">
       </a>
@@ -50,14 +50,14 @@
           aria-label="Buscar productos" aria-describedby="basic-addon1">
         <div class="input-group-append">
           <i class="fa fa-search input-group-text d-flex flex-column justify-content-center" id="basic-addon1"></i>
-
         </div>
-        <ul id="search-suggestions-list" class="search-suggestions-list">
+
+        <ul id="search-suggestions-list" class="search-bar__suggestions">
           <!-- Se completa dinamicamente -->
         </ul>
       </div>
 
-      <div class="d-flex align-items-center nav-right">
+      <div class="d-flex align-items-center site-header__nav">
         <a class="py-2  d-none d-md-inline-block nav-item" href="categories.html">Categorías</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="products.html">Productos</a>
         <a class="py-2  d-none d-md-inline-block nav-item" href="sell.html">Vender</a>
@@ -65,7 +65,7 @@
         <div class="dropdown d-inline-block">
           <a id="dropdown-button" class="text-nowrap dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="user-image"></img>Anonimo
+            <img class="site-header__user-image"></img>Anonimo
           </a>
           <div id="opciones-usuario-dropdown" class="dropdown-menu dropdown-menu-right"
             aria-labelledby="dropdownMenuButton">
@@ -94,48 +94,45 @@
     </a>
   </nav>
 
-  <div class="container main">
+  <div class="container">
 
 
-    <article class=" cart">
+    <article class="cart">
 
       <section class="cart-details">
         <header class="cart-details__header">
           Tu carrito.
-          
         </header>
 
-        <section class="overflow">
+        <section class="cart-details__items">
           <table class="table">
             <thead class="table__head">
               <tr>
-                <th class="cart-item__celda" scope="col"></th>
-                <th class="cart-item__celda cart-item__celda--left" scope="col">Nombre</th>
-                <th class="cart-item__celda" scope="col">Costo</th>
-                <th class="cart-item__celda" scope="col">Cantidad</th>
-                <th class="cart-item__celda" scope="col">Subtotal</th>
+                <th class="table__cell" scope="col"></th>
+                <th class="table__cell table__cell--left" scope="col">Nombre</th>
+                <th class="table__cell" scope="col">Costo</th>
+                <th class="table__cell" scope="col">Cantidad</th>
+                <th class="table__cell" scope="col">Subtotal</th>
               </tr>
             </thead>
             <tbody id="items-container">
+              <!-- Se completa dinamicamente -->
             </tbody>
           </table>
         </section>
 
       </section>
-
-
-
     
-      <section class="cart-checkout">
+      <section class="cart-stats">
         <fieldset>
-          <legend class="cart-checkout__title">Costos.</legend>
+          <legend class="cart-stats__title">Costos.</legend>
           <select class="form-control form-control-sm" name="porcentajeEnvio">
             <!-- Se completa dinamicamente -->
           </select>
 
-          <p class="cart-stats__totalprice">
+          <p class="cart-stats__line">
             Subtotal:
-            <span name="subtotal-cart" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
+            <span name="subtotal-cart" class="cart-stats__number--bold">
               <!-- Se completa dinamicamente -->
             </span>
           </p>
@@ -155,14 +152,14 @@
     </article>
   </div>
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ya casi tenes tus productos!</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                <h5 class="modal-title" id="modal-title">Ya casi tenes tus productos!</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             </div>
             <div class="modal-body">
-              <div id="smartwizard">
+              <div id="modal-wizard">
                 <ul>
                   <li><a href="#step-1">Paso 1<br /><small>Direccion</small></a></li>
                   <li><a href="#step-2">Paso 2<br /><small>Envio</small></a></li>
@@ -171,18 +168,17 @@
                 </ul>
                   <div>
                     <div id="step-1" class="row">
-
-                      <div class="content">
+                      <div class="modal-step">
                         <form action="" class="form col-md-12">
                           <fieldset class="mb-3">
                       
-                            <p class="legend-sub">
-                              <i class="fas fa-shipping-fast icon-step"></i>
+                            <p class="modal-step__description">
+                              <i class="fas fa-shipping-fast metodo-envio__icon"></i>
                               Contanos donde queres que hagamos la entrega
                             </p>
   
                             <div class="form-row">
-                              <div class="form-group col-md-3">
+                              <div class="form-group col-sm-6 col-md-3">
                                 <label for="inputDepartamento">Departamento</label>
                                 <select id="inputDepartamento" class="form-control form-control-sm">
                                   <option selected>Montevideo</option>
@@ -190,17 +186,17 @@
                                 </select>
                               </div>
   
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-sm-6 col-md-2">
                                 <label for="inputCiudad">Ciudad</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="Ciudad" required> 
                               </div>
   
-                              <div class="form-group col-md-5">
+                              <div class="form-group col-sm-8 col-md-5">
                                 <label for="inputCalle">Calle</label>
                                 <input id="inputCalle" type="text" class="form-control form-control-sm" placeholder="Observaciones" required>
                               </div>
   
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-sm-4 col-md-2">
                                 <label for="inputNumeroPuerta">Numero</label>
                                 <input id="inputNumeroPuerta" type="text" class="form-control form-control-sm" placeholder="N° de puerta" required>
                               </div>
@@ -216,23 +212,19 @@
                             </div>
                           </fieldset>
                         </form>
-
-
-
                       </div>
 
                     </div>
 
                     <div id="step-2" class="row">
-
-                      <div class="content">
-                        <p class="legend-sub">Elegí como queres que te lo enviemos</p>
+                      <div class="modal-step">
+                        <p class="modal-step__description">Elegí como queres que te lo enviemos</p>
                         <form class="row metodos-envio">
                           <div class="col metodo-envio">
                             <div class="form-group metodo-envio__header">
                               <input id="estandar" type="radio" name="envio"  value="0.05" checked>
                               <label for="estandar">
-                                <i class="fas fa-truck icon-step"></i>
+                                <i class="fas fa-truck metodo-envio__icon"></i>
                                 <h6>Estandar</h6>
                               </label>
                             </div>
@@ -244,7 +236,7 @@
                             <div class="form-group metodo-envio__header">
                               <input type="radio" name="envio" id="express" value="0.07">
                               <label for="express">
-                                <i class="fas fa-shipping-fast icon-step"></i>
+                                <i class="fas fa-shipping-fast metodo-envio__icon"></i>
                                 <h6>Express</h6>
                               </label>
                             </div>
@@ -256,7 +248,7 @@
                             <div class="form-group metodo-envio__header">
                               <input type="radio" name="envio" id="premium" value="0.15">
                               <label for="premium">
-                                <i class="fas fa-gem icon-step"></i>
+                                <i class="fas fa-gem metodo-envio__icon"></i>
                                 <h6>Premium</h6>
                               </label>
                             </div>
@@ -272,54 +264,47 @@
                     </div>
 
                     <div id="step-3" class="row">
-
-                      <div class="content">
+                      <div class="modal-step">
                         <form class="row">
                           <span style="text-align: center; margin: 0 auto;">En construccion</span>
-                          
-                   
-  
-  
-                        
                         </form>
-
-
-
                       </div>
                  
                     </div>
 
                     <div id="step-4">
                       <div class="row">
-                        <div class="content">
-                          <fieldset class="costos">
+                        <div class="modal-step">
+                          <fieldset class="cart-stats__wrapper">
                             <legend>Costo total</legend>
                             <select class="form-control form-control-sm" name="porcentajeEnvio" id="select-currency">
                               <!-- Se completa dinamicamente -->
                             </select>
               
-                            <p class="cart-stats__totalprice">
+                            <p class="cart-stats__line">
                               Subtotal:
-                              <span name="subtotal-cart" class="cart-stats__number cart-stats__number--right">
+                              <span name="subtotal-cart" class="cart-stats__number">
                                 <!-- Se completa dinamicamente -->
                               </span>
                             </p>
               
-                            <p class="cart-stats__totalprice">
+                            <p class="cart-stats__line">
                               Envio:
-                              <span id="envio" class="cart-stats__number cart-stats__number--right"> $ 0</span>
+                              <span id="envio" class="cart-stats__number">
+                                <!-- Se completa dinamicamente -->
+                              </span>
                             </p>
               
                             <hr />
               
-                            <p class="cart-stats__totalprice">
+                            <p class="cart-stats__line">
                               Total:
-                              <span id="total" class="cart-stats__number cart-stats__number--bold cart-stats__number--right">
+                              <span id="total" class="cart-stats__number cart-stats__number--bold">
                                 <!-- Se completa dinamicamente -->
                               </span>
                             </p>
 
-                            <p class="legend-sub">Hace click en siguiente para confirmar tu compra</p>
+                            <p class="modal-step__description">Hace click en siguiente para confirmar tu compra</p>
                           </fieldset>
                           
                         </div>
@@ -333,27 +318,13 @@
         </div>
     </div>
 </div>
-  <script src="js/jquery-3.4.1.min.js"></script>
 
- <script type="text/javascript" src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/cart.js"></script>
 
-  <script>
-    $('#smartwizard').smartWizard({
-      selected: 0,
-      theme: 'dots',
-      autoAdjustHeight:true,
-      justified: true,
-      transitionEffect:'fade',
-      showStepURLhash: false,
-      lang: {
-            next: 'Siguiente',
-            previous: 'Anterior'
-      },
-    });
-    </script>
 </body>
 
 </html>
