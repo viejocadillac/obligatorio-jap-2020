@@ -15,9 +15,19 @@ const CART_BUY_URL = 'https://japdevdep.github.io/ecommerce-api/cart/buy.json';
 
 // Global functions
 
-const renderIn = (container) => (innerHTML) => {
+/**
+ * 
+ * @param {HTMLElement} container Contenedor donde se renderizara el contenido
+ * @param {boolean} replace Indica si se debe remplazar el contenido (true) o agregar (false)
+ */
+const renderIn = (container, replace = false) => (innerHTML) => {
   // eslint-disable-next-line no-param-reassign
-  container.innerHTML += innerHTML;
+  if (replace) {
+    container.innerHTML = innerHTML;
+  } else {
+    container.innerHTML += innerHTML;
+  }
+  
 };
 
 const redirectTo = (url) => {

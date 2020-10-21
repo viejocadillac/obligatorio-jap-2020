@@ -124,7 +124,7 @@
       </section>
     
       <section class="cart-stats">
-        <fieldset>
+        <fieldset class="cart-stats__fieldset">
           <legend class="cart-stats__title">Costos.</legend>
           <select class="form-control form-control-sm" name="porcentajeEnvio">
             <!-- Se completa dinamicamente -->
@@ -156,7 +156,16 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-title">Ya casi tenes tus productos!</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                <h5 class="modal-title" id="modal-title">Ya casi tenes tus productos!</h5>
+                <div class="d-flex">
+                  <select class="form-control form-control-sm cart-stats__select-currency" name="porcentajeEnvio" id="select-currency">
+                    <!-- Se completa dinamicamente -->
+                  </select>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              
             </div>
             <div class="modal-body">
               <div id="modal-wizard">
@@ -169,7 +178,7 @@
                   <div>
                     <div id="step-1" class="row">
                       <div class="modal-step">
-                        <form action="" class="form col-md-12">
+                        <form id="form-step-0" action="" class="form col-md-12">
                           <fieldset class="mb-3">
                       
                             <p class="modal-step__description">
@@ -180,7 +189,7 @@
                             <div class="form-row">
                               <div class="form-group col-sm-6 col-md-3">
                                 <label for="inputDepartamento">Departamento</label>
-                                <select id="inputDepartamento" class="form-control form-control-sm">
+                                <select id="inputDepartamento" name="departamento" class="form-control form-control-sm">
                                   <option selected>Montevideo</option>
                                   <option>Canelones</option>
                                 </select>
@@ -188,17 +197,21 @@
   
                               <div class="form-group col-sm-6 col-md-2">
                                 <label for="inputCiudad">Ciudad</label>
-                                <input type="text" class="form-control form-control-sm" placeholder="Ciudad" required> 
+                                <input type="text" name="ciudad" class="form-control form-control-sm with-error" placeholder="Ciudad" data-error="Debes ingresar tu ciudad">
+                                <!-- Div donde se renderiza el mensaje de error -->
+                                <div></div>
                               </div>
   
                               <div class="form-group col-sm-8 col-md-5">
                                 <label for="inputCalle">Calle</label>
-                                <input id="inputCalle" type="text" class="form-control form-control-sm" placeholder="Observaciones" required>
+                                <input id="inputCalle" name="calle" type="text" class="form-control form-control-sm with-error" placeholder="Calle" data-error="Ingresa la calle donde vivis">
+                                <!-- Div donde se renderiza el mensaje de error -->
+                                <div></div>
                               </div>
   
                               <div class="form-group col-sm-4 col-md-2">
                                 <label for="inputNumeroPuerta">Numero</label>
-                                <input id="inputNumeroPuerta" type="text" class="form-control form-control-sm" placeholder="N° de puerta" required>
+                                <input id="inputNumeroPuerta" name="numero" type="text" class="form-control form-control-sm" placeholder="N° de puerta">
                               </div>
   
                         
@@ -207,7 +220,7 @@
                             <div class="form-row">
                               <div class="form-group col-md-12">
                                 <label for="inputObservaciones">Observaciones de la direccion</label>
-                                <input id="inputObservaciones" type="text" class="form-control form-control-sm" placeholder="Cualquier dato que te parezca relevante" required>
+                                <input id="inputObservaciones" name="observaciones" type="text" class="form-control form-control-sm" placeholder="Cualquier dato que te parezca relevante">
                               </div>
                             </div>
                           </fieldset>
@@ -219,7 +232,7 @@
                     <div id="step-2" class="row">
                       <div class="modal-step">
                         <p class="modal-step__description">Elegí como queres que te lo enviemos</p>
-                        <form class="row metodos-envio">
+                        <form id="form-step-1" class="row metodos-envio">
                           <div class="col metodo-envio">
                             <div class="form-group metodo-envio__header">
                               <input id="estandar" type="radio" name="envio"  value="0.05" checked>
@@ -265,47 +278,130 @@
 
                     <div id="step-3" class="row">
                       <div class="modal-step">
-                        <form class="row">
-                          <span style="text-align: center; margin: 0 auto;">En construccion</span>
+                        <p class="modal-step__description">¿Como deseas pagar?</p>
+                        <form id="form-step-2" class="row form col-md-12">
+
+                          <div class="col-md-6 metodos-de-pago" id="metodos-de-pago">
+                            <div class="metodo-pago">
+                              
+                              <label for="mastercard">
+                                <img src="/img/mastercard.jpg" alt="" width="70px">
+                              </label>
+                              <input id="mastercard" type="radio" name="metodo"  value="mastercard" checked>
+                            </div>
+
+                            <div class="metodo-pago">
+                              <label for="visa">
+                                <img src="/img/visa.jpg" alt="" width="70px">
+                              </label>
+                              <input id="visa" type="radio" name="metodo"  value="visa">
+                            </div>
+
+                            <div class="metodo-pago">
+                              <label for="bbva">
+                                <img src="/img/bbva.jpg" alt="" width="70px">
+                              </label>
+                              <input id="bbva" type="radio" name="metodo"  value="bbva">
+                            </div>
+
+
+                          </div>
+
+                          <div id="datos-de-pago" class="col-md-6">
+                            <!-- Formulario se carga dinamicamente dependiendo del tipo de pago seleccionado-->
+                          </div>
+                       
                         </form>
                       </div>
                  
                     </div>
 
-                    <div id="step-4">
-                      <div class="row">
+                    <div id="step-4" class="row">
+                      <div >
                         <div class="modal-step">
-                          <fieldset class="cart-stats__wrapper">
-                            <legend>Costo total</legend>
-                            <select class="form-control form-control-sm" name="porcentajeEnvio" id="select-currency">
-                              <!-- Se completa dinamicamente -->
-                            </select>
-              
-                            <p class="cart-stats__line">
-                              Subtotal:
-                              <span name="subtotal-cart" class="cart-stats__number">
-                                <!-- Se completa dinamicamente -->
-                              </span>
-                            </p>
-              
-                            <p class="cart-stats__line">
-                              Envio:
-                              <span id="envio" class="cart-stats__number">
-                                <!-- Se completa dinamicamente -->
-                              </span>
-                            </p>
-              
-                            <hr />
-              
-                            <p class="cart-stats__line">
-                              Total:
-                              <span id="total" class="cart-stats__number cart-stats__number--bold">
-                                <!-- Se completa dinamicamente -->
-                              </span>
-                            </p>
+                          <p class="modal-step__description">Vamos a confirmar los datos</p>
 
-                            <p class="modal-step__description">Hace click en siguiente para confirmar tu compra</p>
-                          </fieldset>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <fieldset class="cart-stats__wrapper">
+                                <legend class="cart-stats__legend">
+                                  Costo total
+                                </legend>
+                                
+                  
+                                <p class="cart-stats__line">
+                                  Subtotal:
+                                  <span name="subtotal-cart" class="cart-stats__number">
+                                    <!-- Se completa dinamicamente -->
+                                  </span>
+                                </p>
+                  
+                                <p class="cart-stats__line">
+                                  Envio:
+                                  <span id="envio" class="cart-stats__number">
+                                    <!-- Se completa dinamicamente -->
+                                  </span>
+                                </p>
+                  
+                                <hr />
+                  
+                                <p class="cart-stats__line">
+                                  Total:
+                                  <span id="total" class="cart-stats__number cart-stats__number--bold">
+                                    <!-- Se completa dinamicamente -->
+                                  </span>
+                                </p>
+    
+                                
+                              </fieldset>
+
+                              <fieldset class="cart-stats__wrapper">
+                                <legend class="cart-stats__legend">Pagar con:</legend>
+
+                                <div id="confirm-card" class="cart-stats__tarjeta-wrapper">
+                                  <div>
+                                    <b>**** **** **** 0000</b> <br>
+                                    Tarjeta 
+                                  </div>
+
+                                  <img src="/img/mastercard.jpg" width="70px" alt="">
+
+                                </div>
+                               
+                               
+                           
+                              </fieldset>
+
+                            </div>
+
+                            <div class="col-md-6">
+                              <fieldset id="confirm-direccion" class="cart-stats__wrapper">
+                                <legend class="cart-stats__legend">Envio a:</legend>
+                                <b>Servidumbre 835 Apto. 3</b> <br>
+                                Pando / Canelones <br>
+                                (Cabaña de madera)
+                                <hr>
+                              </fieldset>
+                             
+                              <div class="col text-center">
+                                <button class="btn btn-primary btn--center btn--full">Confirmar</button>
+                              </div>
+  
+              
+
+
+                            </div>
+                       
+  
+                      
+
+                          </div>
+
+                        
+                      
+
+                     
+                            
                           
                         </div>
 
@@ -321,6 +417,7 @@
 
   <script src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/cart.js"></script>

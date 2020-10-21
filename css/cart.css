@@ -123,9 +123,11 @@
 }
 
 .cart-stats__wrapper {
-    padding: 0 4rem;
-    box-sizing: border-box;
+    padding: 1rem;
+
     width: 100%;
+    margin-top: 1rem;
+  
 }
 
 .cart-stats__header {
@@ -139,9 +141,16 @@
     margin-bottom: 1rem;
 }
 
+.cart-stats__fieldset {
+    width: 100%;
+
+}
+
 .cart-stats__line {
     display: flex;
+    width: 100%;
     justify-content: space-between;
+    margin-bottom: 0.2rem;
 }
 
 .cart-stats__number--bold {
@@ -279,6 +288,55 @@
         min-width: 200px;
     }
 }
+
+.cart-stats__tarjeta-wrapper {
+ display: flex;
+ justify-content: space-between;
+}
+
+
+.cart-stats__legend {
+font-size: 0.8em;
+}
+
+
+input.with-error + div {
+
+    color: tomato;
+    font-size: 0.8em;
+    position: absolute;
+}
+
+.cart-stats__confirmation-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-stats__select-currency {
+    width: fit-content;
+    
+}
+.btn--centered {
+    margin: 0 auto;
+}
+
+.btn--full {
+    width: 100%;
+}
+
+.metodos-de-pago {
+    display: flex;
+    justify-content: center;
+}
+
+.metodo-pago {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+}
+
+
 
 @media screen and (max-width: 700px) {
 
