@@ -1,4 +1,4 @@
-/* global getJSONData CART_INFO_URL renderIn, $ */
+/* global getJSONData CART_INFO_URL renderIn, CART_BUY_URL, $ */
 
 /*
   Valor de cada moneda con respecto al peso en este caso.
@@ -12,85 +12,59 @@ const CURRENCIES = {
 
 const ACCEPTED_CREDIT_CARDS = new Set(['visa', 'mastercard']);
 
-/*
-  Se los almacena en una variable global para poder simular que se
-  borran ya que no se cuenta con una backend
-*/
-const CART_ITEMS = [];
-
-
-
-/* Se inicializa la libreria del modal */
-$('#modal-wizard').smartWizard({
-  selected: 0,
-  theme: 'dots',
-  autoAdjustHeight: false,
-  justified: true,
-  transitionEffect: 'fade',
-  showStepURLhash: false,
-  enableFinishButton: true,
-  lang: {
-    next: 'Siguiente',
-    previous: 'Anterior',
-  },
-
-});
-
-const renderConfirmationData = (data) => {
-  const confirmCard = document.getElementById('confirm-card');
-  const confirmDireccion = document.getElementById('confirm-direccion');
-  confirmCard.innerHTML = `
-    <div>
-      <b>**** **** **** ${data.metodoPago.numero.slice(-4)}</b> <br>
-      Tarjeta 
-    </div>
-
-    <img src="/img/${data.metodoPago.metodo}.jpg" width="70px" alt="${data.metodoPago.metodo}">
-  
-  `;
-
-  confirmDireccion.innerHTML = `
-    <legend class="cart-stats__legend">Envio a:</legend>
-    <b>${data.direccion.calle} ${data.direccion.numero}</b> <br>
-    ${data.direccion.ciudad}} / ${data.direccion.departamento} <br>
-    (${data.direccion.observaciones})
-    <hr>
-  `;
+/**
+ * @param {number} number Cantidad a formatear
+ * @returns {string} Cadena formateada dependiendo del locale
+ */
+const formatNumberWithLocale = (number) => {
+  const locale = navigator.languages[0];
+  const numberFormater = new Intl.NumberFormat(locale);
+  return numberFormater.format(number);
 };
 
-$('#modal-wizard').on('leaveStep', (e, anchorObject, currentStepIndex) => {
-  /* Se verifica que estemos en el ultimo paso, justo antes de pasar al ultimo */
-  if (currentStepIndex === 2) {
-    /*
-      Se obtienen los datos de todos los formularios del checkout y
-      se los renderiza en el ultimo paso que es el de confirmacion
-    */
+const getSelectedCurrency = () => document.getElementsByName('porcentajeEnvio')[1].value;
+const formatMoney = (ammount, currency = getSelectedCurrency()) => `${currency} ${formatNumberWithLocale(ammount)}`;
+const isAcceptedCreditCard = (name) => ACCEPTED_CREDIT_CARDS.has(name);
 
-    const formDireccion = document.getElementById('form-step-0');
-    const formMetodoEnvio = document.getElementById('form-step-1');
-    const formMetodoPago = document.getElementById('form-step-2');
+// TODO Validar dependiendo del tipo
+const isValid = (input) => input.value.length > 0;
 
-    const confirmationData = {
-      direccion: Object.fromEntries(new FormData(formDireccion)),
-      metodoEnvio: Object.fromEntries(new FormData(formMetodoEnvio)),
-      metodoPago: Object.fromEntries(new FormData(formMetodoPago)),
-    };
-
-    renderConfirmationData(confirmationData);
+const toggleError = (e) => {
+  const { target } = e;
+  const errorMessage = target.dataset.error;
+  if (isValid(target)) {
+    target.nextElementSibling.innerHTML = '';
+  } else {
+    target.nextElementSibling.innerHTML = errorMessage;
   }
+};
 
-  /*
-    Se obtiene el formulario del paso actual y se verifica que todos los
-    campos requeridos hayan sido ingresados y sean validos.
-    Si son validos, continua al paso siguiente.
-   */
-  const form = document.getElementById(`form-step-${currentStepIndex}`);
-  return form ? validateAll(form) : true;
-});
+const capitalize = (string) => {
+  const firstCapitalized = string.charAt(0).toUpperCase();
+  return firstCapitalized + string.slice(1);
+};
 
 /* ----------------------- Generadores de HTML -----------------------*/
 
+const generateAddressHTML = (address) => `
+  <legend class="cart-stats__legend">Envío a:</legend>
+  <b>${capitalize(address.calle)} ${address.numero}</b> <br>
+  ${capitalize(address.ciudad)} / ${address.departamento} <br>
+  ${address.observaciones ? `(${capitalize(address.observaciones)})` : ''}
+  
+  <hr>
+`;
+
+const generatePaymentConfirmationHTML = (payment) => `
+  <div>
+    <b>**** **** **** ${payment.numero.slice(-4)}</b> <br>
+    ${isAcceptedCreditCard(payment.metodo) ? 'Tarjeta' : 'Cuenta bancaria'} 
+  </div>
+  <img src="/img/${payment.metodo}.jpg" width="70px" alt="${payment.metodo}">
+`;
+
 const generateCartItemHTML = ({
+  id,
   currency,
   unitCost,
   name,
@@ -100,6 +74,7 @@ const generateCartItemHTML = ({
   const subtotal = count * unitCost;
   return `
     <tr
+        id="${id}"
         class="cart-item"
         oninput="onCountChange(this)"
         data-currency=${currency}
@@ -119,6 +94,10 @@ const generateCartItemHTML = ({
       <td name="subtotal" class="cart-item__subtotal">
       ${formatMoney(subtotal, currency)}
       </td>
+      <td>
+        <button class="cart-item__delete" type="button" onclick="deleteItemAndUpdate(this)" data-delete="${id}"><i class="far fa-trash-alt"></i></button>
+      </td>
+      
     </tr>
   `;
 };
@@ -128,15 +107,15 @@ const generateCurrencyOptionHTML = (currency) => `<option value="${currency}">${
 const getFormOfPaymentWithCardHTML = () => `
   <div class="form-row">
     <div class="form-group col-md-12">
-      <label for="numero-tarjeta">Numero de tarjeta</label>
-      <input type="text" name="numero" id="numero-tarjeta" class="form-control form-control-sm with-error" data-error="Ingresa un numero de tarjeta valido">
+      <label for="numero-tarjeta">Número de tarjeta</label>
+      <input type="text" name="numero" id="numero-tarjeta" class="form-control form-control-sm with-error" data-error="Ingresá un número de tarjeta válido">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
 
     <div class="form-group col-md-12">
       <label for="nombre-tarjeta">Nombre</label>
-      <input type="text" name="titular" id="nombre-tarjeta" class="form-control form-control-sm with-error" data-error="Debes ingresar tu nombre">
+      <input type="text" name="titular" id="nombre-tarjeta" class="form-control form-control-sm with-error" data-error="Debés ingresar tu nombre">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
@@ -145,14 +124,14 @@ const getFormOfPaymentWithCardHTML = () => `
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="fecha-vencimiento">Vence en:</label>
-      <input type="date" name="vencimiento" id="fecha-vencimiento" class="form-control form-control-sm with-error" data-error="Ingresa la fecha de vencimiento">
+      <input type="date" name="vencimiento" id="fecha-vencimiento" class="form-control form-control-sm with-error" data-error="Ingresá la fecha de vencimiento">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
 
     <div class="form-group col-md-6">
-      <label for="">Codigo de seguridad</label>
-      <input type="number" name="ccv" id="codigo-seguridad" class="form-control form-control-sm with-error" data-error="Codigo de seguridad en el reverso">
+      <label for="">Código de seguridad</label>
+      <input type="number" name="ccv" id="codigo-seguridad" class="form-control form-control-sm with-error" data-error="Código de seguridad en el reverso">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
@@ -162,20 +141,83 @@ const getFormOfPaymentWithCardHTML = () => `
 const getFormOfPaymentWithTransactionHTML = () => `
   <div class="form-row">
     <div class="form-group col-md-12">
-      <label for="numero-tarjeta">Numero de cuenta</label>
-      <input type="text" name="numero" id="numero-tarjeta" class="form-control form-control-sm with-error">
+      <label for="numero-tarjeta">Número de cuenta</label>
+      <input type="text" name="numero" id="numero-tarjeta" class="form-control form-control-sm with-error" data-error="Número de cuenta no válido">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
 
     <div class="form-group col-md-12">
       <label for="nombre-tarjeta">Nombre</label>
-      <input type="text" name="titular" id="nombre-tarjeta" class="form-control form-control-sm with-error">
+      <input type="text" name="titular" id="nombre-tarjeta" class="form-control form-control-sm with-error" data-error="Ingresá el nombre del titular">
       <!-- Div donde se renderiza el mensaje de error -->
       <div></div>
     </div>
   </div>                
 `;
+
+/* Se inicializa la libreria del modal */
+$('#modal-wizard').smartWizard({
+  selected: 0,
+  theme: 'dots',
+  autoAdjustHeight: false,
+  justified: true,
+  transitionEffect: 'fade',
+  showStepURLhash: false,
+  enableFinishButton: true,
+  lang: {
+    next: 'Siguiente',
+    previous: 'Anterior',
+  },
+});
+
+const renderConfirmationData = (data) => {
+  const confirmCard = document.getElementById('confirm-card');
+  const confirmDireccion = document.getElementById('confirm-direccion');
+
+  renderIn(confirmCard, true)(generatePaymentConfirmationHTML(data.metodoPago));
+  renderIn(confirmDireccion, true)(generateAddressHTML(data.direccion));
+};
+
+const getPurchaseData = () => {
+  const formDireccion = document.getElementById('form-step-0');
+  const formMetodoEnvio = document.getElementById('form-step-1');
+  const formMetodoPago = document.getElementById('form-step-2');
+
+  const confirmationData = {
+    direccion: Object.fromEntries(new FormData(formDireccion)),
+    metodoEnvio: Object.fromEntries(new FormData(formMetodoEnvio)),
+    metodoPago: Object.fromEntries(new FormData(formMetodoPago)),
+  };
+  return confirmationData;
+};
+
+const validateAll = (form) => {
+  const inputs = form.getElementsByClassName('with-error');
+  const arrayOfInputs = Array.from(inputs);
+
+  arrayOfInputs.forEach((input) => toggleError({ target: input }));
+  return arrayOfInputs.every((input) => isValid(input));
+};
+
+$('#modal-wizard').on('leaveStep', (e, anchorObject, currentStepIndex) => {
+  /* Se verifica que estemos en el ultimo paso, justo antes de pasar al ultimo */
+  if (currentStepIndex === 2) {
+    /*
+      Se obtienen los datos de todos los formularios del checkout y
+      se los renderiza en el ultimo paso que es el de confirmacion
+    */
+    renderConfirmationData(getPurchaseData());
+  }
+
+  /*
+    Se obtiene el formulario del paso actual y se verifica que todos los
+    campos requeridos hayan sido ingresados y sean validos.
+    Si son validos, continua al paso siguiente.
+   */
+  const form = document.getElementById(`form-step-${currentStepIndex}`);
+  return form ? validateAll(form) : true;
+});
 
 /**
  * Funcion que retorna un array con los subtotales de cada item del carrito
@@ -213,18 +255,6 @@ const getDeliveryCost = (subtotal) => {
 };
 
 /**
- * @param {number} number Cantidad a formatear
- * @returns {string} Cadena formateada dependiendo del locale
- */
-const getFormatedNumberWithLocale = (number) => {
-  const locale = navigator.languages[0];
-  const numberFormater = new Intl.NumberFormat(locale);
-  return numberFormater.format(number);
-};
-
-const getSelectedCurrency = () => document.getElementsByName('porcentajeEnvio')[1].value;
-
-/**
  * Convierte el valor pasado en pesos a la moneda seleccionada
  * La moneda indicada debe ser parte del array CURRENCIES.
  * @param {number} value Valor a convertir
@@ -234,8 +264,6 @@ const convertPesoToSelectedCurrency = (value) => {
   const selectedCurrency = getSelectedCurrency();
   return value / CURRENCIES[selectedCurrency];
 };
-
-const formatMoney = (ammount, currency = getSelectedCurrency()) => `${currency} ${getFormatedNumberWithLocale(ammount)}`;
 
 const updateDeliveryCost = (subtotal) => {
   const contenedores = document.getElementsByName('delivery-cost');
@@ -267,6 +295,17 @@ const updateTotal = () => {
 };
 
 // eslint-disable-next-line no-unused-vars
+const deleteItemAndUpdate = (button) => {
+  const idOfItemToDelete = button.dataset.delete;
+  const itemToDelete = document.getElementById(idOfItemToDelete);
+  itemToDelete.parentNode.removeChild(itemToDelete);
+
+  // Se borra el boton
+  button.parentNode.removeChild(button);
+  updateTotal();
+};
+
+// eslint-disable-next-line no-unused-vars
 const onCountChange = (cartItem) => {
   const { unitcost, currency } = cartItem.dataset;
   const unitCostInt = parseInt(unitcost, 10);
@@ -281,8 +320,6 @@ const onCountChange = (cartItem) => {
   cartItem.setAttribute('data-subtotal', unitCostInt * newProductCount);
   updateTotal();
 };
-
-
 
 const addErrorHandlerToInputs = () => {
   const inputs = document.getElementsByClassName('with-error');
@@ -308,6 +345,34 @@ const updateFormPayments = () => {
   addErrorHandlerToInputs();
 };
 
+const renderPurchaseMessage = ({ msg }, success) => {
+  const messageContainer = document.getElementById('purchase-message');
+  messageContainer.innerHTML = msg;
+  if (success) {
+    messageContainer.classList.add('purchase-message--success');
+    messageContainer.classList.remove('purchase-message--fail');
+  } else {
+    messageContainer.classList.remove('purchase-message--success');
+    messageContainer.classList.add('purchase-message--fail');
+  }
+};
+
+const sendPurchaseData = (data) => {
+  /*
+    La informacion al servidor deberia de ser enviada por POST, pero
+    el servidor al que se manda esta solicitud simulada no lo acepta,
+    por lo que siemplemente se hace una solicitud GET para obtener el mensaje de confirmacion
+  */
+  console.log(data);
+  return fetch(CART_BUY_URL).then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+    // eslint-disable-next-line no-throw-literal
+    throw { msg: 'Error al realizar la compra' };
+  });
+};
+
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
@@ -316,9 +381,15 @@ document.addEventListener('DOMContentLoaded', () => {
     data,
   }) => {
     const itemsContainer = document.getElementById('items-container');
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
-    data.articles.map(generateCartItemHTML).forEach(renderIn(itemsContainer));
+    /*
+      Se agrega una propiedad extra (id) a los datos que llegan del servidor
+      para luego poder referenciarlo y eliminarlo
+    */
+    data.articles
+      .map((article, i) => ({ id: `cart-item-${i}`, ...article }))
+      .map(generateCartItemHTML)
+      .forEach(renderIn(itemsContainer));
+
     updateTotal();
   });
 
@@ -344,40 +415,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const metodosDePagoContainer = document.getElementById('metodos-de-pago');
-  metodosDePagoContainer.addEventListener('change', (e) => {
+  metodosDePagoContainer.addEventListener('change', () => {
     updateFormPayments();
   });
 
   updateFormPayments();
 
   addErrorHandlerToInputs();
-});
 
-const isAcceptedCreditCard = (name) => {
- 
-  return ACCEPTED_CREDIT_CARDS.has(name);
-};
-
-const isValid = (input) => input.value.length > 0;
-
-const toggleError = (e) => {
-  const { target } = e;
-  const errorMessage = target.dataset.error;
-  if (isValid(target)) {
-    target.nextElementSibling.innerHTML = '';
-  } else {
-    target.nextElementSibling.innerHTML = errorMessage;
-  }
-};
-
-const validateAll = (form) => {
-  let valid = true;
-
-  const inputs = form.getElementsByClassName('with-error');
-  Array.from(inputs).forEach((input) => {
-    // Si uno de los elementos no es valido, la variable valid siempre va a ser false
-    valid = valid && isValid(input);
-    toggleError({ target: input });
+  /* Envio de los datos de compra */
+  const buttonEnvio = document.getElementById('button-envio');
+  buttonEnvio.addEventListener('click', () => {
+    // TODO Mostrar spinner de carga
+    sendPurchaseData(getPurchaseData()).then((response) => {
+      renderPurchaseMessage(response, true);
+    }).catch((err) => {
+      renderPurchaseMessage(err, false);
+    });
   });
-  return valid;
-};
+});

@@ -80,7 +80,7 @@
   <nav class="nav-bottom">
     <a href="categories.html" class="d-md-none">
       <i class="fas fa-user"></i>
-      <p>Categorias</p>
+      <p>Categorías</p>
     </a>
 
     <a href="products.html" class="d-md-none">
@@ -113,6 +113,8 @@
                 <th class="table__cell" scope="col">Costo</th>
                 <th class="table__cell" scope="col">Cantidad</th>
                 <th class="table__cell" scope="col">Subtotal</th>
+                <!-- Columna de donde se muestran los botones de eliminar item-->
+                <th class="table__cell" scope="col"></th>
               </tr>
             </thead>
             <tbody id="items-container">
@@ -156,7 +158,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-title">Ya casi tenes tus productos!</h5>
+                <h5 class="modal-title" id="modal-title">Ya casi tenés tus productos!</h5>
                 <div class="d-flex">
                   <select class="form-control form-control-sm cart-stats__select-currency" name="porcentajeEnvio" id="select-currency">
                     <!-- Se completa dinamicamente -->
@@ -170,10 +172,10 @@
             <div class="modal-body">
               <div id="modal-wizard">
                 <ul>
-                  <li><a href="#step-1">Paso 1<br /><small>Direccion</small></a></li>
-                  <li><a href="#step-2">Paso 2<br /><small>Envio</small></a></li>
-                  <li><a href="#step-3">Paso 3<br /><small>Metodo de pago</small></a></li>
-                  <li><a href="#step-4">Paso 4<br /><small>Confirmacion</small></a></li>
+                  <li><a href="#step-1">Paso 1<br /><small>Dirección</small></a></li>
+                  <li><a href="#step-2">Paso 2<br /><small>Envío</small></a></li>
+                  <li><a href="#step-3">Paso 3<br /><small>Método de pago</small></a></li>
+                  <li><a href="#step-4">Paso 4<br /><small>Confirmación</small></a></li>
                 </ul>
                   <div>
                     <div id="step-1" class="row">
@@ -183,7 +185,7 @@
                       
                             <p class="modal-step__description">
                               <i class="fas fa-shipping-fast metodo-envio__icon"></i>
-                              Contanos donde queres que hagamos la entrega
+                              Contános dónde querés que hagamos la entrega
                             </p>
   
                             <div class="form-row">
@@ -210,7 +212,7 @@
                               </div>
   
                               <div class="form-group col-sm-4 col-md-2">
-                                <label for="inputNumeroPuerta">Numero</label>
+                                <label for="inputNumeroPuerta">Número</label>
                                 <input id="inputNumeroPuerta" name="numero" type="text" class="form-control form-control-sm" placeholder="N° de puerta">
                               </div>
   
@@ -219,7 +221,7 @@
   
                             <div class="form-row">
                               <div class="form-group col-md-12">
-                                <label for="inputObservaciones">Observaciones de la direccion</label>
+                                <label for="inputObservaciones">Observaciones de la dirección</label>
                                 <input id="inputObservaciones" name="observaciones" type="text" class="form-control form-control-sm" placeholder="Cualquier dato que te parezca relevante">
                               </div>
                             </div>
@@ -231,7 +233,7 @@
 
                     <div id="step-2" class="row">
                       <div class="modal-step">
-                        <p class="modal-step__description">Elegí como queres que te lo enviemos</p>
+                        <p class="modal-step__description">Elegí como querés que te lo enviemos</p>
                         <form id="form-step-1" class="row metodos-envio">
                           <div class="col metodo-envio">
                             <div class="form-group metodo-envio__header">
@@ -241,7 +243,7 @@
                                 <h6>Estandar</h6>
                               </label>
                             </div>
-                            <p>De 12 a 15 dias de demora.</p>
+                            <p>De 12 a 15 días de demora.</p>
                             <span id="estandar" name="delivery-cost" class="metodo-envio__precio" data-percent="0.05">Costo: UYU 1200</span>
                           </div>
   
@@ -253,7 +255,7 @@
                                 <h6>Express</h6>
                               </label>
                             </div>
-                            <p>De 5 a 8 dias de demora.</p>
+                            <p>De 5 a 8 días de demora.</p>
                             <span id="express" name="delivery-cost" class="metodo-envio__precio"data-percent="0.07">Costo: UYU 1200</span>
                           </div>
   
@@ -265,7 +267,7 @@
                                 <h6>Premium</h6>
                               </label>
                             </div>
-                            <p>De 2 a 5 dias de demora.</p>
+                            <p>De 2 a 5 días de demora.</p>
                             <span id="premium" name="delivery-cost" class="metodo-envio__precio" data-percent="0.15">Costo: UYU 1200</span>
                           </div>
                         </form>
@@ -278,31 +280,49 @@
 
                     <div id="step-3" class="row">
                       <div class="modal-step">
-                        <p class="modal-step__description">¿Como deseas pagar?</p>
+                        <p class="modal-step__description">¿Como preferís pagar?</p>
                         <form id="form-step-2" class="row form col-md-12">
 
                           <div class="col-md-6 metodos-de-pago" id="metodos-de-pago">
-                            <div class="metodo-pago">
+
+                        
+                              <legend class="cart-stats__legend cart-stats__legend--centered">
+                                Crédito o débito
+                              </legend>
+
+                              <div class="metodos-de-pago__group">
+
+                                <div class="metodo-pago">
                               
-                              <label for="mastercard">
-                                <img src="/img/mastercard.jpg" alt="" width="70px">
-                              </label>
-                              <input id="mastercard" type="radio" name="metodo"  value="mastercard" checked>
+                                  <label for="mastercard">
+                                    <img src="/img/mastercard.jpg" alt="" width="70px">
+                                  </label>
+                                  <input id="mastercard" type="radio" name="metodo"  value="mastercard" checked>
+                                </div>
+    
+                                <div class="metodo-pago">
+                                  <label for="visa">
+                                    <img src="/img/visa.jpg" alt="" width="70px">
+                                  </label>
+                                  <input id="visa" type="radio" name="metodo"  value="visa">
+                                </div>
+                              </div>
+                            
+                 
+                            <legend class="cart-stats__legend cart-stats__legend--centered">
+                              Tranferencia bancaria
+                            </legend>
+
+                            <div class="metodos-de-pago__group">
+                              <div class="metodo-pago">
+                                <label for="bbva">
+                                  <img src="/img/bbva.jpg" alt="" width="70px">
+                                </label>
+                                <input id="bbva" type="radio" name="metodo"  value="bbva">
+                              </div>
                             </div>
 
-                            <div class="metodo-pago">
-                              <label for="visa">
-                                <img src="/img/visa.jpg" alt="" width="70px">
-                              </label>
-                              <input id="visa" type="radio" name="metodo"  value="visa">
-                            </div>
-
-                            <div class="metodo-pago">
-                              <label for="bbva">
-                                <img src="/img/bbva.jpg" alt="" width="70px">
-                              </label>
-                              <input id="bbva" type="radio" name="metodo"  value="bbva">
-                            </div>
+                          
 
 
                           </div>
@@ -337,7 +357,7 @@
                                 </p>
                   
                                 <p class="cart-stats__line">
-                                  Envio:
+                                  Envío:
                                   <span id="envio" class="cart-stats__number">
                                     <!-- Se completa dinamicamente -->
                                   </span>
@@ -376,16 +396,16 @@
 
                             <div class="col-md-6">
                               <fieldset id="confirm-direccion" class="cart-stats__wrapper">
-                                <legend class="cart-stats__legend">Envio a:</legend>
-                                <b>Servidumbre 835 Apto. 3</b> <br>
-                                Pando / Canelones <br>
-                                (Cabaña de madera)
-                                <hr>
+                                <!-- Se completa dinamicamente -->
                               </fieldset>
                              
                               <div class="col text-center">
-                                <button class="btn btn-primary btn--center btn--full">Confirmar</button>
+                                <button id="button-envio" class="btn btn-primary btn--center btn--full">Confirmar</button>
                               </div>
+
+                              <span id="purchase-message" class="purchase-message purchase-message--sucess">
+                                <!-- Se completa dinamicamente-->
+                              </span>
   
               
 

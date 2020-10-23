@@ -92,6 +92,11 @@
     width: 5ch;
 }
 
+.cart-item__delete {
+    border: none;
+    background:none;
+}
+
 /* Hace que los controles del input number se visualicen siempre, no solo cuando se hace hover */
 .cart-item__count-input::-webkit-inner-spin-button {
     opacity: 1
@@ -253,6 +258,8 @@
 
 
 
+
+
 @media screen and (max-width: 768px) {
     .cart {
         height: calc(100vh - 16rem);
@@ -299,12 +306,22 @@
 font-size: 0.8em;
 }
 
+.cart-stats__legend--centered {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.with-error {
+    margin-bottom: 1.5rem;
+}
+
 
 input.with-error + div {
-
     color: tomato;
     font-size: 0.8em;
     position: absolute;
+    top: calc(100% - 1.5em);
+    padding-bottom: 2rem;
 }
 
 .cart-stats__confirmation-title {
@@ -326,14 +343,37 @@ input.with-error + div {
 
 .metodos-de-pago {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+}
+
+.metodos-de-pago__group {
+    display:flex;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .metodo-pago {
     display: flex;
     flex-direction: column;
-    justify-content:space-between;
+    justify-content:baseline;
     align-items: center;
+}
+
+.purchase-message {
+    display: block;
+ 
+    text-align: center;
+
+
+}
+
+.purchase-message--success {
+    color: Green;
+}
+
+.purchase-message--fail {
+    color: Tomato;
 }
 
 
@@ -450,4 +490,11 @@ input.with-error + div {
     .cart-item__count-input {
         text-align: center;
     }
+
+    .cart-item__delete {
+        grid-area: b;
+        margin-left: auto;
+        margin-right:0;
+    }
+
 }
