@@ -60,7 +60,7 @@ const generatePaymentConfirmationHTML = (payment) => `
     <b>**** **** **** ${payment.numero.slice(-4)}</b> <br>
     ${isAcceptedCreditCard(payment.metodo) ? 'Tarjeta' : 'Cuenta bancaria'} 
   </div>
-  <img src="/img/${payment.metodo}.jpg" width="70px" alt="${payment.metodo}">
+  <img src="img/${payment.metodo}.jpg" width="70px" alt="${payment.metodo}">
 `;
 
 const generateCartItemHTML = ({
