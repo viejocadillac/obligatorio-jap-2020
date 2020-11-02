@@ -16,13 +16,13 @@ body {
 .signin {
   width: 100%;
   max-width: 600px;
-  padding: 15px;
   margin: auto;
   padding: 4em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .firebaseui-idp-button {
@@ -35,7 +35,6 @@ body {
   font-weight: 700;
   color: crimson;
   margin-bottom: 0.5em;
-
 }
 
 .btn-primary {
@@ -45,100 +44,28 @@ body {
 }
 
 .btn-primary:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   background-color: crimson;
   box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.2);
 }
 
-.sign-in-description {
-  margin-top: 0;
-  text-align: center;
-  font-size: 0.8em;
-}
-
-.text-label {
-  font-size: 0.9em;
-}
-
-
-
-.form-control-underline-group {
-  position: relative;
-  border-bottom: 2px solid grey;
-  box-sizing: border-box;
-  margin-top: 3em;
-}
-
-.form-control-underline-group>input  {
-  border: none;
-  outline: none;
-}
-
-.form-control-underline-group>label {
-
-  color: grey;
+.login-error {
+  color: tomato;
+  margin-top: 1rem;
   position: absolute;
-  margin-left: 0.5rem;
-  top: 100%;
-  transform: translateY(-100%);
-  transition: all 0.3s ease-in-out;
+  bottom: 0;
 }
 
-input:valid + label {
-  top: 0%;
-  font-size: 0.7em;
-}
-
-input + label {
-
-  color: grey;
-  position: absolute;
-  margin-left: 0.5rem;
-  left: 0;
-  transform: translateY(-100%);
-  transition: all 0.3s ease-in-out;
-}
-
-.input-underline {
-  width: 0%;
-  height: 2px;
-  background-color: crimson;
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0 auto;
-  transition: width 0.3s ease-in-out;
-}
-
-
-.form-control-underline-group:focus-within>.input-underline {
-  width: 100%;
-}
-
-.form-control-underline-group:focus-within>label{
-  color: crimson;
-  top: 0;
-  font-size: 0.7em;
-}
-
-
-.input-no-focus,
-.input-no-focus:focus,
-.input-no-focus:active {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  box-shadow: none;
-
-}
 
 .google-signin {
   text-align: center;
 }
 
-.other-methods-title {
-  margin-top: 2em;
-  font-size: 0.8em;
-  text-align: center;
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 60%;               
+  background-color:rgb(206, 206, 206);
+  height: 1px;
 }

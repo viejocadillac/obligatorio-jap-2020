@@ -30,25 +30,25 @@
   <div class="container p-1">
     <div class="signin">
       <h1 class="signin-title">eMercado</h1>
-      <p class="sign-in-description">Inicia sesion para acceder a esta area</p>
-      <form id="formulario-login" action="">
+      <form id="formulario-login">
 
-        <div id="user-input-group"class="form-group form-control-underline-group">
-          <input id="usuario" name="username" type="text" class="input-no-focus" title="Debe ingresar su usuario"required>
-          <label class="text-label" for="usuario">Usuario</label>
-          <div class="input-underline"></div>
+        <div id="user-input-group" class="form-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="text" class="form-control form-control-sm with-error" data-error="Debe ingresar su email">
+          <div></div>
         </div>
 
-        <div id="password-input-group" class="form-group form-control-underline-group">
-          <input id="password" name="password" type="password" class="input-no-focus" required title="Debe ingresar su contraseña">
-          <label class="text-label" for="password">Password</label>
-          <div class="input-underline"></div>
+        <div id="password-input-group" class="form-group">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" class="form-control form-control-sm with-error" data-error="Debe ingresar su contraseña">
+          <div></div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-sm float-right">Entrar</button>
-     
+        <button type="submit" class="btn btn-primary float-right">Entrar</button>
+        
       </form>
-      <p class="other-methods-title">O tambien podes iniciar sesion con:</p>
+      <p id="login-error" class="login-error"></p>
+      <hr></hr>
       <div id="firebaseui-auth-container"></div>
 
     </div>
