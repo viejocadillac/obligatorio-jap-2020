@@ -72,10 +72,35 @@ const createNavMenu = (displayName, photoURL) => {
       <button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>`;
   } else if (dropdownButton) {
     // Barra de navegacion presente pero sin nombre de usuario (dropdown)
-    opcionesDeUsuario.innerHTML += '<a class="dropdown-item disabled">Crear cuenta</a>';
+// TODO Validar dependiendo del tipo
+const isValid = (input) => input.value.length > 0;
+
+const toggleError = (e) => {
+  const { target } = e;
+  const errorMessage = target.dataset.error;
+  if (isValid(target)) {
+    target.nextElementSibling.innerHTML = '';
+  } else {
+    target.nextElementSibling.innerHTML = errorMessage;
   }
 };
 
+const validateAll = (form) => {
+  const inputs = form.getElementsByClassName('with-error');
+  const arrayOfInputs = Array.from(inputs);
+
+  arrayOfInputs.forEach((input) => toggleError({ target: input }));
+  return arrayOfInputs.every((input) => isValid(input));
+};
+
+const addErrorHandlerToInputs = () => {
+  const inputs = document.getElementsByClassName('with-error');
+  Array.from(inputs).forEach((input) => {
+    input.addEventListener('input', (e) => {
+      toggleError(e);
+    });
+  });
+};
 // Firebase config
 const firebaseConfig = {
   apiKey: 'AIzaSyB-XYq5X9nS1FIQZoCXvOohWwsJMdBDLXc',
