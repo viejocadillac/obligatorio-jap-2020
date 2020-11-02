@@ -132,17 +132,14 @@ a.logo-small {
 
 .nav-item {
   margin: 0 0.5rem;
-}
-
-a.nav-item {
-  color: grey;
+  color: grey !important;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .nav-item:hover {
   cursor: pointer;
-  color: rgb(255, 72, 109);
+  color: rgb(255, 72, 109) !important;
 }
 
 button.nav-item:hover,
