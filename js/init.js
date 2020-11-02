@@ -16,7 +16,7 @@ const CART_BUY_URL = 'https://japdevdep.github.io/ecommerce-api/cart/buy.json';
 // Global functions
 
 /**
- * 
+ *
  * @param {HTMLElement} container Contenedor donde se renderizara el contenido
  * @param {boolean} replace Indica si se debe remplazar el contenido (true) o agregar (false)
  */
@@ -27,7 +27,6 @@ const renderIn = (container, replace = false) => (innerHTML) => {
   } else {
     container.innerHTML += innerHTML;
   }
-  
 };
 
 const redirectTo = (url) => {
@@ -61,12 +60,19 @@ const createNavMenu = (displayName, photoURL) => {
   if (displayName && dropdownButton) {
     // Nombre de usuario y barra de navegacion presente (dropdown)
     dropdownButton.innerHTML = `<img class="site-header__user-image" src="${photoURL}"></img><span class="d-none d-md-inline-block user-name">${displayName}</span>`;
-    opcionesDeUsuario.innerHTML += `
+    opcionesDeUsuario.innerHTML = `
       <a href="cart.html" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Mi Carrito</a>
       <a href="my-profile.html" class="dropdown-item"><i class="fas fa-user"></i>Perfil</a>
       <button id="logout-button" class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</button>`;
   } else if (dropdownButton) {
     // Barra de navegacion presente pero sin nombre de usuario (dropdown)
+    opcionesDeUsuario.innerHTML = `
+      <a href="${LOGIN}"class="dropdown-item">Iniciar Sesion</a>
+      <a class="dropdown-item disabled">Crear cuenta</a>
+    `;
+  }
+};
+
 // TODO Validar dependiendo del tipo
 const isValid = (input) => input.value.length > 0;
 
@@ -143,9 +149,8 @@ firebase.auth().onAuthStateChanged((user) => {
       const image = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
       createNavMenu(name, image);
     });
-    } else {
-      createNavMenu();
-    }
+  } else {
+    createNavMenu();
   }
 }, (error) => {});
 
@@ -255,34 +260,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // Cuando se hace focus en el input de busqueda, se llama a la api y
   // se obtiene la lista de productos
   if (inputSearch) {
-  inputSearch.addEventListener('focus', () => {
-    // Se controla que hasta que no se termina la solicitud no se pueda generar otra.
-    if (!fetching) {
-      fetching = true;
-      getJSONData(PRODUCTS_URL, false).then(({
-        data,
-      }) => {
-        PRODUCTS = data;
-        setProductsAndActualize(autocompleteList, data);
-        autocompleteList.style.display = 'block';
-        fetching = false;
-      });
-    }
-  });
+    inputSearch.addEventListener('focus', () => {
+      // Se controla que hasta que no se termina la solicitud no se pueda generar otra.
+      if (!fetching) {
+        fetching = true;
+        getJSONData(PRODUCTS_URL, false).then(({
+          data,
+        }) => {
+          PRODUCTS = data;
+          setProductsAndActualize(autocompleteList, data);
+          autocompleteList.style.display = 'block';
+          fetching = false;
+        });
+      }
+    });
 
-  // Se ejecuta cada vez que se ingresa algo en el input de busqueda
-  inputSearch.addEventListener('input', (event) => {
+    // Se ejecuta cada vez que se ingresa algo en el input de busqueda
+    inputSearch.addEventListener('input', (event) => {
     // Se obtiene el texto ingresado
-    const inputValue = event.target.value;
+      const inputValue = event.target.value;
 
-    // Se genera una expresion regular (Se puede ingresar expresiones en el input), ignorando
-    // la diferencia entre mayusculas y minusculas.
-    try {
-      const regex = new RegExp(inputValue, 'i');
-      const filtrados = PRODUCTS.filter((product) => product.name.match(regex));
-      setProductsAndActualize(autocompleteList, filtrados);
-    } catch (error) {
+      // Se genera una expresion regular (Se puede ingresar expresiones en el input), ignorando
+      // la diferencia entre mayusculas y minusculas.
+      try {
+        const regex = new RegExp(inputValue, 'i');
+        const filtrados = PRODUCTS.filter((product) => product.name.match(regex));
+        setProductsAndActualize(autocompleteList, filtrados);
+      } catch (error) {
       // console.log('Expresion de busqueda no valida');
-    }
-  });
+      }
+    });
+  }
+  addErrorHandlerToInputs();
 });
