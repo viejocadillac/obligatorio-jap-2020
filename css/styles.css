@@ -378,6 +378,28 @@ input.with-error + div {
   top: calc(100% );
   padding-bottom: 2rem;
 }
+
+.main-no-user {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  height: calc(100vh - 5rem);
+}
+
+.main-no-user__title {
+  margin: 1rem 0;
+}
+
+.main-no-user__footer {
+  margin-top: 1em;
+}
+
+.btn-iniciar-sesion {
+  max-width: 250px;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 768px) {
   .carousel-caption {
     text-align: center;
