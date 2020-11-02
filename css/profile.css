@@ -1,0 +1,57 @@
+.user-resume {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-resume__image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-resume__image-input {
+  display: none;
+}
+
+.user-resume__image-change {
+  font-size: 0.7em;
+}
+
+.user-resume__image-change:hover {
+  cursor: pointer;
+}
+
+.user-resume__image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-resume__email,
+.user-resume__name {
+  margin: 0;
+
+}
+
+#spinner-wrapper {
+  display: block;
+  z-index: 3;
+  background-color: rgb(255, 255, 255);
+
+}
+
+.lds-ring div {
+  border: 6px solid grey;
+  border-color: grey transparent transparent transparent;
+}
+
+.lds-ring::after {
+  content: 'Cargando';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -1em;
+}

@@ -22,23 +22,11 @@
    <link href="css/font-awesome.min.css" rel="stylesheet">
    <!-- Estilos globales -->
    <link href="css/styles.css" rel="stylesheet">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+   <link href="css/profile.css" rel="stylesheet">
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+   <script src="js/init.js"></script>
 
+   <script src="js/my-profile.js" defer></script>
 </head>
 
 <body>
@@ -96,20 +84,109 @@
       <p>Vender</p>
     </a>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
-  </div>
+  <div id="main" class="container p-5">
 
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <div class="user-resume">
+      <div class="user-resume__image-container">
+        <img id="profile-image" class="user-resume__image" src="img/profile-example.png" alt="Imagen de perfil">
+        <label class="user-resume__image-change" for="profile-image-input">Cambiar imagen</label>
+        <input class="user-resume__image-input" type="file" name="" id="profile-image-input">
+
+    </div>
+      <div id="user-resume-data">
+        <h3 class="user-resume__name">Mathias Moreira</h3>
+        <p class="user-resume__email">viejocadillac@gmail.com</p>
+  </div>
+    </div>
+    <form id="personal-info" class="form-row">
+      <fieldset class="col-lg-6">
+        <legend>Informacion personal</legend>
+        <div class="">
+          <div class="form-group">
+            <label for="name">Nombre y Apellido</label>
+            <input class="form-control form-control-sm" type="text" name="displayName" id="name" >
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control form-control-sm" type="text" name="email" id="email" >
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Telefono</label>
+            <input class="form-control form-control-sm" type="text" name="phoneNumber" id="phoneNumber" value="">
+          </div>
+          <div class="form-group">
+            <label for="age">Edad</label>
+            <input class="form-control form-control-sm" type="number" name="age" id="age" >
+          </div>
+
+        </div>
+      </fieldset>
+      <fieldset class="col-lg-6">
+                      
+        
+        <legend>Dirección</legend>
+        
+
+        <div class="form-row">
+          <div class="form-group col-sm-6 col-md-3">
+            <label for="inputDepartamento">Departamento</label>
+            <select id="inputDepartamento" name="departamento" class="form-control form-control-sm">
+              <option >Artigas</option>
+              <option >Canelones</option>
+              <option >Cerro Largo</option>
+              <option >Colonia</option>
+              <option >Durazno</option>
+              <option >Flores</option>
+              <option >Florida</option>
+              <option >Lavalleja</option>
+              <option >Maldonado</option>
+              <option selected>Montevideo</option>
+              <option >Paysandú</option>
+              <option >Rio Negro</option>
+              <option >Rivera</option>
+              <option >Rocha</option>
+              <option >Salto</option>
+              <option >San José</option>
+              <option >Soriano</option>
+              <option >Tacuarembó</option>
+              <option >Treinta y Tres</option>
+            </select>
+          </div>
+
+          <div class="form-group col-sm-6 col-md-2">
+            <label for="inputCiudad">Localidad</label>
+            <input id="inputCiudad" type="text" name="ciudad" class="form-control form-control-sm with-error" placeholder="Donde vivis" data-error="Debes ingresar tu localidad">
+            <!-- Div donde se renderiza el mensaje de error -->
+            <div></div>
+          </div>
+
+          <div class="form-group col-sm-8 col-md-5">
+            <label for="inputCalle">Calle</label>
+            <input id="inputCalle" name="calle" type="text" class="form-control form-control-sm with-error" placeholder="Calle" data-error="Ingresa la calle donde vivis">
+            <!-- Div donde se renderiza el mensaje de error -->
+            <div></div>
+          </div>
+
+          <div class="form-group col-sm-4 col-md-2">
+            <label for="inputNumeroPuerta">Número</label>
+            <input id="inputNumeroPuerta" name="numero" type="text" class="form-control form-control-sm" placeholder="N° de puerta">
+          </div>
+
+    
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="inputObservaciones">Observaciones de la dirección</label>
+            <input id="inputObservaciones" name="observaciones" type="text" class="form-control form-control-sm" placeholder="Cualquier dato que te parezca relevante">
+          </div>
+        </div>
+      </fieldset>
+      <button id="save-changes" type="button" class="btn btn-primary" disabled='true'>Guardar cambios</button>
+  
+      <div class="col-md-6"></div>
+    </form>
+ 
   </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
