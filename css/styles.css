@@ -367,6 +367,17 @@ hr {
   font-size: 4rem;
 }
 
+.with-error {
+  margin-bottom: 1.5rem;
+}
+
+input.with-error + div {
+  color: tomato;
+  font-size: 0.8em;
+  position: absolute;
+  top: calc(100% );
+  padding-bottom: 2rem;
+}
 @media screen and (max-width: 768px) {
   .carousel-caption {
     text-align: center;

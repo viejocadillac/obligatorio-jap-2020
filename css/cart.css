@@ -311,18 +311,7 @@ font-size: 0.8em;
     margin: 0 auto;
 }
 
-.with-error {
-    margin-bottom: 1.5rem;
-}
 
-
-input.with-error + div {
-    color: tomato;
-    font-size: 0.8em;
-    position: absolute;
-    top: calc(100% - 1.5em);
-    padding-bottom: 2rem;
-}
 
 .cart-stats__confirmation-title {
     display: flex;
