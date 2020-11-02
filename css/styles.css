@@ -367,6 +367,11 @@ hr {
   font-size: 4rem;
 }
 
+.form-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
 .with-error {
   margin-bottom: 1.5rem;
 }
