@@ -208,13 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (event) => {
     if (event.target !== inputSearch) {
       event.stopPropagation();
-      autocompleteList.style.display = 'none';
+      if (autocompleteList) autocompleteList.style.display = 'none';
     }
   });
 
   let fetching = false;
   // Cuando se hace focus en el input de busqueda, se llama a la api y
   // se obtiene la lista de productos
+  if (inputSearch) {
   inputSearch.addEventListener('focus', () => {
     // Se controla que hasta que no se termina la solicitud no se pueda generar otra.
     if (!fetching) {
