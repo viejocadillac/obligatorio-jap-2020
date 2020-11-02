@@ -1,4 +1,12 @@
-/* global getJSONData CART_INFO_URL renderIn, CART_BUY_URL, $ */
+/* global
+    getJSONData
+    CART_INFO_URL
+    renderIn
+    CART_BUY_URL
+    $
+    validateAll
+    addErrorHandlerToInputs
+  */
 
 /*
   Valor de cada moneda con respecto al peso en este caso.
@@ -25,19 +33,6 @@ const formatNumberWithLocale = (number) => {
 const getSelectedCurrency = () => document.getElementsByName('porcentajeEnvio')[1].value;
 const formatMoney = (ammount, currency = getSelectedCurrency()) => `${currency} ${formatNumberWithLocale(ammount)}`;
 const isAcceptedCreditCard = (name) => ACCEPTED_CREDIT_CARDS.has(name);
-
-// TODO Validar dependiendo del tipo
-const isValid = (input) => input.value.length > 0;
-
-const toggleError = (e) => {
-  const { target } = e;
-  const errorMessage = target.dataset.error;
-  if (isValid(target)) {
-    target.nextElementSibling.innerHTML = '';
-  } else {
-    target.nextElementSibling.innerHTML = errorMessage;
-  }
-};
 
 const capitalize = (string) => {
   const firstCapitalized = string.charAt(0).toUpperCase();
@@ -192,14 +187,6 @@ const getPurchaseData = () => {
   return confirmationData;
 };
 
-const validateAll = (form) => {
-  const inputs = form.getElementsByClassName('with-error');
-  const arrayOfInputs = Array.from(inputs);
-
-  arrayOfInputs.forEach((input) => toggleError({ target: input }));
-  return arrayOfInputs.every((input) => isValid(input));
-};
-
 $('#modal-wizard').on('leaveStep', (e, anchorObject, currentStepIndex) => {
   /* Se verifica que estemos en el ultimo paso, justo antes de pasar al ultimo */
   if (currentStepIndex === 2) {
@@ -319,15 +306,6 @@ const onCountChange = (cartItem) => {
 
   cartItem.setAttribute('data-subtotal', unitCostInt * newProductCount);
   updateTotal();
-};
-
-const addErrorHandlerToInputs = () => {
-  const inputs = document.getElementsByClassName('with-error');
-  Array.from(inputs).forEach((input) => {
-    input.addEventListener('input', (e) => {
-      toggleError(e);
-    });
-  });
 };
 
 const updateFormPayments = () => {
