@@ -1,4 +1,4 @@
-/* global HOME, firebase, firebaseui, setLocalStorage, redirectTo */
+/* global HOME, firebase, firebaseui, validateAll, redirectTo */
 
 // For Firebase
 const CLIENT_ID = '210642457292-5ta58pfjm3pqbg7h7seocdkbtbhqt1oh.apps.googleusercontent.com';
@@ -58,8 +58,34 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(formulario);
       const userObj = Object.fromEntries(formData.entries());
 
-      setLocalStorage('user', userObj);
-      redirectTo(HOME);
+      if (validateAll(formulario)) {
+        firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password).then(() => {
+          redirectTo(HOME);
+        }).catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          let errorToDisplay;
+          console.log(error)
+
+          if (errorCode === 'auth/invalid-email') {
+            errorToDisplay = 'Email no valido';
+          } else if (errorCode === 'auth/wrong-password') {
+            errorToDisplay = 'Contraseña incorrecta';
+          } else if (errorCode === 'auth/user-not-found') {
+            errorToDisplay = 'Usuario no encontrado';
+          } else {
+            errorToDisplay = 'No se puedo iniciar sesion';
+          }
+
+          document.getElementById('login-error').innerHTML = errorToDisplay;
+     
+          // ..
+        });
+
+      }
+ 
+
+      
     }
   });
 });
