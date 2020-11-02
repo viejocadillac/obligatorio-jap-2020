@@ -4,6 +4,7 @@ body {
 
 .navbar-light.bg-light {
   box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.1);
+  
 }
 
 
@@ -128,6 +129,7 @@ a.logo-small {
 }
 
 /* Opciones de usuario en la barra de navegacion */
+
 
 
 .nav-item {

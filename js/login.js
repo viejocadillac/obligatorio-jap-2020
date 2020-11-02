@@ -46,6 +46,17 @@ ui.start('#firebaseui-auth-container', uiConfig);
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('formulario-login');
 
+  /*
+    Se oculta el mensaje de error del formulario cada vez que se ingresa
+    algo en los input con clase with-error
+  */
+  const inputs = document.getElementsByClassName('with-error');
+  Array.from(inputs).forEach((input) => {
+    input.addEventListener('input', () => {
+      document.getElementById('login-error').innerHTML = '';
+    });
+  });
+
   formulario.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -65,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Handle Errors here.
           const errorCode = error.code;
           let errorToDisplay;
-          console.log(error)
+          console.log(error);
 
           if (errorCode === 'auth/invalid-email') {
             errorToDisplay = 'Email no valido';
