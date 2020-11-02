@@ -50,12 +50,7 @@ const hideSpinner = () => {
 
 const logout = (e) => {
   firebase.auth().signOut().then(() => {
-    const localStorageUser = getFromLocalStorage('user');
-    if (localStorageUser) {
-      localStorage.removeItem('user');
-      redirectTo(LOGIN);
-    }
-    // console.log('sesion cerrada correctamente');
+    redirectTo(HOME);
   });
 };
 
@@ -114,6 +109,26 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+let DB;
+
+const saveInDBifNewUser = (user) => {
+  if (firebase.database) {
+    DB = firebase.database();
+    const userRef = DB.ref(`users/${user.uid}`);
+    userRef.once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        const data = {
+          displayName: user.displayName,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          phoneNumber: user.phoneNumber ? user.phoneNumber : '',
+          photoURL: user.photoURL,
+        };
+        userRef.set(data);
+      }
+    });
+  }
+};
 
 /*
 Se chequea si hay un usuario logueado, dependiendo de eso,
@@ -122,13 +137,12 @@ se completa el menu de la barra de navegacion
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in with google.
-    createNavMenu(user.displayName, user.photoURL);
-  } else {
-    // usuario no logueado con google, se chequea si existe en localStorage
-    const localStorageUser = getFromLocalStorage('user');
-
-    if (localStorageUser) {
-      createNavMenu(localStorageUser.username, 'img/profile-example.png');
+    saveInDBifNewUser(user);
+    firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
+      const name = snapshot.val().displayName ? snapshot.val().displayName : snapshot.val().email.split('@')[0];
+      const image = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
+      createNavMenu(name, image);
+    });
     } else {
       createNavMenu();
     }
