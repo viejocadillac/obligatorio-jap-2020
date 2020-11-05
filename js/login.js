@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle Errors here.
         const errorCode = error.code;
         let errorToDisplay;
-        console.log(error);
 
         if (errorCode === 'auth/invalid-email') {
           errorToDisplay = 'Email no valido';

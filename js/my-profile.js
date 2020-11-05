@@ -1,14 +1,24 @@
-/* global firebase renderIn hideSpinner LOGIN REGISTER HOME */
+/* global
+  firebase
+  renderIn
+  hideSpinner
+  LOGIN
+  REGISTER
+  HOME
+  generateUserResumeHTML
+  getFormDataObject
+*/
 
 const updateUserData = (data, cb) => {
   // Chequea si hay algun usuario logueado.
+  // eslint-disable-next-line consistent-return
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const userRef = firebase.database().ref(`users/${user.uid}`);
       return userRef.update(data, cb);
     }
-  }, (error) => {
-    console.log(error);
+  }, () => {
+    // TODO Manejar errores
   });
 };
 
@@ -31,8 +41,8 @@ const onUserData = (callback) => {
       `;
       hideSpinner();
     }
-  }, (error) => {
-    console.log(error);
+  }, () => {
+    // TODO Manejar errores
   });
 };
 
@@ -62,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Automaticamente cuando el usuario selecciona una nueva imagen,
         esta se sube a la base de datos
       */
-      updateUserData({ photoURL: image }, () => console.log('Image loaded'));
+      updateUserData({ photoURL: image });
     };
 
     reader.readAsDataURL(inputImage.files[0]);
@@ -94,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveChanges = document.getElementById('save-changes');
 
   saveChanges.addEventListener('click', () => {
-    const userInfo = Object.fromEntries(new FormData(userInfoForm));
+    const userInfo = getFormDataObject(userInfoForm);
     updateUserData(userInfo);
     saveChanges.disabled = true;
   });

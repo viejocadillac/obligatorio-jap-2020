@@ -23,13 +23,16 @@ const CART_BUY_URL = 'https://japdevdep.github.io/ecommerce-api/cart/buy.json';
  * @param {boolean} replace Indica si se debe remplazar el contenido (true) o agregar (false)
  */
 const renderIn = (container, replace = false) => (innerHTML) => {
-  // eslint-disable-next-line no-param-reassign
   if (replace) {
+    // eslint-disable-next-line no-param-reassign
     container.innerHTML = innerHTML;
   } else {
+    // eslint-disable-next-line no-param-reassign
     container.innerHTML += innerHTML;
   }
 };
+
+const getFormDataObject = (form) => Object.fromEntries(new FormData(form));
 
 const redirectTo = (url) => {
   window.location.href = url;
@@ -50,10 +53,8 @@ const hideSpinner = () => {
 };
 
 const logout = (redirect = true) => {
-
   firebase.auth().signOut().then(() => {
     if (redirect) redirectTo(HOME);
-    
   });
 };
 
@@ -188,7 +189,6 @@ const getJSONData = (url, showLoading = true, options = {}) => {
     .then((response) => {
       result.status = 'ok';
       result.data = response;
-      if (showLoading) hideSpinner();
       return result;
     })
     .catch((error) => {

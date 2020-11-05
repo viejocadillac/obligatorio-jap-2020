@@ -6,7 +6,8 @@
     $
     validateAll
     addErrorHandlerToInputs
-  */
+    getFormDataObject
+*/
 
 /*
   Valor de cada moneda con respecto al peso en este caso.
@@ -46,7 +47,6 @@ const generateAddressHTML = (address) => `
   <b>${capitalize(address.calle)} ${address.numero}</b> <br>
   ${capitalize(address.ciudad)} / ${address.departamento} <br>
   ${address.observaciones ? `(${capitalize(address.observaciones)})` : ''}
-  
   <hr>
 `;
 
@@ -180,9 +180,9 @@ const getPurchaseData = () => {
   const formMetodoPago = document.getElementById('form-step-2');
 
   const confirmationData = {
-    direccion: Object.fromEntries(new FormData(formDireccion)),
-    metodoEnvio: Object.fromEntries(new FormData(formMetodoEnvio)),
-    metodoPago: Object.fromEntries(new FormData(formMetodoPago)),
+    direccion: getFormDataObject(formDireccion),
+    metodoEnvio: getFormDataObject(formMetodoEnvio),
+    metodoPago: getFormDataObject(formMetodoPago),
   };
   return confirmationData;
 };
@@ -335,21 +335,19 @@ const renderPurchaseMessage = ({ msg }, success) => {
   }
 };
 
-const sendPurchaseData = (data) => {
-  /*
-    La informacion al servidor deberia de ser enviada por POST, pero
-    el servidor al que se manda esta solicitud simulada no lo acepta,
-    por lo que siemplemente se hace una solicitud GET para obtener el mensaje de confirmacion
-  */
-  console.log(data);
-  return fetch(CART_BUY_URL).then((response) => {
-    if (response.status === 200) {
-      return response.json();
-    }
-    // eslint-disable-next-line no-throw-literal
-    throw { msg: 'Error al realizar la compra' };
-  });
-};
+/*
+  La informacion al servidor deberia de ser enviada por POST, pero
+  el servidor al que se manda esta solicitud simulada no lo acepta,
+  por lo que simplemente se hace una solicitud GET para obtener el mensaje de confirmacion
+*/
+const sendPurchaseData = () => fetch(CART_BUY_URL).then((response) => {
+  if (response.status === 200) {
+    return response.json();
+  }
+  // TODO Mostrar mensaje de error al usuario
+  // eslint-disable-next-line no-throw-literal
+  throw { msg: 'Error al realizar la compra' };
+});
 
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los

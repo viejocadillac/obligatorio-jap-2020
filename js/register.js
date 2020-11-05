@@ -1,4 +1,4 @@
-/* global firebase, redirectTo, PROFILE */
+/* global firebase, redirectTo, PROFILE, getFormDataObject */
 const saveUserInDB = (user, userExtraData) => {
   const userRef = firebase.database().ref(`users/${user.uid}`);
   return userRef.set(userExtraData);
@@ -8,24 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnRegister = document.getElementById('btn-register');
   const userInfoForm = document.getElementById('personal-info');
   btnRegister.addEventListener('click', () => {
-    const userInfo = Object.fromEntries(new FormData(userInfoForm));
-    const { email, password } = userInfo;
+    const userInfo = getFormDataObject(userInfoForm);
+    const { email, password, displayName } = userInfo;
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
       const { user } = response;
-      const dataToSave = {
+      const initData = {
         email,
-        displayName: userInfo.displayName,
+        displayName,
         photoURL: '',
         phoneNumber: '',
         emailVerified: false,
       };
 
-      saveUserInDB(user, dataToSave).then(() => redirectTo(PROFILE));
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      console.log(errorCode);
+      saveUserInDB(user, initData).then(() => redirectTo(PROFILE));
+    }).catch(() => {
+      // TODO Manejar errores
     });
   });
 });
