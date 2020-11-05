@@ -1,3 +1,7 @@
+const saveUserInDB = (user, userExtraData) => {
+  const userRef = firebase.database().ref(`users/${user.uid}`);
+  return userRef.set(userExtraData);
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   const btnRegister = document.getElementById('btn-register');
