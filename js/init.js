@@ -2,7 +2,8 @@
 /* global firebase */
 
 const HOME = '/obligatorio-jap-2020';
-const LOGIN = '/obligatorio-jap-2020/login';
+const LOGIN = `${HOME}/login`;
+const PROFILE = `${HOME}/my-profile`;
 
 const CATEGORIES_URL = 'https://japdevdep.github.io/ecommerce-api/category/all.json';
 const PUBLISH_PRODUCT_URL = 'https://japdevdep.github.io/ecommerce-api/product/publish.json';
