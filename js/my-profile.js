@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
       inputEmail.setAttribute('value', userData.email);
       profileImage.setAttribute('src', image);
 
-      inputDepartamento.value = userData.departamento;
-      inputCiudad.setAttribute('value', userData.ciudad);
-      inputCalle.setAttribute('value', userData.calle);
-      inputNumeroPuerta.setAttribute('value', userData.numero);
-      inputObservaciones.setAttribute('value', userData.observaciones);
+      inputDepartamento.value = userData.departamento ? userData.departamento : 'Montevideo';
+      inputCiudad.setAttribute('value', userData.ciudad ? userData.ciudad : '');
+      inputCalle.setAttribute('value', userData.calle ? userData.calle : '');
+      inputNumeroPuerta.setAttribute('value', userData.numero ? userData.numero : '');
+      inputObservaciones.setAttribute('value', userData.observaciones ? userData.observaciones : '');
 
       renderIn(userResumeData, true)(generateUserResumeHTML(userData.displayName, userData.email));
     }
