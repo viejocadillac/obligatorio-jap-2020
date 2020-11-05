@@ -4,7 +4,7 @@ const updateUserData = (data, cb) => {
   // Chequea si hay algun usuario logueado.
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      const userRef = DB.ref(`users/${user.uid}`);
+      const userRef = firebase.database().ref(`users/${user.uid}`);
       return userRef.update(data, cb);
     }
   }, (error) => {
@@ -16,7 +16,7 @@ const onUserData = (callback) => {
   // Chequea si hay algun usuario logueado.
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      DB.ref(`users/${user.uid}`).on('value', (snapshot) => {
+      firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
         callback(snapshot.val());
       });
     } else {
