@@ -36,11 +36,6 @@ const onUserData = (callback) => {
   });
 };
 
-const generateUserResumeHTML = (displayName, email) => `
-  <h3 class="user-resume__name">${displayName}</h3>
-  <p class="user-resume__email">${email}</p>
-`;
-
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
