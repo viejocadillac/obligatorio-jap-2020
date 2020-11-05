@@ -3,6 +3,7 @@
 
 const HOME = '/obligatorio-jap-2020';
 const LOGIN = `${HOME}/login`;
+const REGISTER = `${HOME}/register`;
 const PROFILE = `${HOME}/my-profile`;
 
 const CATEGORIES_URL = 'https://japdevdep.github.io/ecommerce-api/category/all.json';
