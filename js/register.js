@@ -1,10 +1,11 @@
-/* global firebase, redirectTo, PROFILE, getFormDataObject */
+/* global firebase, redirectTo, PROFILE, getFormDataObject hideSpinner */
 const saveUserInDB = (user, userExtraData) => {
   const userRef = firebase.database().ref(`users/${user.uid}`);
   return userRef.set(userExtraData);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  hideSpinner();
   const btnRegister = document.getElementById('btn-register');
   const userInfoForm = document.getElementById('personal-info');
   btnRegister.addEventListener('click', () => {
@@ -21,9 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
         emailVerified: false,
       };
 
-      saveUserInDB(user, initData).then(() => redirectTo(PROFILE));
-    }).catch(() => {
+      saveUserInDB(user, initData).then(() => redirectTo(PROFILE)).catch((err) => {console.log(error)});
+    }).catch((error) => {
       // TODO Manejar errores
+      console.log(error)
     });
   });
 });
