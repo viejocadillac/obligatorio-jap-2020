@@ -48,14 +48,21 @@ const hideSpinner = () => {
   document.getElementById('spinner-wrapper').style.display = 'none';
 };
 
-const logout = (e) => {
+const logout = (redirect = true) => {
+
   firebase.auth().signOut().then(() => {
-    redirectTo(HOME);
+    if (redirect) redirectTo(HOME);
+    
   });
 };
 
+const generateUserResumeHTML = (displayName, email) => `
+  <h3 class="user-resume__name">${displayName}</h3>
+  <p class="user-resume__email">${email}</p>
+`;
+
 const createNavMenu = (displayName, photoURL) => {
-  const dropdownButton = document.getElementById('dropdown-button');
+  const dropdownButton = document.getElementById('dropdownMenuButton');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
 
   if (displayName && dropdownButton) {
@@ -118,25 +125,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 let DB;
 
-const saveInDBifNewUser = (user) => {
-  if (firebase.database) {
-    DB = firebase.database();
-    const userRef = DB.ref(`users/${user.uid}`);
-    userRef.once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-        const data = {
-          displayName: user.displayName,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          phoneNumber: user.phoneNumber ? user.phoneNumber : '',
-          photoURL: user.photoURL,
-        };
-        userRef.set(data);
-      }
-    });
-  }
-};
-
 /*
 Se chequea si hay un usuario logueado, dependiendo de eso,
 se completa el menu de la barra de navegacion
@@ -144,7 +132,6 @@ se completa el menu de la barra de navegacion
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in with google.
-    saveInDBifNewUser(user);
     firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
       const name = snapshot.val().displayName ? snapshot.val().displayName : snapshot.val().email.split('@')[0];
       const image = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
