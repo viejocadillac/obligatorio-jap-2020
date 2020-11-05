@@ -1,3 +1,4 @@
+/* global firebase, redirectTo, PROFILE */
 const saveUserInDB = (user, userExtraData) => {
   const userRef = firebase.database().ref(`users/${user.uid}`);
   return userRef.set(userExtraData);
