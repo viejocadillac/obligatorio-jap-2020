@@ -59,44 +59,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   formulario.addEventListener('submit', (e) => {
     e.preventDefault();
+    const formData = new FormData(formulario);
+    const userObj = Object.fromEntries(formData.entries());
 
-    const user = firebase.auth().currentUser;
-    if (user) {
-      // User is signed in.
-      // TODO Mostrar el error de otra forma, por ejemplo abajo del formulario
-      alert('Ya se encuentra logueado con google');
-    } else {
-      const formData = new FormData(formulario);
-      const userObj = Object.fromEntries(formData.entries());
+    if (validateAll(formulario)) {
+      firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password).then(() => {
+        redirectTo(HOME);
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        let errorToDisplay;
+        console.log(error);
 
-      if (validateAll(formulario)) {
-        firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password).then(() => {
-          redirectTo(HOME);
-        }).catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          let errorToDisplay;
-          console.log(error);
+        if (errorCode === 'auth/invalid-email') {
+          errorToDisplay = 'Email no valido';
+        } else if (errorCode === 'auth/wrong-password') {
+          errorToDisplay = 'Contraseña incorrecta';
+        } else if (errorCode === 'auth/user-not-found') {
+          errorToDisplay = 'Usuario no encontrado';
+        } else {
+          errorToDisplay = 'No se puedo iniciar sesion';
+        }
 
-          if (errorCode === 'auth/invalid-email') {
-            errorToDisplay = 'Email no valido';
-          } else if (errorCode === 'auth/wrong-password') {
-            errorToDisplay = 'Contraseña incorrecta';
-          } else if (errorCode === 'auth/user-not-found') {
-            errorToDisplay = 'Usuario no encontrado';
-          } else {
-            errorToDisplay = 'No se puedo iniciar sesion';
-          }
-
-          document.getElementById('login-error').innerHTML = errorToDisplay;
-     
-          // ..
-        });
-
-      }
- 
-
-      
+        document.getElementById('login-error').innerHTML = errorToDisplay;
+      });
     }
   });
 });
