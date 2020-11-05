@@ -1,4 +1,4 @@
-/* global firebase renderIn hideSpinner LOGIN REGISTER */
+/* global firebase renderIn hideSpinner LOGIN REGISTER HOME */
 
 const updateUserData = (data, cb) => {
   // Chequea si hay algun usuario logueado.
@@ -24,7 +24,7 @@ const onUserData = (callback) => {
       const main = document.getElementById('main');
       main.classList.add('main-no-user');
       main.innerHTML = `
-      <img src="/img/login.svg" height="200">
+        <img src="${HOME}/img/login.svg" height="200">
         <h1 class="main-no-user__title">Inicia sesión para ver esto</h1>
         <a href="${LOGIN}" class="btn btn-primary btn-iniciar-sesion" >Ir a iniciar sesión</a>
         <p class="main-no-user__footer">¿No tenés cuenta? <a href="${REGISTER}">Registrate</a></p>
