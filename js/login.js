@@ -8,7 +8,7 @@ const uiConfig = {
   // Url to redirect to after a successful sign-in.
   signInSuccessUrl: HOME,
   callbacks: {
-    signInSuccess() {
+    signInSuccessWithAuthResult() {
       if (window.opener) {
         // The widget has been opened in a popup, so close the window
         // and return false to not redirect the opener.
