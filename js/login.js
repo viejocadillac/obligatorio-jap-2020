@@ -1,4 +1,4 @@
-/* global HOME, firebase, firebaseui, validateAll, redirectTo */
+/* global HOME, firebase, firebaseui, validateAll, redirectTo, generateUserResumeHTML hideSpinner */
 
 // For Firebase
 const CLIENT_ID = '210642457292-5ta58pfjm3pqbg7h7seocdkbtbhqt1oh.apps.googleusercontent.com';
