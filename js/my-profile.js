@@ -26,8 +26,8 @@ const onUserData = (callback) => {
       main.innerHTML = `
       <img src="/img/login.svg" height="200">
         <h1 class="main-no-user__title">Inicia sesión para ver esto</h1>
-        <a href="${HOME}/login.html" class="btn btn-primary btn-iniciar-sesion" >Ir a iniciar sesión</a>
-        <p class="main-no-user__footer">¿No tenés cuenta? <a href="${HOME}/register.html">Registrate</a></p>
+        <a href="${LOGIN}" class="btn btn-primary btn-iniciar-sesion" >Ir a iniciar sesión</a>
+        <p class="main-no-user__footer">¿No tenés cuenta? <a href="${REGISTER}">Registrate</a></p>
       `;
       hideSpinner();
     }
