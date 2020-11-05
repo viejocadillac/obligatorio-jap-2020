@@ -8,8 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const userInfoForm = document.getElementById('personal-info');
   btnRegister.addEventListener('click', () => {
     const userInfo = Object.fromEntries(new FormData(userInfoForm));
-    console.log(userInfo)
-    firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password).catch(function(error) {
+    const { email, password } = userInfo;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((response) => {
+      const { user } = response;
+      const dataToSave = {
+        email,
+        displayName: userInfo.displayName,
+        photoURL: '',
+        phoneNumber: '',
+        emailVerified: false,
+      };
+
+      saveUserInDB(user, dataToSave).then(() => redirectTo(PROFILE));
+    }).catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       console.log(errorCode);
