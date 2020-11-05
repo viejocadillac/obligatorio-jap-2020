@@ -17,7 +17,7 @@
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  
+
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <!-- Estilos globales -->
@@ -31,9 +31,10 @@
 
 <body>
   <div class="container p-1">
-    <div class="signin">
+    <!-- Se muestra cuando no existe usuario logeado -->
+    <div id="signin" class="signin">
       <h1 class="signin-title">eMercado</h1>
-      <form id="formulario-login">
+      <form id="formulario-login" class="form-login">
 
         <div id="user-input-group" class="form-group">
           <label for="email">Email</label>
@@ -46,21 +47,41 @@
           <input id="password" name="password" type="password" class="form-control form-control-sm with-error" data-error="Debe ingresar su contraseña">
           <div></div>
         </div>
-
-        <button type="submit" class="btn btn-primary float-right">Entrar</button>
+        
+   
+          <button type="submit" class="btn btn-primary btn-login">Entrar</button>
+      
+        
+        
         
       </form>
+      <p class="main-no-user__footer">¿No tenés cuenta? <a href="/register.html">Registrate</a></p>
       <p id="login-error" class="login-error"></p>
       <hr></hr>
       <div id="firebaseui-auth-container"></div>
 
     </div>
+
+      <!-- Se muestra cuando EXISTE usuario logeado -->
+    <div id="user-loged" class="signin">
+      <h1 class="main-no-user__title">Ya iniciaste sesion con la siguiente cuenta.</h1>
+      <div id="user-resume">
+        <!-- Se completa dinamicamente -->
+      </div>
+
+
+      <button type="button" class="btn btn-primary btn-iniciar-sesion" onclick="logout(false)">Cerrar sesión</button>
+    </div>
     
   </div>
 
- 
-  <script src="js/init.js"></script>
-  <script src="js/login.js"></script>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </body>
-
 </html>

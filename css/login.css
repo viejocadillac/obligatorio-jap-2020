@@ -15,14 +15,18 @@ body {
 
 .signin {
   width: 100%;
-  max-width: 600px;
+  max-width: 300px;
   margin: auto;
-  padding: 4em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.firebaseui-card-content {
+  padding: 0;
 }
 
 .firebaseui-idp-button {
@@ -56,6 +60,25 @@ body {
   bottom: 0;
 }
 
+.form-login {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-login {
+  margin-left: auto;
+  margin-right: 0;
+  align-self: center;
+}
+
+.main-no-user__footer {
+  width: 100%;
+  text-align: center;
+}
+
+.with-error{
+  margin-bottom: 0;
+}
 
 .google-signin {
   text-align: center;
@@ -68,4 +91,27 @@ hr {
   width: 60%;               
   background-color:rgb(206, 206, 206);
   height: 1px;
+}
+
+#spinner-wrapper {
+  display: block;
+  z-index: 3;
+  background-color: rgb(255, 255, 255);
+}
+
+.lds-ring {
+  transform: translate(-50%, -50%);
+}
+
+.lds-ring div {
+  border: 6px solid grey;
+  border-color: grey transparent transparent transparent;
+}
+
+.lds-ring::after {
+  content: 'Cargando';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -1em;
 }
