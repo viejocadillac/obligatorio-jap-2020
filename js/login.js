@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       signin.style.display = 'none';
       firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
         signin.classList.add('main-no-user');
-        const userImage = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
+        const userImage = snapshot.val().photoURL ? snapshot.val().photoURL : `${HOME}/img/profile-example.png`;
         document.getElementById('user-loged').style.display = 'block';
         document.getElementById('user-resume').innerHTML = `
         <img src="${userImage}" height="150px"></img>

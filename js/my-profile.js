@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   onUserData((userData) => {
     if (userData) {
-      const image = userData.photoURL ? userData.photoURL : '/img/profile-example.png';
+      const image = userData.photoURL ? userData.photoURL : `${HOME}/img/profile-example.png`;
       inputName.setAttribute('value', userData.displayName);
       inputAge.setAttribute('value', userData.age);
       inputPhone.setAttribute('value', userData.phoneNumber);

@@ -135,7 +135,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // User is signed in with google.
     firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
       const name = snapshot.val().displayName ? snapshot.val().displayName : snapshot.val().email.split('@')[0];
-      const image = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
+      const image = snapshot.val().photoURL ? snapshot.val().photoURL : `${HOME}/img/profile-example.png`;
       createNavMenu(name, image);
     });
   } else {
