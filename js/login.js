@@ -46,6 +46,28 @@ ui.start('#firebaseui-auth-container', uiConfig);
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('formulario-login');
 
+  firebase.auth().onAuthStateChanged((user) => {
+    const signin = document.getElementById('signin');
+
+    if (user) {
+      signin.style.display = 'none';
+      firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
+        signin.classList.add('main-no-user');
+        const userImage = snapshot.val().photoURL ? snapshot.val().photoURL : '/img/profile-example.png';
+        document.getElementById('user-loged').style.display = 'block';
+        document.getElementById('user-resume').innerHTML = `
+        <img src="${userImage}" height="150px"></img>
+          ${generateUserResumeHTML(snapshot.val().displayName, snapshot.val().email)}
+        `;
+        hideSpinner();
+      });
+    } else {
+      signin.style.display = 'block';
+      document.getElementById('user-loged').style.display = 'none';
+      hideSpinner();
+    }
+  });
+
   /*
     Se oculta el mensaje de error del formulario cada vez que se ingresa
     algo en los input con clase with-error
