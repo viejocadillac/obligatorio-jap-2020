@@ -1,4 +1,4 @@
-/* global firebase DB renderIn hideSpinner */
+/* global firebase renderIn hideSpinner LOGIN REGISTER */
 
 const updateUserData = (data, cb) => {
   // Chequea si hay algun usuario logueado.
@@ -20,7 +20,7 @@ const onUserData = (callback) => {
         callback(snapshot.val());
       });
     } else {
-      /* Usuario no logueado, mostrar mensaje de esto y boton de ir al login o a crear cuenta*/
+      /* Usuario no logueado, mostrar mensaje de esto y boton de ir al login o a crear cuenta */
       const main = document.getElementById('main');
       main.classList.add('main-no-user');
       main.innerHTML = `
