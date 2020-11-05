@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="es">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,13 +6,14 @@
     <meta name="description" content="">
     <title>eMercado - Todo lo que busques está aquí</title>
 
-    <!-- Firebase Auth -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__es.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    
     <!-- Bootstrap -->
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -23,32 +23,14 @@
     <!-- Estilos globales -->
     <link href="css/styles.css" rel="stylesheet">
 
-    <script src="js/init.js"></script>
     <link href="css/dropzone.css" rel="stylesheet">
     <script rel="stylesheet" src="js/dropzone.js"></script>
-    <script src="js/sell.js"></script>
+    <script src="js/init.js" defer></script>
 
     <!-- Verifica si un usuario se encuentra logeado, de no ser asi redirige a /login -->
-    <script src="js/redirectIfNotLoged.js"></script>
+    <script src="js/redirectIfNotLoged.js" defer></script>
   
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
+    <script src="js/sell.js" defer></script>
   </head>
   <body>
 
