@@ -1,4 +1,4 @@
-/* global PUBLISH_PRODUCT_URL, getJSONData, Dropzone */
+/* global firebase, PUBLISH_PRODUCT_URL, REGISTER, getJSONData, Dropzone, hideSpinner */
 
 let productCost = 0;
 let productCount = 0;
@@ -33,7 +33,6 @@ function updateTotalCosts() {
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
-
   firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
       /* Usuario no logueado, mostrar mensaje de esto y boton de ir al login o a crear cuenta */
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="${LOGIN}" class="btn btn-primary btn-iniciar-sesion" >Ir a iniciar sesión</a>
         <p class="main-no-user__footer">¿No tenés cuenta? <a href="${REGISTER}">Registrate</a></p>
       `;
-      
     }
     hideSpinner();
   }, () => {
