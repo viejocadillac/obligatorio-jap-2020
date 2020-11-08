@@ -85,37 +85,47 @@
       <p>Vender</p>
     </a>
   </nav>
-  <div class="container p-5">
+  <div class="container main">
+    <div class="bienvenida">
+      <img src="/img/register.svg" alt="Registro" height="200px">
+      <h1>Bienvenido/a!</h1>
+      <p>Completa el formulario para ser parte de eMercado</p>
+
+    </div>
     <form id="personal-info" class="form-row">
-      <fieldset class="col-lg-6">
-        <legend>Registro</legend>
-        
+      <fieldset class="col-lg-6 formulario">
+  
           <div class="form-group">
             <label for="name">Nombre y Apellido</label>
-            <input class="form-control form-control-sm" type="text" name="displayName" id="name" >
+            <input class="form-control form-control-sm with-error" type="text" name="displayName" id="name" data-error="Debes ingresar tu nombre">
+            <div><!-- Elemento donde se renderiza el mensaje de error --></div>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input class="form-control form-control-sm" type="text" name="email" id="email" >
+            <input class="form-control form-control-sm with-error" type="text" name="email" id="email" data-error="Email no valido">
+            <div><!-- Elemento donde se renderiza el mensaje de error --></div>
           </div>
           <div class="form-group">
             <label for="password">Contraseña</label>
-            <input class="form-control form-control-sm" type="password" name="password" id="password" value="">
+            <input class="form-control form-control-sm with-error" type="password" name="password" id="password" value="" data-error="Debes ingresar una contraseña">
+            <div><!-- Elemento donde se renderiza el mensaje de error --></div>
           </div>
           <div class="form-group">
             <label for="repassword">Confirmar contraseña</label>
-            <input class="form-control form-control-sm" type="password" name="repassword" id="repassword" >
+            <input class="form-control form-control-sm with-error" type="password" name="repassword" id="repassword" data-error="No coincide con la contraseña">
+            <div><!-- Elemento donde se renderiza el mensaje de error --></div>
           </div>
-          <button id="btn-register" type="button" class="btn btn-primary">Registrarme</button>
-         
+
+          <div class="input-group input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm"><i id="btn-send-form-icon" class="fa fa-sign-in-alt"></i></span>
+            </div>
+            <input id="btn-register" type="button" class="form-control btn btn-primary" value="Registrate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            <p id="register-error" class="form-error form-error--register"><!-- Se completa dinamicamente --></p>
+          </div>
       
       </fieldset>
-    
-      
-  
-      
     </form>
- 
   </div>
 
  
