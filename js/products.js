@@ -29,50 +29,54 @@ const showProducts = (products) => {
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
 document.addEventListener('DOMContentLoaded', () => {
-  getJSONData(PRODUCTS_URL).then(({
-    data,
-  }) => {
-    // eslint-disable-next-line no-undef
-    lastSorted = data;
-    showProducts(data);
+  getJSONData(PRODUCTS_URL)
+    .then(({
+      data,
+    }) => {
+      // eslint-disable-next-line no-undef
+      lastSorted = data;
+      showProducts(data);
 
-    let sortOptions = {
-      key: 'cost',
-      areNumbers: true,
-    };
-    addOrderListener('by-cost-max-min', lastSorted, DESC, sortOptions, showProducts);
-    addOrderListener('by-cost-min-max', lastSorted, ASC, sortOptions, showProducts);
+      let sortOptions = {
+        key: 'cost',
+        areNumbers: true,
+      };
+      addOrderListener('by-cost-max-min', lastSorted, DESC, sortOptions, showProducts);
+      addOrderListener('by-cost-min-max', lastSorted, ASC, sortOptions, showProducts);
 
-    sortOptions = {
-      key: 'soldCount',
-      areNumbers: true,
-    };
-    addOrderListener('by-sold-count-max-min', lastSorted, DESC, sortOptions, showProducts);
-    addOrderListener('by-sold-count-min-max', lastSorted, ASC, sortOptions, showProducts);
+      sortOptions = {
+        key: 'soldCount',
+        areNumbers: true,
+      };
+      addOrderListener('by-sold-count-max-min', lastSorted, DESC, sortOptions, showProducts);
+      addOrderListener('by-sold-count-min-max', lastSorted, ASC, sortOptions, showProducts);
 
-    // Orden alfabetico A-Z
-    sortOptions = {
-      key: 'name',
-    };
-    addOrderListener('by-abc-az', lastSorted, ASC, sortOptions, showProducts);
-    // Orden alfabetico Z-A
-    addOrderListener('by-abc-za', lastSorted, DESC, sortOptions, showProducts);
+      // Orden alfabetico A-Z
+      sortOptions = {
+        key: 'name',
+      };
+      addOrderListener('by-abc-az', lastSorted, ASC, sortOptions, showProducts);
+      // Orden alfabetico Z-A
+      addOrderListener('by-abc-za', lastSorted, DESC, sortOptions, showProducts);
 
-    // Filter
-    document.getElementById('filter').addEventListener('click', () => {
-      const [minValue, maxValue] = getNumberValues('filter-min', 'filter-max');
+      // Filter
+      document.getElementById('filter').addEventListener('click', () => {
+        const [minValue, maxValue] = getNumberValues('filter-min', 'filter-max');
 
-      const filterByPrice = document.getElementById('filter-by-price').checked;
-      const filterBySold = document.getElementById('filter-by-sold').checked;
+        const filterByPrice = document.getElementById('filter-by-price').checked;
+        const filterBySold = document.getElementById('filter-by-sold').checked;
 
-      if (filterByPrice) {
-        filterByRange(lastSorted, 'cost', minValue, maxValue, showProducts);
-      } else if (filterBySold) {
-        filterByRange(lastSorted, 'soldCount', minValue, maxValue, showProducts);
-      }
+        if (filterByPrice) {
+          filterByRange(lastSorted, 'cost', minValue, maxValue, showProducts);
+        } else if (filterBySold) {
+          filterByRange(lastSorted, 'soldCount', minValue, maxValue, showProducts);
+        }
+      });
+
+      // Clear filter
+      addClearFilterListener('filter-clear', 'filter-min', 'filter-max', showProducts);
+    })
+    .finally(() => {
+      hideSpinner();
     });
-
-    // Clear filter
-    addClearFilterListener('filter-clear', 'filter-min', 'filter-max', showProducts);
-  });
 });
