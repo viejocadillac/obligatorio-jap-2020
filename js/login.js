@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputs = document.getElementsByClassName('with-error');
   Array.from(inputs).forEach((input) => {
     input.addEventListener('input', () => {
-      document.getElementById('login-error').innerHTML = '';
+      document.getElementById('form-error').innerHTML = '';
     });
   });
 
