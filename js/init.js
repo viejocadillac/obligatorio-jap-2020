@@ -83,8 +83,14 @@ const createNavMenu = (displayName, photoURL) => {
   }
 };
 
-// TODO Validar dependiendo del tipo
-const isValid = (input) => input.value.length > 0;
+const validators = {
+  repassword: (val) => document.getElementById('password').value === val,
+  password: (val) => val.length > 6,
+  email: (val) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(val).toLowerCase());
+  },
+};
 
 const toggleError = (e) => {
   const { target } = e;
