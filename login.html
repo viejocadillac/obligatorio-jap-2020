@@ -47,16 +47,18 @@
           <input id="password" name="password" type="password" class="form-control form-control-sm with-error" data-error="Debe ingresar su contraseña">
           <div></div>
         </div>
-        
-   
-          <button type="submit" class="btn btn-primary btn-login">Entrar</button>
-      
-        
-        
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm"><i id="btn-send-form-icon" class="fa fa-sign-in-alt"></i></span>
+          </div>
+          <input id="btn-login" type="submit" class="form-control btn btn-primary" value="Iniciar sesion" aria-label="Boton de inicio de sesión" aria-describedby="inputGroup-sizing-sm">
+          <p id="form-error" class="form-error form-error--register"><!-- Se completa dinamicamente--></p>
+        </div>
         
       </form>
       <p class="main-no-user__footer">¿No tenés cuenta? <a href="/obligatorio-jap-2020/register.html">Registrate</a></p>
-      <p id="login-error" class="login-error"></p>
+     
       <hr></hr>
       <div id="firebaseui-auth-container"></div>
 
@@ -68,8 +70,6 @@
       <div id="user-resume">
         <!-- Se completa dinamicamente -->
       </div>
-
-
       <button type="button" class="btn btn-primary btn-iniciar-sesion" onclick="logout(false)">Cerrar sesión</button>
     </div>
     
