@@ -129,6 +129,31 @@ const addErrorHandlerToInputs = () => {
     });
   });
 };
+
+/**
+ * Devuelve dos funciones que manejan el estado del boton, tanto el disabled como la clase del icono
+ * @param {HTMLElement} button Boton que se desea controlar
+ * @param {HTMLElement} icon Elemento idealmente i (icono de FontAwesome)
+ *                            al que se le cambiara la clase
+ * @param {string} classLoading Clase que se le aplica al boton cuando se
+ *                               inicia una operacion asincrona
+ * @param {string} classStatic Clase que se le aplica al boton cuando
+ *                              se encuentra en su estado inicial
+ * @returns {object} Objeto con dos funciones: start y stop
+ */
+const createStateButtonHandler = (button, icon, classLoading, classStatic) => ({
+  start: () => {
+    // eslint-disable-next-line no-param-reassign
+    button.disabled = true;
+    icon.classList.replace(classStatic, classLoading);
+  },
+  stop: () => {
+    // eslint-disable-next-line no-param-reassign
+    button.disabled = false;
+    icon.classList.replace(classLoading, classStatic);
+  },
+});
+
 // Firebase config
 const firebaseConfig = {
   apiKey: 'AIzaSyB-XYq5X9nS1FIQZoCXvOohWwsJMdBDLXc',
