@@ -63,6 +63,24 @@ const generateUserResumeHTML = (displayName, email) => `
   <p class="user-resume__email">${email}</p>
 `;
 
+const getFormErrorText = (errorCode) => {
+  let errorToDisplay;
+  if (errorCode === 'auth/invalid-email') {
+    errorToDisplay = 'Email no valido';
+  } else if (errorCode === 'auth/wrong-password') {
+    errorToDisplay = 'Contraseña incorrecta';
+  } else if (errorCode === 'auth/user-not-found') {
+    errorToDisplay = 'Usuario no encontrado';
+  } else if (errorCode === 'auth/email-already-in-use') {
+    errorToDisplay = 'El email ya se encuentra en uso';
+  } else if (errorCode === 'auth/weak-password') {
+    errorToDisplay = 'Contraseña muy debil';
+  } else {
+    errorToDisplay = 'No se pudo iniciar sesion';
+  }
+  return `Ops! ${errorToDisplay}`;
+};
+
 const createNavMenu = (displayName, photoURL) => {
   const dropdownButton = document.getElementById('dropdownMenuButton');
   const opcionesDeUsuario = document.getElementById('opciones-usuario-dropdown');
