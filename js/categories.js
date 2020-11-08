@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* La variable lastSorted esta definida en el archivo sort.js */
     lastSorted = data;
     showCategories(data);
+    hideSpinner();
 
     let sortOptions = {
       key: 'productCount',
