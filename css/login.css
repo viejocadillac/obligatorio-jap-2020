@@ -57,7 +57,7 @@ body {
   text-align: center;
 }
 
-.with-error{
+.with-error {
   margin-bottom: 0;
 }
 
@@ -67,10 +67,10 @@ body {
 
 hr {
   border: 0;
-  clear:both;
-  display:block;
-  width: 60%;               
-  background-color:rgb(206, 206, 206);
+  clear: both;
+  display: block;
+  width: 60%;
+  background-color: rgb(206, 206, 206);
   height: 1px;
 }
 
