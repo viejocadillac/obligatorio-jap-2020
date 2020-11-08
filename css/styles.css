@@ -210,8 +210,6 @@ button.nav-item:active {
   border-top-right-radius: 8px;
 }
 
-
-
 .grid-element:hover img {
   transform: scale(1.02);
 }
@@ -371,9 +369,7 @@ hr {
   left: 50%;
   top: 20%;
   transform: translate(-50%);
-
   text-align: center;
-
 }
 
 .titular h1 {
@@ -424,6 +420,19 @@ input.with-error + div {
   max-width: 250px;
   margin: 0 auto;
 }
+
+.form-error {
+  color: tomato;
+  margin-top: 1rem;
+  height: 50px;
+  bottom: 0;
+  width: 300px;
+  text-align: center;
+}
+
+
+
+
 
 @media screen and (max-width: 768px) {
   .carousel-caption {
