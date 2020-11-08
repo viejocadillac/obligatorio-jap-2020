@@ -88,21 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
       firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password).then(() => {
         redirectTo(HOME);
       }).catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
-        let errorToDisplay;
-
-        if (errorCode === 'auth/invalid-email') {
-          errorToDisplay = 'Email no valido';
-        } else if (errorCode === 'auth/wrong-password') {
-          errorToDisplay = 'Contraseña incorrecta';
-        } else if (errorCode === 'auth/user-not-found') {
-          errorToDisplay = 'Usuario no encontrado';
-        } else {
-          errorToDisplay = 'No se puedo iniciar sesion';
-        }
-
-        document.getElementById('login-error').innerHTML = errorToDisplay;
+        document.getElementById('form-error').innerHTML = getFormErrorText(errorCode);
       });
     }
   });
