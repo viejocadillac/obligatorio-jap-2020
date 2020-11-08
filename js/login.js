@@ -1,4 +1,14 @@
-/* global HOME, firebase, firebaseui, validateAll, redirectTo, generateUserResumeHTML hideSpinner */
+/* global
+    HOME,
+    firebase,
+    firebaseui,
+    validateAll,
+    redirectTo,
+    generateUserResumeHTML,
+    getFormErrorText,
+    hideSpinner
+    createStateButtonHandler
+*/
 
 // For Firebase
 const CLIENT_ID = '210642457292-5ta58pfjm3pqbg7h7seocdkbtbhqt1oh.apps.googleusercontent.com';
@@ -42,7 +52,6 @@ ui.start('#firebaseui-auth-container', uiConfig);
 // Función que se ejecuta una vez que se haya lanzado el evento de
 // que el documento se encuentra cargado, es decir, se encuentran todos los
 // elementos HTML presentes.
-
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('formulario-login');
   const btnSendFormIcon = document.getElementById('btn-send-form-icon');
