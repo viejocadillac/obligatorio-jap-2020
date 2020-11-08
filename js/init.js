@@ -78,7 +78,7 @@ const createNavMenu = (displayName, photoURL) => {
     // Barra de navegacion presente pero sin nombre de usuario (dropdown)
     opcionesDeUsuario.innerHTML = `
       <a href="${LOGIN}"class="dropdown-item">Iniciar Sesion</a>
-      <a class="dropdown-item disabled">Crear cuenta</a>
+      <a href="${REGISTER}" class="dropdown-item">Crear cuenta</a>
     `;
   }
 };
