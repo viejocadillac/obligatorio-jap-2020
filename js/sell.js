@@ -45,8 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="${LOGIN}" class="btn btn-primary btn-iniciar-sesion" >Ir a iniciar sesión</a>
         <p class="main-no-user__footer">¿No tenés cuenta? <a href="${REGISTER}">Registrate</a></p>
       `;
-      hideSpinner();
+      
     }
+    hideSpinner();
   }, () => {
     // TODO Manejar errores
   });
