@@ -92,6 +92,17 @@ const validators = {
   },
 };
 
+const isValid = (input) => {
+  if (input.type === 'password' && input.name === 'repassword') {
+    return validators.repassword(input.value);
+  } if (input.type === 'password') {
+    return validators.password(input.value);
+  } if (input.type === 'text' && input.name === 'email') {
+    return validators.email(input.value);
+  }
+  return input.value.length > 0;
+};
+
 const toggleError = (e) => {
   const { target } = e;
   const errorMessage = target.dataset.error;
