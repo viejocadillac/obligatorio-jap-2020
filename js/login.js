@@ -45,6 +45,15 @@ ui.start('#firebaseui-auth-container', uiConfig);
 
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('formulario-login');
+  const btnSendFormIcon = document.getElementById('btn-send-form-icon');
+  const btnLogin = document.getElementById('btn-login');
+
+  const buttonStateHandler = createStateButtonHandler(
+    btnLogin,
+    btnSendFormIcon,
+    'fa-spinner',
+    'fa-sign-in-alt',
+  );
 
   firebase.auth().onAuthStateChanged((user) => {
     const signin = document.getElementById('signin');
@@ -85,12 +94,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const userObj = Object.fromEntries(formData.entries());
 
     if (validateAll(formulario)) {
+      buttonStateHandler.start();
       firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password).then(() => {
         redirectTo(HOME);
       }).catch((error) => {
         const errorCode = error.code;
         document.getElementById('form-error').innerHTML = getFormErrorText(errorCode);
-      });
+      })
+        .finally(() => {
+          buttonStateHandler.stop();
+        });
     }
   });
 });
